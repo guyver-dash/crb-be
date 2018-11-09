@@ -1,0 +1,86 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 06, 2018 at 04:54 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `pbmis_updated_2`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `regions`
+--
+
+CREATE TABLE `regions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `psgc_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `regions`
+--
+
+INSERT INTO `regions` (`id`, `psgc_code`, `description`, `country_id`, `created_at`, `updated_at`) VALUES
+(1, '010000000', 'REGION I (ILOCOS REGION)', '173', '2017-11-17 00:59:26', '2017-11-17 00:59:26'),
+(2, '020000000', 'REGION II (CAGAYAN VALLEY)', '173', '2017-11-17 00:59:26', '2017-11-17 00:59:26'),
+(3, '030000000', 'REGION III (CENTRAL LUZON)', '173', '2017-11-17 00:59:26', '2017-11-17 00:59:26'),
+(4, '040000000', 'REGION IV-A (CALABARZON)', '173', '2017-11-17 00:59:26', '2017-11-17 00:59:26'),
+(5, '050000000', 'REGION V (BICOL REGION)', '173', '2017-11-17 00:59:27', '2017-11-17 00:59:27'),
+(6, '060000000', 'REGION VI (WESTERN VISAYAS)', '173', '2017-11-17 00:59:27', '2017-11-17 00:59:27'),
+(7, '070000000', 'REGION VII (CENTRAL VISAYAS)', '173', '2017-11-17 00:59:27', '2017-11-17 00:59:27'),
+(8, '080000000', 'REGION VIII (EASTERN VISAYAS)', '173', '2017-11-17 00:59:28', '2017-11-17 00:59:28'),
+(9, '090000000', 'REGION IX (ZAMBOANGA PENINSULA)', '173', '2017-11-17 00:59:28', '2017-11-17 00:59:28'),
+(10, '100000000', 'REGION X (NORTHERN MINDANAO)', '173', '2017-11-17 00:59:28', '2017-11-17 00:59:28'),
+(11, '110000000', 'REGION XI (DAVAO REGION)', '173', '2017-11-17 00:59:29', '2017-11-17 00:59:29'),
+(12, '120000000', 'REGION XII (SOCCSKSARGEN)', '173', '2017-11-17 00:59:29', '2017-11-17 00:59:29'),
+(13, '130000000', 'NATIONAL CAPITAL REGION (NCR)', '173', '2017-11-17 00:59:29', '2017-11-17 00:59:29'),
+(14, '140000000', 'CORDILLERA ADMINISTRATIVE REGION (CAR)', '173', '2017-11-17 00:59:30', '2017-11-17 00:59:30'),
+(15, '150000000', 'AUTONOMOUS REGION IN MUSLIM MINDANAO (ARMM)', '173', '2017-11-17 00:59:30', '2017-11-17 00:59:30'),
+(16, '160000000', 'REGION XIII (Caraga)', '173', '2017-11-17 00:59:30', '2017-11-17 00:59:30'),
+(17, '170000000', 'REGION IV-B (MIMAROPA)', '173', '2017-11-17 00:59:27', '2017-11-17 00:59:27');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `regions`
+--
+ALTER TABLE `regions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `regions`
+--
+ALTER TABLE `regions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
