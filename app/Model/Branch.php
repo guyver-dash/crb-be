@@ -11,7 +11,7 @@ class Branch extends Model
 
     public function store(){
 
-    	return $this->hasOne('App\Model\Store', 'id', 'store_id');
+    	return $this->hasOne('App\Model\Holding', 'id', 'holding_id');
     }
 
     public function address(){

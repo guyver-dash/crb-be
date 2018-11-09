@@ -12,14 +12,23 @@ class ImagesTableSeeder extends Seeder
      */
     public function run()
     {
-    	for ($i=1; $i < 999; $i++) { 
+    	for ($i=1; $i < 98; $i++) { 
     		Image::create([
 		        'path' => 'images/uploads/' . rand(1,67) . '.jpg',
 		        'imageable_id' => $i,
-		        'imageable_type' => 'App\Model\Item',
+		        'imageable_type' => 'App\Model\Holding',
 		        'is_primary' => 1
     		]);
     	}
+
+        for ($i=1; $i < 98; $i++) { 
+            Image::create([
+                'path' => 'images/uploads/' . rand(1,67) . '.jpg',
+                'imageable_id' => $i,
+                'imageable_type' => 'App\Model\Branch',
+                'is_primary' => 1
+            ]);
+        }
         
     }
 }

@@ -21,6 +21,16 @@ class Address extends Model
     	 return $this->morphTo();
     }
 
+    public function country(){
+
+        return $this->hasOne('App\Model\Country', 'id', 'country_id');
+    }
+
+    public function region(){
+
+        return $this->hasOne('App\Model\Region', 'id', 'region_id');
+    }
+
     public function province(){
 
         return $this->hasOne('App\Model\Province', 'id', 'province_id');

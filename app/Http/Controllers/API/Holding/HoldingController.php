@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\Country;
+namespace App\Http\Controllers\API\Holding;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Country;
+use App\Model\Holding;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-
-class CountryController extends Controller
+class HoldingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,10 @@ class CountryController extends Controller
      */
     public function index()
     {
-        
+
+        $collection = Holding::relTable()->orderBy('created_at', 'asc')->get();
         return response()->json([
-                'countries' => Country::all()
+                'holdings' => $collection
             ]);
     }
 
@@ -40,7 +41,7 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         
     }
 
     /**
@@ -51,7 +52,12 @@ class CountryController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json([
+
+                'holding' => Holding::where('id', $id)
+                    ->relTable()->get()
+
+            ]);
     }
 
     /**
@@ -62,7 +68,12 @@ class CountryController extends Controller
      */
     public function edit($id)
     {
-        //
+        return response()->json([
+
+                'holding' => Holding::where('id', $id)
+                    ->relTable()->first()
+
+            ]);
     }
 
     /**
@@ -86,5 +97,13 @@ class CountryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function paginate($collection){
+
+        $request =  app()->make('request');
+
+        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
 }

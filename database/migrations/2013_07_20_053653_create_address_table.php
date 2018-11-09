@@ -18,6 +18,7 @@ class CreateAddressTable extends Migration
             $table->integer('addressable_id');
             $table->string('addressable_type');
             $table->integer('country_id')->nullable();
+            $table->integer('region_id')->nullable();
             $table->integer('province_id')->nullable();
             $table->integer('city_id')->nullable();
             $table->integer('brgy_id')->nullable();

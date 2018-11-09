@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBranchesTable extends Migration
+class CreateHoldingSubMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateBranchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('branches', function (Blueprint $table) {
+        Schema::create('holding_sub_menu', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('holding_id')->unsigned()->nullable();
-            $table->foreign('holding_id')->references('id')
-                ->on('holdings');
-            $table->string('name');
-            $table->string('desc');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateBranchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branches');
+        Schema::dropIfExists('holding_sub_menu');
     }
 }

@@ -4,8 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class State extends Model
+class Region extends Model
 {
-   
-   protected $table = 'states';
+    
+    protected $table = 'regions';
+    
 }
