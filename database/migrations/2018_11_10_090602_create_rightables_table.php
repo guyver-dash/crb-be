@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWebsitesTable extends Migration
+class CreateRightablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateWebsitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('websites', function (Blueprint $table) {
+        Schema::create('rightables', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('websitable_id');
-            $table->string('websitable_type');
-            $table->string('name');
-            $table->string('url');
+            $table->integer('right_id');
+            $table->integer('rightable_id');
+            $table->string('rightable_type');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateWebsitesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('websites');
+        Schema::dropIfExists('rightables');
     }
 }

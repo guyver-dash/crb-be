@@ -10,6 +10,16 @@ class Holding extends Model
     
     protected $table = 'holdings';
 
+    public function users(){
+
+        return $this->belongsToMany('App\Model\User', 'holding_user', 'user_id', 'holding_id');
+    }
+
+    public function rights(){
+
+        return $this->morphToMany('App\Model\Right', 'rightable');
+    }
+
     public function branches(){
 
     	return $this->hasMany('App\Model\Branch', 'holding_id', 'id');

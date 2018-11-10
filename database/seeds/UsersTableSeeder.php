@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Model\User;
+use App\Model\Right;
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -70,5 +72,13 @@ class UsersTableSeeder extends Seeder
                 'user_id' => $user->id,
                 'role_id' => 13
             ]);
+
+
+
+        for ($i=1; $i < 5; $i++) { 
+           
+           $user = User::find($i);
+           $user->rights()->attach([$i]);
+        }
     }
 }

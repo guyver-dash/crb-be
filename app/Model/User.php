@@ -20,6 +20,11 @@ class User extends Model
         'password', 'remember_token',
     ];
 
+    public function rights(){
+
+        return $this->morphToMany('App\Model\Right', 'rightable');
+    }
+    
     public function roles(){
         return $this->belongsToMany('App\Model\Role', 'role_user', 'user_id', 'role_id');
     }

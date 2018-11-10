@@ -54,7 +54,7 @@ class RegionController extends Controller
         
         return response()->json([
 
-                'regions' => Region::all()
+                'regions' => Region::where('country_id', $id)->get()
 
             ]);
     }
