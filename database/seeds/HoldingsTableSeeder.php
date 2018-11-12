@@ -46,22 +46,6 @@ class HoldingsTableSeeder extends Seeder
 
         }
 
-        for ($i=1; $i < 98; $i++) { 
-            
-            $holding = Holding::find($i);
-
-            $right = Right::find(rand(1,5));
-            $holding->rights()->attach([$right->id]);
-        }
-
-        for ($i=1; $i < 99; $i++) { 
-            $holding = Holding::find($i);
-            $holding->users()->attach($holding->id, [
-                    'holding_id' => $i,
-                    'user_id' => 1
-                ]);
-        }
-
 
     }
 }

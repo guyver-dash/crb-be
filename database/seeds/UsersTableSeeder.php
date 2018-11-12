@@ -73,12 +73,5 @@ class UsersTableSeeder extends Seeder
                 'role_id' => 13
             ]);
 
-
-
-        for ($i=1; $i < 5; $i++) { 
-           
-           $user = User::find($i);
-           $user->rights()->attach([$i]);
-        }
     }
 }

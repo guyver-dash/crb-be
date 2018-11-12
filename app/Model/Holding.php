@@ -10,15 +10,22 @@ class Holding extends Model
     
     protected $table = 'holdings';
 
+    protected $fillable = ['name', 'desc'];
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($holding) {
+            $holding->branches()->delete();
+            $holding->address()->delete();
+        });
+    }
+
     public function users(){
 
         return $this->belongsToMany('App\Model\User', 'holding_user', 'user_id', 'holding_id');
     }
 
-    public function rights(){
-
-        return $this->morphToMany('App\Model\Right', 'rightable');
-    }
 
     public function branches(){
 

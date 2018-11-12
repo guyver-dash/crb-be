@@ -20,15 +20,14 @@ class User extends Model
         'password', 'remember_token',
     ];
 
-    public function rights(){
-
-        return $this->morphToMany('App\Model\Right', 'rightable');
-    }
     
     public function roles(){
         return $this->belongsToMany('App\Model\Role', 'role_user', 'user_id', 'role_id');
     }
 
+    public function holdings(){
+        return $this->belongsToMany('App\Model\Holding', 'holding_user', 'user_id', 'holding_id');
+    }
   
     public function getCreatedAtAttribute($val){
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Holding;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Holding;
+use App\Model\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class HoldingController extends Controller
@@ -19,7 +20,7 @@ class HoldingController extends Controller
 
         $collection = Holding::relTable()->orderBy('created_at', 'asc')->get();
         return response()->json([
-                'holdings' => $collection
+                'holdings' => $this->paginate($collection)
             ]);
     }
 
@@ -85,7 +86,23 @@ class HoldingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        
+        $holding = Holding::find($id); 
+        $holding->update($request->all());
+        $holding->address()->update([
+                'country_id' => $request->country_id,
+                'region_id' => $request->region_id,
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'brgy_id' => $request->brgy_id
+            ]);
+        
+
+        return response()->json([
+                'holding' => Holding::where('id', $id)
+                    ->relTable()->first()
+            ]);
     }
 
     /**
@@ -96,7 +113,12 @@ class HoldingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $holding = Holding::find($id);
+        $holding->delete();
+        return response()->json([
+                'success' => true
+            ]);
     }
 
 
@@ -106,4 +128,5 @@ class HoldingController extends Controller
 
         return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
+
 }

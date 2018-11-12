@@ -14,3 +14,5 @@ Route::resource('holdings', 'API\Holding\HoldingController');
 Route::resource('countries', 'API\Country\CountryController');
 Route::resource('regions', 'API\Region\RegionController');
 Route::resource('provinces', 'API\Province\ProvinceController');
+Route::resource('cities', 'API\City\CityController');
+Route::resource('brgys', 'API\Brgy\BrgyController');

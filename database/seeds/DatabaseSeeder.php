@@ -8,7 +8,8 @@ use App\Model\Holding;
 use App\Model\Branch;
 use App\Model\Menu;
 use App\Model\Address;
-use App\Model\Right;
+use App\Model\AccessRight;
+use App\Model\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Address::truncate();
+        Permission::truncate();
         User::truncate();
         Role::truncate();
         Image::truncate();
@@ -28,15 +30,16 @@ class DatabaseSeeder extends Seeder
         Holding::truncate();
         Branch::truncate();
         Image::truncate();
-        Right::truncate();
+        AccessRight::truncate();
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(MenusTableSeeder::class);
-        $this->call(RightsTableSeeder::class);
         $this->call(HoldingsTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
         $this->call(ImagesTableSeeder::class);
-
+        $this->call(AccessRightTableSeeder::class);
+        $this->call(PermissionTableSeeder::class);
     }
 }
