@@ -20,7 +20,7 @@ class HoldingController extends Controller
 
         $collection = Holding::relTable()->orderBy('created_at', 'asc')->get();
         return response()->json([
-                'holdings' => $this->paginate($collection)
+                'holdings' => $collection
             ]);
     }
 
