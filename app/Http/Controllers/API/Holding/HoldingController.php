@@ -10,6 +10,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class HoldingController extends Controller
 {
+
+    public function __construct()
+    {
+        
+        $this->authorizeResource(Holding::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,12 +57,11 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Holding $holding)
     {
         return response()->json([
 
-                'holding' => Holding::where('id', $id)
-                    ->relTable()->get()
+                'holding' => $holding->relTable()->first()
 
             ]);
     }
@@ -67,13 +72,13 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Holding $holding)
     {
+        // $holding = Holding::find($id);
+        // $this->authorize('view', $holding);
+
         return response()->json([
-
-                'holding' => Holding::where('id', $id)
-                    ->relTable()->first()
-
+                'holding' => $holding->relTable()->first()
             ]);
     }
 
@@ -88,6 +93,7 @@ class HoldingController extends Controller
     {
         
         
+
         $holding = Holding::find($id); 
         $holding->update($request->all());
         $holding->address()->update([

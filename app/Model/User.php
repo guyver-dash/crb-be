@@ -3,10 +3,17 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
 
-class User extends Model
+// class User extends Model
+
+class User extends Authenticatable 
 {
+    use HasApiTokens, Notifiable;
+    
      protected $fillable = [
         'firstname', 'middlename', 'lastname', 'company', 'jobTitle', 'phone', 'email', 'password', 'status'
     ];

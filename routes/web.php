@@ -1,4 +1,3 @@
 <?php
-Route::get('/', function(){
-	return 'asdf';
-});
+Route::post('login', 'Auth\LoginController@login');
+

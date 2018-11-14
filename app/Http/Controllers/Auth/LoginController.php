@@ -44,7 +44,6 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        $token = 'asdf';
          try {
            if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json('Invalid username or password', 422);
