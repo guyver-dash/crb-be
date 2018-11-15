@@ -13,13 +13,21 @@ class AccessRightTableSeeder extends Seeder
     public function run()
     {
         
-        $accessRights = ['create', 'read', 'store', 'edit', 'update'];
+        $accessRights = ['index', 'create', 'read', 'store', 'edit', 'update'];
 
         foreach ($accessRights as $value) {
         	
-        	AccessRight::create([
+        	$accessRight = AccessRight::create([
         			'name' => $value
         		]);
+
+            $accessRight = AccessRight::find($accessRight->id);
+            $accessRight->roles()->attach($accessRight->id, [
+
+                    'role_id' => rand(1, 2),
+                    'access_right_id' => $accessRight->id
+
+                ]);
         }
     }
 }

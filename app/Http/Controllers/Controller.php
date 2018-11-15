@@ -28,7 +28,7 @@ class Controller extends BaseController
     protected function resourceAbilityMap()
     {
         // Map the "index" ability to the "index" function in our policies
-        return array_merge($this->resourceAbilityMapTrait(), ['index' => 'index']);
+        return array_merge($this->resourceAbilityMapTrait(), ['index' => 'index', 'edit' => 'view']);
     }
 
     //AuthorizesRequests for $this->authorizeResource in Policies for index..

@@ -5,17 +5,17 @@ namespace App\Http\Controllers\API\Holding;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Holding;
-use App\Model\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Auth;
 
 class HoldingController extends Controller
 {
-
     public function __construct()
     {
         
         $this->authorizeResource(Holding::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +24,13 @@ class HoldingController extends Controller
     public function index()
     {
 
-        $collection = Holding::relTable()->orderBy('created_at', 'asc')->get();
+        $collection = Holding::relTable()->get();
+
         return response()->json([
                 'holdings' => $collection
-            ]);
+            ]);  
+
+        
     }
 
     /**
@@ -48,7 +51,7 @@ class HoldingController extends Controller
      */
     public function store(Request $request)
     {
-         
+        //
     }
 
     /**
@@ -74,9 +77,9 @@ class HoldingController extends Controller
      */
     public function edit(Holding $holding)
     {
+        
         // $holding = Holding::find($id);
         // $this->authorize('view', $holding);
-
         return response()->json([
                 'holding' => $holding->relTable()->first()
             ]);
@@ -89,12 +92,8 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Holding $holding)
     {
-        
-        
-
-        $holding = Holding::find($id); 
         $holding->update($request->all());
         $holding->address()->update([
                 'country_id' => $request->country_id,
@@ -106,8 +105,7 @@ class HoldingController extends Controller
         
 
         return response()->json([
-                'holding' => Holding::where('id', $id)
-                    ->relTable()->first()
+                'holding' => $holding->relTable()->first()
             ]);
     }
 
@@ -119,14 +117,26 @@ class HoldingController extends Controller
      */
     public function destroy($id)
     {
-        
-        $holding = Holding::find($id);
+         $holding = Holding::find($id);
         $holding->delete();
         return response()->json([
                 'success' => true
             ]);
     }
 
+    public function role(){
+
+        $role = collect(Auth::User()->roles)->filter(function($role){
+
+            if ($role->access_level == 1) {
+                
+                return $role->name;
+            }
+
+        })->first();
+
+        return $role;
+    }
 
     public function paginate($collection){
 
@@ -134,5 +144,4 @@ class HoldingController extends Controller
 
         return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
-
 }

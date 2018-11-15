@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Model\User;
 use App\Model\Holding;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Auth;
 
 class HoldingPolicy
 {
@@ -13,7 +14,9 @@ class HoldingPolicy
 
     public function index(User $user)
     {
-        return true;
+
+       return true;
+
     }
 
     /**
@@ -25,6 +28,7 @@ class HoldingPolicy
      */
     public function view(User $user, Holding $holding)
     {
+
         return true;
     }
 

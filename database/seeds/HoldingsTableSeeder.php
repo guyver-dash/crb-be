@@ -44,11 +44,11 @@ class HoldingsTableSeeder extends Seeder
             $newAddress->brgy_id = rand(1, 42029);
             $holding->address()->save($newAddress);
 
-            $holding = Holding::find($i);
-            $holding->users()->attach($i, [
-                    'holding_id'=> $i,
-                    'user_id' => rand(1, 2)
+                $holding->roles()->attach($holding->id, [
+                    'holding_id' => $holding->id,
+                    'role_id' => rand(1,2)
                 ]);
+            
 
         }
 

@@ -26,6 +26,10 @@ class Holding extends Model
         return $this->belongsToMany('App\Model\User', 'holding_user', 'user_id', 'holding_id');
     }
 
+    public function roles(){
+
+        return $this->belongsToMany('App\Model\Role', 'holding_role', 'role_id', 'holding_id');
+    }
 
     public function branches(){
 
@@ -42,9 +46,15 @@ class Holding extends Model
     	return $this->morphOne('App\Model\Address', 'addressable');
     }
 
+    public function businessInfo(){
+
+        return $this->morphOne('App\Model\BusinessInfo', 'businessable');
+    }
+
+
     public function scopeRelTable($query){
 
-    	return $query->with(['address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'branches', 'images']);
+    	return $query->with(['address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'branches', 'images', 'roles', 'businessInfo']);
     }
 
     public function getCreatedAtAttribute($val){
