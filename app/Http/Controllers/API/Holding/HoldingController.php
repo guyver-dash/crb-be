@@ -75,13 +75,13 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Holding $holding)
+    public function edit(Holding $holding, Request $request)
     {
         
-        // $holding = Holding::find($id);
-        // $this->authorize('view', $holding);
+        $holding = Holding::where('id', $request->id)->relTable()->first();
+
         return response()->json([
-                'holding' => $holding->relTable()->first()
+                'holding' => $holding
             ]);
     }
 
@@ -92,8 +92,10 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Holding $holding)
+    public function update(Holding $holding, Request $request)
     {
+
+        $holding = Holding::where('id', $request->id)->first();
         $holding->update($request->all());
         $holding->address()->update([
                 'country_id' => $request->country_id,
@@ -102,10 +104,9 @@ class HoldingController extends Controller
                 'city_id' => $request->city_id,
                 'brgy_id' => $request->brgy_id
             ]);
-        
 
         return response()->json([
-                'holding' => $holding->relTable()->first()
+                'holding' => Holding::where('id', $request->id)->first()
             ]);
     }
 
