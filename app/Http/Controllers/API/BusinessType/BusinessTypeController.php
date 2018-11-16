@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\Holding;
+namespace App\Http\Controllers\API\BusinessType;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Holding;
+use App\Model\BusinessType;
 
-class SuperAdminHoldingController extends Controller
+class BusinessTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,10 @@ class SuperAdminHoldingController extends Controller
     public function index()
     {
         
-        $collection = Holding::relTable()->get();
         return response()->json([
-                'holdings' => $collection
+
+                'businessTypes' => BusinessType::all()
+
             ]);
     }
 

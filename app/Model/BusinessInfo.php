@@ -18,4 +18,12 @@ class BusinessInfo extends Model
 
     	 return $this->morphTo();
     }
+
+    public function businessType(){
+        return $this->hasOne('App\Model\BusinessType', 'id', 'business_type_id');
+    }
+
+    public function vatType(){
+        return $this->hasOne('App\Model\VatType', 'id', 'vat_type_id');
+    }
 }

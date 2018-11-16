@@ -16,3 +16,5 @@ Route::resource('regions', 'API\Region\RegionController');
 Route::resource('provinces', 'API\Province\ProvinceController');
 Route::resource('cities', 'API\City\CityController');
 Route::resource('brgys', 'API\Brgy\BrgyController');
+Route::resource('business_types', 'API\BusinessType\BusinessTypeController');
+Route::resource('vat_types', 'API\VatType\VatTypeController');

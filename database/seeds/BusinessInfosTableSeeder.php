@@ -20,7 +20,7 @@ class BusinessInfosTableSeeder extends Seeder
         	BusinessInfo::create([
 
         			'businessable_id' => $i, 
-        			'businessable_type'=> $businessType[rand(0,1)],
+        			'businessable_type'=> 'App\Model\Holding',
         			'business_type_id' => rand(1,2), 
         			'vat_type_id' => rand(1, 2),
         			'telephone' => $faker->phoneNumber, 

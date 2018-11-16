@@ -8,6 +8,9 @@ class Address extends Model
 {
     protected $table = 'address';
     protected $fillable = [
+
+        'country_id',
+        'region_id',
     	'province_id',
     	'city_id',
     	'brgy_id',

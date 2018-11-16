@@ -24,7 +24,7 @@ class HoldingController extends Controller
     public function index()
     {
 
-        $collection = Holding::relTable()->get();
+        $collection = Holding::orderBy('created_at', 'desc')->relTable()->get();
 
         return response()->json([
                 'holdings' => $collection
@@ -40,7 +40,7 @@ class HoldingController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -51,7 +51,28 @@ class HoldingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $holding = Holding::create($request->all());
+        $holding = Holding::find($holding->id);
+        $holding->address()->create([
+                'country_id' => $request->country_id,
+                'region_id' => $request->region_id,
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'brgy_id' => $request->brgy_id,
+                'street_lot_blk' => $request->street_lot_blk
+            ]);
+        $holding->businessInfo()->create([
+                'business_type_id' => $request->business_type_id,
+                'vat_type_id' => $request->vat_type_id,
+                'telephone' => $request->telephone,
+                'email' => $request->email,
+                'tin' => $request->tin,
+                'website' => $request->website
+            ]);
+
+        return response()->json([
+                'success' => $request->all()
+            ]);
     }
 
     /**
@@ -60,12 +81,12 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Holding $holding)
+    public function show(Holding $holding, Request $request)
     {
+        $holding = Holding::where('id', $request->id)->relTable()->first();
+
         return response()->json([
-
-                'holding' => $holding->relTable()->first()
-
+                'holding' => $holding
             ]);
     }
 
@@ -104,7 +125,14 @@ class HoldingController extends Controller
                 'city_id' => $request->city_id,
                 'brgy_id' => $request->brgy_id
             ]);
-
+        $holding->businessInfo()->update([
+                'business_type_id' => $request->business_type_id,
+                'vat_type_id' => $request->vat_type_id,
+                'telephone' => $request->telephone,
+                'email' => $request->email,
+                'tin' => $request->tin,
+                'website' => $request->website
+            ]);
         return response()->json([
                 'holding' => Holding::where('id', $request->id)->first()
             ]);
@@ -116,28 +144,15 @@ class HoldingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Holding $holding, Request $request)
     {
-         $holding = Holding::find($id);
+        $holding = Holding::find($request->id);
         $holding->delete();
         return response()->json([
                 'success' => true
             ]);
     }
 
-    public function role(){
-
-        $role = collect(Auth::User()->roles)->filter(function($role){
-
-            if ($role->access_level == 1) {
-                
-                return $role->name;
-            }
-
-        })->first();
-
-        return $role;
-    }
 
     public function paginate($collection){
 
