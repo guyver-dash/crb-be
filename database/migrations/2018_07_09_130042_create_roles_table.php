@@ -17,7 +17,7 @@ class CreateRolesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->integer('access_level');
+            $table->integer('parent_id');
             $table->timestamps();
         });
     }

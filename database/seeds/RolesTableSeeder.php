@@ -19,10 +19,9 @@ class RolesTableSeeder extends Seeder
         foreach ($roles as $value) {
             $role = Role::create([
                     'name' => $value,
-                    'access_level' => $level
+                    'parent_id' => rand(0, count($roles) - 2)
                     
                 ]);
-            $level++;
 
         }
 

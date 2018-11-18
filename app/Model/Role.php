@@ -15,4 +15,20 @@ class Role extends Model
 
     	 return $this->belongsToMany('App\Model\Holding');
     }
+
+    public function children() {
+
+        return $this->hasMany('App\Model\Role', 'parent_id', 'id');
+    }
+
+    public function allChildrenRoles()
+    {
+        return $this->children()->with('allChildrenRoles');
+    }
+
+    public function scopeChildLess($q){
+
+        $q->where('parent_id', '=', 0);
+
+    }
 }

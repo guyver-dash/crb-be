@@ -1,3 +1,8 @@
 <?php
-Route::post('login', 'Auth\LoginController@login');
+
+Route::get('example', function(){
+
+   $role =  App\Model\Role::childLess()->get();
+    dd($role);
+});
 
