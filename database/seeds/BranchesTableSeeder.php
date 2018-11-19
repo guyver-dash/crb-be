@@ -16,18 +16,18 @@ class BranchesTableSeeder extends Seeder
         
         $faker = Faker\Factory::create();
 
-        for ($i=1; $i < 99; $i++) { 
+        for ($i=1; $i < 97; $i++) { 
         	$branch = new Branch();
         	$branch->name = $faker->company;
         	$branch->desc = $faker->sentence($nbWords = 6, $variableNbWords = true);
-        	$branch->holding_id = $i;
+        	$branch->company_id = $i;
         	$branch->save();
         }
 
 
 
         
-        for ($i=1; $i < 98; $i++) { 
+        for ($i=1; $i < 97; $i++) { 
             
             $branch = Branch::find($i);
 

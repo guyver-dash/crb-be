@@ -17,6 +17,7 @@ class CreateHoldingsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('desc');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

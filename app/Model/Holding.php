@@ -3,10 +3,14 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 class Holding extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
     
     protected $table = 'holdings';
 
@@ -16,9 +20,9 @@ class Holding extends Model
         parent::boot();
 
         static::deleting(function($holding) {
-            $holding->roles()->detach();
-            $holding->address()->delete();
-            $holding->companies()->delete();
+            // $holding->companies()->delete();
+            // $holding->address()->delete();
+            // $holding->roles()->detach();
         });
     }
 
