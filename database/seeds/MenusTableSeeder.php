@@ -14,25 +14,26 @@ class MenusTableSeeder extends Seeder
     {
 
         $menus = ['System Settings', 'Productions', 'Breeds', 'Purchases Modules', 'Sales', 'Inventories', 'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
-
+        $sub_menu1 = [
+            'Holdings', 'Companies', 'Company Statutory Table', 'Payroll Setup', 'Entities', 'User', 'Customers',
+            'Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
         foreach ($menus as $value) {
         	
-        	$m = Menu::create([
-        			'name' => $value,
-        			'description' => $value
+        	     Menu::create([
+                    'parent_id' => 0,
+        			'label' => $value,
+        			'name' => $value
         		]);
-
-            $user = User::find(1);
-
-            $user->menus()->attach(1, [
-                    'user_id' => 1,
-                    'menu_id' => $m->id
-                ]);
 
         }
 
-
-
+        foreach($sub_menu1 as $submenu){
+            Menu::create([
+                'parent_id' => 1,
+                'label' => $submenu,
+                'name' => $submenu
+            ]);
+        }
 
     }
 }

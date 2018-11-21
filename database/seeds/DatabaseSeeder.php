@@ -13,6 +13,9 @@ use App\Model\BusinessType;
 use App\Model\VatType;
 use App\Model\BusinessInfo;
 use App\Model\Company;
+use App\Model\Gender;
+use App\Model\CivilStatus;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +27,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        CivilStatus::truncate();
+        Gender::truncate();
         BusinessType::truncate();
         VatType::truncate();
         Address::truncate();
@@ -38,6 +43,8 @@ class DatabaseSeeder extends Seeder
         AccessRight::truncate();
         Company::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $this->call(CivilStatusTableSeeder::class);
+        $this->call(GendersTableSeeder::class);
         $this->call(VatTypesTableSeeder::class);
         $this->call(BusinessTypesTableSeeder::class);
         $this->call(RolesTableSeeder::class);

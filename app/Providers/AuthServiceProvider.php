@@ -13,7 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model\Holding' => 'App\Policies\HoldingPolicy'
+        'App\Model\Holding' => 'App\Policies\HoldingPolicy',
+        'App\Model\Company' => 'App\Policies\CompanyPolicy'
     ];
 
     /**
@@ -26,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Passport::routes();
         Gate::resource('holdings', 'App\Policies\HoldingPolicy');
+        Gate::resource('companies', 'App\Policies\CompanyPolicy');
 
     }
 }

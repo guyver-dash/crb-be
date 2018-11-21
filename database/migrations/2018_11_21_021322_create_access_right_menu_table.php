@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenuUserTable extends Migration
+class CreateAccessRightMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMenuUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_user', function (Blueprint $table) {
-             $table->increments('id');
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')
-                ->on('users');
+        Schema::create('access_right_menu', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('access_right_id')->unsigned()->nullable();
+            $table->foreign('access_right_id')->references('id')
+                ->on('access_rights');
             $table->integer('menu_id')->unsigned()->nullable();
             $table->foreign('menu_id')->references('id')
                 ->on('menus');
@@ -32,6 +32,6 @@ class CreateMenuUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_user');
+        Schema::dropIfExists('access_right_menu');
     }
 }

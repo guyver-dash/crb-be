@@ -7,7 +7,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('details', 'API\User\UserController@details');
 	Route::resource('holdings', 'API\Holding\HoldingController');
 });
+
+Route::get('search-company', 'API\Company\CompanyController@searchCompany');
 Route::resource('companies', 'API\Company\CompanyController');
+
+
 Route::resource('roles', 'API\Roles\RoleController');
 Route::resource('user', 'API\User\UserController');
 Route::resource('countries', 'API\Country\CountryController');

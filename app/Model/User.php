@@ -47,6 +47,6 @@ class User extends Authenticatable
 
     public function scopeRelTable($query){
 
-        return $query->with(['menus.subMenus.subMenusChild', 'roles']);
+        return $query->with(['roles.accessRights.menus']);
     }
 }

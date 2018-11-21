@@ -28,6 +28,17 @@ class AccessRightTableSeeder extends Seeder
                     'access_right_id' => $accessRight->id
 
                 ]);
+
+            
+        }
+
+        for ($i=1; $i < 50; $i++) { 
+                
+            $accessRight = AccessRight::find(rand(1, 5));
+            $accessRight->menus()->attach($accessRight->id, [
+                'menu_id' => rand(1, 31),
+                'access_right_id' => $accessRight->id
+            ]);
         }
     }
 }

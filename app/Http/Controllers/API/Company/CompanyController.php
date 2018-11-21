@@ -9,6 +9,11 @@ use App\Model\Company;
 
 class CompanyController extends Controller
 {
+
+    public function __construct(){
+
+        // $this->authorizeResource(Company::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,11 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies =  Company::relTable()->get();
+
+        $request = app()->make('request');
+
+        $companies =  Company::where('name', 'like', '%'. $request->filter . '%')
+            ->relTable()->get();
 
         return response()->json([
 
@@ -65,7 +74,11 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        return response()->json([
+
+            'company' => Company::where('id',$id)->relTable()->first()
+        ]);
     }
 
     /**
@@ -90,6 +103,20 @@ class CompanyController extends Controller
     {
         //
     }
+
+
+    public function searchCompany(Request $request){
+
+        $companies =  Company::where('name', 'like', '%'. $request->search . '%' )->relTable()->get();
+
+        return response()->json([
+            
+            'companies' => $this->paginate($companies)
+
+        ]);
+
+    }
+
 
     public function paginate($collection){
 

@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
         		'firstname' => 'super',
         		'lastname' => 'admin ',
                 'middlename' => 'middlename',
+                'username' => 'super-admin',
         		'email' => 'superAdmin@pattys.com',
         		'password' => Hash::make('23456789')
 
@@ -33,6 +34,7 @@ class UsersTableSeeder extends Seeder
                 'firstname' => 'store',
                 'lastname' => 'admin',
                 'middlename' => 'middlename',
+                'username' => 'store-admin',
                 'email' => 'storeAdmin@pattys.com',
                 'password' => Hash::make('23456789')
 
@@ -48,6 +50,7 @@ class UsersTableSeeder extends Seeder
                 'firstname' => 'Super',
                 'lastname' => 'Super Manager',
                 'middlename' => 'middlename',
+                'username' => 'super-staff',
                 'email' => 'superStaff@pattys.com',
                 'password' => Hash::make('23456789')
 
@@ -63,6 +66,7 @@ class UsersTableSeeder extends Seeder
                 'firstname' => 'Store',
                 'lastname' => 'Store CEO',
                 'middlename' => 'middlename',
+                'username' => 'store-staff',
                 'email' => 'storeStaff@pattys.com',
                 'password' => Hash::make('23456789')
 

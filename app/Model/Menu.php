@@ -12,8 +12,13 @@ class Menu extends Model
 
     
 	
-	public function subMenus(){
+	public function children() {
 
-		return $this->hasMany('App\Model\SubMenu');
-	}    
+        return $this->hasMany('App\Model\Menu', 'parent_id', 'id');
+    }
+
+    public function allChildren()
+    {
+        return $this->children()->with('allChildren');
+    }   
 }

@@ -16,6 +16,11 @@ class Role extends Model
     	 return $this->belongsToMany('App\Model\Holding');
     }
 
+    public function accessRights(){
+
+        return $this->belongsToMany('App\Model\AccessRight');
+    }
+
     public function children() {
 
         return $this->hasMany('App\Model\Role', 'parent_id', 'id');
