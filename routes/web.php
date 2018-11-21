@@ -15,9 +15,18 @@ Route::get('menus', function(){
 
 Route::get('user-menu', function(){
 
-    $user = App\Model\User::where('id', 1)
-    ->relTable()
-    ->first();
-
-    dd($user);
+    $user = App\Model\User::where('id',1)
+        ->whereHas('roles', function($q){
+            $q->where('parent_id', 0);
+        })->relTable()->first();
+    
+    $menu = [];
+    if($user != null){
+        $menu = App\Model\Menu::with('allChildren')->get();
+        $menu = $menu->filter(function($item){
+            return $item->parent_id === 0;
+        });
+    }
+    
+    return $menu;
 });

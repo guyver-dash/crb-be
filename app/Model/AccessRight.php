@@ -17,4 +17,5 @@ class AccessRight extends Model
     public function menus(){
         return $this->belongsToMany('App\Model\Menu', 'access_right_menu', 'menu_id', 'access_right_id');
     }
+    
 }

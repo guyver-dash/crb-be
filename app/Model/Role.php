@@ -26,6 +26,11 @@ class Role extends Model
         return $this->hasMany('App\Model\Role', 'parent_id', 'id');
     }
 
+
+    public function scopeParent($q){
+
+        $q->min('parent_id');
+    }
     public function allChildrenRoles()
     {
         return $this->children()->with('allChildrenRoles');

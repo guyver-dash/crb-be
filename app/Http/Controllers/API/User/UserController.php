@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\User; 
+use App\Model\User; 
 use Illuminate\Support\Facades\Auth; 
 
 
@@ -152,15 +152,17 @@ class UserController extends Controller
             return response()->json([
                     'success' => $success,
                     'user' => Auth::User()->relTable()->first(),
+                    'menus' => $this->userMenus(),
                     'userLogin' => true
                 ]); 
  
-        }else if(Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+        }else if(Auth::attempt(['username' => request('email'), 'password' => request('password')])) {
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             return response()->json([
                     'success' => $success,
                     'user' => Auth::User()->relTable()->first(),
+                    'menus' => $this->userMenus(),
                     'userLogin' => true
                 ]); 
         }
@@ -170,38 +172,24 @@ class UserController extends Controller
 
 
     }
-/** 
-     * Register api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function register(Request $request) 
-    { 
-        $validator = Validator::make($request->all(), [ 
-            'name' => 'required', 
-            'email' => 'required|email', 
-            'password' => 'required', 
-            'c_password' => 'required|same:password', 
-        ]);
-        if ($validator->fails()) { 
-                    return response()->json(['error'=>$validator->errors()], 401);            
-                }
-                $input = $request->all(); 
-                $input['password'] = bcrypt($input['password']); 
-                $user = User::create($input); 
-                $success['token'] =  $user->createToken('MyApp')->accessToken; 
-                $success['name'] =  $user->name;
-        return response()->json(['success'=>$success], $this->successStatus); 
+
+
+    public function userMenus(){
+
+        $user = User::where('id', Auth::User()->id)
+        ->whereHas('roles', function($q){
+            $q->where('parent_id', 0);
+        })->relTable()->first();
+    
+        $menu = [];
+        if($user != null){
+            $menu = \App\Model\Menu::with('allChildren')->get();
+            $menu = $menu->filter(function($item){
+                return $item->parent_id === 0;
+            });
+        }
+        
+        return $menu;
     }
-/** 
-     * details api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function details() 
-    { 
-        $user = Auth::user(); 
-        return response()->json(['success' => $user], $this->successStatus); 
-    } 
     
 }
