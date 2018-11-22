@@ -3,10 +3,9 @@
 namespace App\Policies;
 
 use App\Model\User;
-use App\Model\Company;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CompanyPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +17,19 @@ class CompanyPolicy
     }
 
     /**
-     * Determine whether the user can view the company.
+     * Determine whether the user can view the model.
      *
      * @param  \App\Model\User  $user
-     * @param  \App\Company  $company
+     * @param  \App\Model\User  $model
      * @return mixed
      */
-    public function view(User $user, Company $company)
+    public function view(User $user, User $model)
     {
         return true;
     }
 
     /**
-     * Determine whether the user can create companies.
+     * Determine whether the user can create models.
      *
      * @param  \App\Model\User  $user
      * @return mixed
@@ -41,49 +40,49 @@ class CompanyPolicy
     }
 
     /**
-     * Determine whether the user can update the company.
+     * Determine whether the user can update the model.
      *
      * @param  \App\Model\User  $user
-     * @param  \App\Company  $company
+     * @param  \App\Model\User  $model
      * @return mixed
      */
-    public function update(User $user, Company $company)
+    public function update(User $user, User $model)
     {
         return true;
     }
 
     /**
-     * Determine whether the user can delete the company.
+     * Determine whether the user can delete the model.
      *
      * @param  \App\Model\User  $user
-     * @param  \App\Company  $company
+     * @param  \App\Model\User  $model
      * @return mixed
      */
-    public function delete(User $user, Company $company)
+    public function delete(User $user, User $model)
     {
         return true;
     }
 
     /**
-     * Determine whether the user can restore the company.
+     * Determine whether the user can restore the model.
      *
      * @param  \App\Model\User  $user
-     * @param  \App\Company  $company
+     * @param  \App\Model\User  $model
      * @return mixed
      */
-    public function restore(User $user, Company $company)
+    public function restore(User $user, User $model)
     {
         return true;
     }
 
     /**
-     * Determine whether the user can permanently delete the company.
+     * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Model\User  $user
-     * @param  \App\Company  $company
+     * @param  \App\Model\User  $model
      * @return mixed
      */
-    public function forceDelete(User $user, Company $company)
+    public function forceDelete(User $user, User $model)
     {
         return true;
     }

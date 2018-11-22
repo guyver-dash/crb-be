@@ -14,7 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model\Holding' => 'App\Policies\HoldingPolicy',
-        'App\Model\Company' => 'App\Policies\CompanyPolicy'
+        'App\Model\Company' => 'App\Policies\CompanyPolicy',
+        'App\Model\User' => 'App\Policies\UserPolicy'
     ];
 
     /**
@@ -28,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
         Gate::resource('holdings', 'App\Policies\HoldingPolicy');
         Gate::resource('companies', 'App\Policies\CompanyPolicy');
+        Gate::resource('users', 'App\Policies\UserPolicy');
 
     }
 }

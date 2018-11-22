@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use JWTAuth;
+use Auth;
 use App\Model\User;
 
 class LoginController extends Controller
@@ -43,39 +43,52 @@ class LoginController extends Controller
    
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-         try {
-           if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json('Invalid username or password', 422);
-           }
-        } catch (JWTAuthException $e) {
-            return response()->json(['failed_to_create_token'], 500);
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
+            $user = Auth::user(); 
+            $success['token'] =  $user->createToken('MyApp')->accessToken; 
+            return response()->json([
+                    'success' => $success,
+                    'user' => Auth::User()->relTable()->first(),
+                    'menus' => $this->userMenus(),
+                    'userLogin' => true
+                ]); 
+ 
+        }else if(Auth::attempt(['username' => request('email'), 'password' => request('password')])) {
+            $user = Auth::user(); 
+            $success['token'] =  $user->createToken('MyApp')->accessToken; 
+            return response()->json([
+                    'success' => $success,
+                    'user' => Auth::User()->relTable()->first(),
+                    'menus' => $this->userMenus(),
+                    'userLogin' => true
+                ]); 
         }
-
-        return response()->json([
-            'user' => User::where('id',JWTAuth::user()->id )->relTable()->first(),
-            'userLogin' => true,
-            'token' => $token
-        ], 200);
+        else{ 
+            return response()->json(['error'=>'Unauthorised'], 401); 
+        } 
     }
 
     public function logout(Request $request) {
 
-        $this->validate($request, ['token' => 'required']);
-        
-        try {
-            JWTAuth::invalidate($request->input('token'));
-            return response([
-            'userLogin' => false,
-            'msg' => 'You have successfully logged out.'
-        ]);
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response([
-                'status' => 'error',
-                'msg' => 'Failed to logout, please try again.'
-            ]);
+       
+    }
+
+    public function userMenus(){
+
+        $user = User::where('id', Auth::User()->id)
+        ->whereHas('roles', function($q){
+            $q->where('parent_id', 0);
+        })->relTable()->first();
+    
+        $menu = [];
+        if($user != null){
+            $menu = \App\Model\Menu::with('allChildren')->get();
+            $menu = $menu->filter(function($item){
+                return $item->parent_id === 0;
+            });
         }
+        
+        return $menu;
     }
 
     

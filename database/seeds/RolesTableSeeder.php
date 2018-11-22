@@ -12,14 +12,32 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['Super Admin', 'Super Manager', 'Super Finance Officer', 'Super Auditor', 'Super Inventory', 'Super Cashier', 'Super Validator', 'Super Merchandiser', 'Super Delivery', 'Super CSR', 'Super Staff', 'Store Admin', 'Store CEO', 'Store Area Manager', 'Store Branch Manager', 'Store Cashier', 'Store Validator', 'Store Merchandiser', 'Store Delivery', 'Store Customer', 'Store Beneficiary'
-        ];
+        $roles = ['Super Admin'];
+        $roles2 = ['Super Manager', 'Super Finance Officer', 'Super Auditor', 'Super Inventory', 'Super Cashier', 'Super Validator', 'Super Merchandiser', 'Super Delivery', 'Super CSR', 'Super Staff'];
+        $roles3 = ['Holding CEO',  'Holding Admin', 'Holding Manager', 'Holding Finance Office', 'Holding Auditor','Holding Inventory'];
          
-        $level =  1;
         foreach ($roles as $value) {
             $role = Role::create([
                     'name' => $value,
-                    'parent_id' => rand(0, count($roles) - 2)
+                    'parent_id' => 0,
+                    
+                ]);
+
+        }
+
+        foreach ($roles2 as $value) {
+            $role = Role::create([
+                    'name' => $value,
+                    'parent_id' => 1,
+                    
+                ]);
+
+        }
+
+        foreach ($roles3 as $value) {
+            $role = Role::create([
+                    'name' => $value,
+                    'parent_id' => 2,
                     
                 ]);
 

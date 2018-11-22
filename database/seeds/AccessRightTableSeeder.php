@@ -32,13 +32,18 @@ class AccessRightTableSeeder extends Seeder
             
         }
 
-        for ($i=1; $i < 50; $i++) { 
+        for($a=1; $a < 100; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
                 
-            $accessRight = AccessRight::find(rand(1, 5));
-            $accessRight->menus()->attach($accessRight->id, [
-                'menu_id' => rand(1, 31),
-                'access_right_id' => $accessRight->id
-            ]);
+                $accessRight = AccessRight::find($i);
+                $accessRight->menus()->attach($accessRight->id, [
+                    'menu_id' => rand(1, 31),
+                    'access_right_id' => $accessRight->id
+                ]);
+            }
+
         }
+        
     }
 }

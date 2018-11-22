@@ -12,7 +12,7 @@ class CompanyController extends Controller
 
     public function __construct(){
 
-        // $this->authorizeResource(Company::class);
+        $this->authorizeResource(Company::class);
     }
     /**
      * Display a listing of the resource.
@@ -61,9 +61,12 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Company $company, Request $request)
     {
-        //
+        return response()->json([
+
+            'company' => Company::where('id',$request->id)->relTable()->first()
+        ]);
     }
 
     /**
@@ -72,12 +75,12 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company, Request $request)
     {
         
         return response()->json([
 
-            'company' => Company::where('id',$id)->relTable()->first()
+            'company' => Company::where('id',$request->id)->relTable()->first()
         ]);
     }
 
@@ -88,9 +91,31 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Company $company, Request $request)
     {
-        //
+
+        $company = Company::where('id', $request->id)->first();
+        $company->update($request->all());
+        $company->address()->update([
+                'country_id' => $request->country_id,
+                'region_id' => $request->region_id,
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+                'brgy_id' => $request->brgy_id
+            ]);
+        $company->businessInfo()->update([
+                'business_type_id' => $request->business_type_id,
+                'vat_type_id' => $request->vat_type_id,
+                'telephone' => $request->telephone,
+                'email' => $request->email,
+                'tin' => $request->tin,
+                'website' => $request->website
+            ]);
+        
+        return response()->json([
+            'company' => Company::where('id',$request->id)->relTable()->first(),
+            'success' => true
+        ]);
     }
 
     /**
@@ -99,23 +124,15 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $holding, Request $request)
     {
-        //
-    }
-
-
-    public function searchCompany(Request $request){
-
-        $companies =  Company::where('name', 'like', '%'. $request->search . '%' )->relTable()->get();
-
+        $holding = Company::find($request->id);
+        $holding->delete();
         return response()->json([
-            
-            'companies' => $this->paginate($companies)
-
-        ]);
-
+                'success' => true
+            ]);
     }
+
 
 
     public function paginate($collection){
@@ -123,5 +140,14 @@ class CompanyController extends Controller
         $request =  app()->make('request');
 
         return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+    }
+
+
+    public function companyHoldings(Request $request){
+        $company = Company::where('id', $request->id)
+        ->with('holding')->first();
+        return response()->json([
+            'holdings' => $company->holding
+        ]);
     }
 }

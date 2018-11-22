@@ -4,14 +4,17 @@ namespace App\Http\Controllers\API\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Validator;
 use App\Model\User; 
-use Illuminate\Support\Facades\Auth; 
+use Auth;
 
 
 class UserController extends Controller
 {
-    public $successStatus = 200;
+   
+    public function __construct(){
+
+        $this->authorizeResource(User::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +22,31 @@ class UserController extends Controller
      */
     public function index()
     {
+        //user with roles
+        $user = User::where('id', Auth::User()->id)
+            ->with('roles')->first();
+
+        //Get the RoleParentId
+        $roleParentId = collect($user->roles)->min('parent_id');
+
+        //Get the all the children of the role parent Id with it's children and users
+        $role = \App\Model\Role::where('parent_id', $roleParentId)->with('allChildren.users')->first();
+
+        //Looop to get the Collection of children users
+        $childrenUsers = collect();
+        foreach($role->allChildren as $children ){
+            $childrenUsers->push($children->users);
+        }
+
+        //Loop to get the Collection of user
+        $users = collect();
+        foreach($childrenUsers as $nCollect){
+            foreach($nCollect as $user){
+                $users->push($user);
+            }
+        }
         
-        return response()->json([
-                'users' => User::all()
-            ]);
+        return response()->json($users);
     }
 
     /**
@@ -65,7 +89,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user, Request $request)
     {
         //
     }
@@ -76,7 +100,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user, Request $request)
     {
         
         return response()->json([
@@ -91,7 +115,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user, Request $request)
     {
         $user = User::find($id);
         $user->update($request->all());
@@ -107,89 +131,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user, Request $request)
     {
         //
     }
 
-    public function getAuthUser(Request $request){
+
+    public function childrenUsers(){
+
         
-        $user = JWTAuth::toUser($request->token);
-
-        $user = $user->with(['roles', 'menus'])->first();
-        return response()->json([
-            'user' => $user,
-            'success' =>true,
-        ]);
     }
 
-    public function search(){
-        $request = app()->make('request');
-        $users = User::where('firstname', 'like', '%'. $request->search . '%')
-                            ->orWhere('lastname', 'like', '%'. $request->search . '%')
-                            ->get();
-        $arrayUser = $users->take(10)->map(function ($item, $key) {
-                    return $item->firstname . ' ' . $item->lastname;
-                });
-        return response()->json([
-                'users' => $users,
-                'arrayUser' => $arrayUser
-
-            ]);
-    }
-
-    
-    /** 
-     * login api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function login(){ 
-
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')->accessToken; 
-            return response()->json([
-                    'success' => $success,
-                    'user' => Auth::User()->relTable()->first(),
-                    'menus' => $this->userMenus(),
-                    'userLogin' => true
-                ]); 
- 
-        }else if(Auth::attempt(['username' => request('email'), 'password' => request('password')])) {
-            $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')->accessToken; 
-            return response()->json([
-                    'success' => $success,
-                    'user' => Auth::User()->relTable()->first(),
-                    'menus' => $this->userMenus(),
-                    'userLogin' => true
-                ]); 
-        }
-        else{ 
-            return response()->json(['error'=>'Unauthorised'], 401); 
-        } 
-
-
-    }
-
-
-    public function userMenus(){
-
-        $user = User::where('id', Auth::User()->id)
-        ->whereHas('roles', function($q){
-            $q->where('parent_id', 0);
-        })->relTable()->first();
-    
-        $menu = [];
-        if($user != null){
-            $menu = \App\Model\Menu::with('allChildren')->get();
-            $menu = $menu->filter(function($item){
-                return $item->parent_id === 0;
-            });
-        }
-        
-        return $menu;
-    }
-    
 }

@@ -11,9 +11,9 @@ class Role extends Model
     protected $fillable = ['name', 'desc'];
 
 
-    public function holdings(){
+    public function users(){
 
-    	 return $this->belongsToMany('App\Model\Holding');
+    	 return $this->belongsToMany('App\Model\User');
     }
 
     public function accessRights(){
@@ -31,9 +31,9 @@ class Role extends Model
 
         $q->min('parent_id');
     }
-    public function allChildrenRoles()
+    public function allChildren()
     {
-        return $this->children()->with('allChildrenRoles');
+        return $this->children()->with('allChildren');
     }
 
     public function scopeChildLess($q){

@@ -24,7 +24,7 @@ class HoldingController extends Controller
     public function index()
     {
 
-        $collection = Holding::relTable()->take(15)->get();
+        $collection = Holding::relTable()->get();
 
         return response()->json([
                 'holdings' => $collection
