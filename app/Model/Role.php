@@ -26,6 +26,13 @@ class Role extends Model
         return $this->hasMany('App\Model\Role', 'parent_id', 'id');
     }
 
+    public function scopeSubordinates($query, User $user){
+
+        $query->where('parent_id', '>=', $user->roles()->orderBy('parent_id', 'ASC')->first()->parent_id);
+        $query->where('parent_id', '>=', $user->roles()->orderBy('parent_id', 'ASC')->first()->id);
+            
+        return $query;
+    }
 
     public function scopeParent($q){
 

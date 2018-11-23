@@ -15,6 +15,9 @@ class CreateInformationsTable extends Migration
     {
         Schema::create('informations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')
+                ->on('users');
             $table->integer('gender_id')->unsigned()->nullable();
             $table->foreign('gender_id')->references('id')->on('gender');
             $table->date('birthdate');

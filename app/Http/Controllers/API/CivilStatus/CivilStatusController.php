@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\Roles;
+namespace App\Http\Controllers\API\CivilStatus;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Role;
-use Auth;
+use App\Model\CivilStatus;
 
-class RoleController extends Controller
+class CivilStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,10 @@ class RoleController extends Controller
      */
     public function index()
     {
+        
         return response()->json([
-                'roles' => Role::all()
-            ]);
+            'civilStatus' => CivilStatus::all()
+        ]);
     }
 
     /**
@@ -85,13 +85,5 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function userSubRoles(){
-        $roles = Role::subordinates(Auth::User())->get();
-        return response()->json([
-
-            'roles' => $roles
-        ]);
     }
 }

@@ -35,7 +35,7 @@ class Company extends Model
 
     public function scopeRelTable($q){
 
-        return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy',]);
+        return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy']);
     }
 
     public function getCreatedAtAttribute($val){

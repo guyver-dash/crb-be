@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\User;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\User; 
@@ -22,31 +23,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        //user with roles
-        $user = User::where('id', Auth::User()->id)
-            ->with('roles')->first();
-
-        //Get the RoleParentId
-        $roleParentId = collect($user->roles)->min('parent_id');
-
-        //Get the all the children of the role parent Id with it's children and users
-        $role = \App\Model\Role::where('parent_id', $roleParentId)->with('allChildren.users')->first();
-
-        //Looop to get the Collection of children users
-        $childrenUsers = collect();
-        foreach($role->allChildren as $children ){
-            $childrenUsers->push($children->users);
-        }
-
-        //Loop to get the Collection of user
-        $users = collect();
-        foreach($childrenUsers as $nCollect){
-            foreach($nCollect as $user){
-                $users->push($user);
-            }
-        }
+        $request = app()->make('request');
         
-        return response()->json($users);
+        $users = User::where('firstname', 'like', '%' . $request->filter . '%')
+            ->subordinates(Auth::User())
+            ->relTable()
+            ->get();
+
+        return response()->json([
+
+            'users' => $this->paginate($users)
+        ]);
     }
 
     /**
@@ -104,7 +91,9 @@ class UserController extends Controller
     {
         
         return response()->json([
-                'user' => User::where('id', $id)->first()
+                'user' => User::where('id', $request->id)
+                    ->relTable()
+                    ->first()
             ]);
     }
 
@@ -137,9 +126,11 @@ class UserController extends Controller
     }
 
 
-    public function childrenUsers(){
+    public function paginate($collection){
 
-        
+        $request =  app()->make('request');
+
+        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
 
 }

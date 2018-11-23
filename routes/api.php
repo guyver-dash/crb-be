@@ -13,12 +13,15 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 
 	Route::resource('users', 'API\User\UserController');
+
+	Route::get('user-subordinate-roles', 'API\Roles\RoleController@userSubRoles');
+	Route::resource('roles', 'API\Roles\RoleController');
+
 });
 
 Route::get('search-company', 'API\Company\CompanyController@searchCompany');
 
 
-Route::resource('roles', 'API\Roles\RoleController');
 Route::resource('countries', 'API\Country\CountryController');
 Route::resource('regions', 'API\Region\RegionController');
 Route::resource('provinces', 'API\Province\ProvinceController');
@@ -26,3 +29,5 @@ Route::resource('cities', 'API\City\CityController');
 Route::resource('brgys', 'API\Brgy\BrgyController');
 Route::resource('business_types', 'API\BusinessType\BusinessTypeController');
 Route::resource('vat_types', 'API\VatType\VatTypeController');
+Route::resource('civil_status', 'API\CivilStatus\CivilStatusController');
+Route::resource('genders', 'API\Gender\GenderController');
