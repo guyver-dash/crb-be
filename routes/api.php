@@ -1,6 +1,7 @@
 <?php
 
 Route::post('login', 'Auth\LoginController@login');
+Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser');
 // Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
@@ -20,8 +21,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 });
 
 Route::get('search-company', 'API\Company\CompanyController@searchCompany');
-
-
 Route::resource('countries', 'API\Country\CountryController');
 Route::resource('regions', 'API\Region\RegionController');
 Route::resource('provinces', 'API\Province\ProvinceController');

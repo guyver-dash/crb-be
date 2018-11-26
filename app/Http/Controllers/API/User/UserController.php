@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API\User;
 
+use App\Notifications\UserRegisteredSuccessfully;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\User; 
 use Auth;
-
+use Hash;
 
 class UserController extends Controller
 {
@@ -52,21 +53,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(User $user, Request $request)
     {
         
-        User::create([
-                'firstname' => $request->firstname,
-                'middlename' => $request->middlename,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
-            ]);
-                
+        $user  = User::create($request->all());
+        $user = User::find($user->id);
+        $user->activation_code = str_random(30).time();
+        $user->password = Hash::make($request->password);
+        $user->update();
+        
+        $user->notify(new UserRegisteredSuccessfully($user));
 
         return response()->json([
-
-                $request->all()
+                'success' => true
             ]);
     }
 
@@ -106,11 +105,33 @@ class UserController extends Controller
      */
     public function update(User $user, Request $request)
     {
-        $user = User::find($id);
+        $user = User::find($request->id);
+        $user->roles()->detach();
+        $newroles = [];
+        foreach($request->roles as $role){
+            $newroles[] = ['role_id' => $role ];
+        }
+        $user->roles()->sync($newroles);
+        $user->address()->update([
+            'country_id' => $request->address['country_id'],
+            'region_id' => $request->address['region_id'],
+            'province_id' => $request->address['province_id'],
+            'city_id' => $request->address['city_id'],
+            'brgy_id' => $request->address['brgy_id'],
+            'street_lot_blk' => $request->address['street_lot_blk']
+        ]);
+        $user->information()->update([
+            'employee_id' => $request->informations['employee_id'],
+            'gender_id' => $request->informations['gender_id'],
+            'birthdate' => $request->informations['birthdate'],
+            'mobile' => $request->informations['mobile'],
+            'nationality' => $request->informations['nationality'],
+            'civil_status_id' => $request->informations['civil_status_id']
+        ]);
         $user->update($request->all());
-
         return response()->json([
-               'users' => User::all()
+               'success' => true,
+               'user' => User::find($request->id)
             ]);
     }
 
