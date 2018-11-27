@@ -14,7 +14,7 @@ class InformationsTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        for ($i=1; $i < 100 ; $i++) { 
+        for ($i=1; $i < 102 ; $i++) { 
             Information::create([
 
                 'employee_id' => $faker->ein,

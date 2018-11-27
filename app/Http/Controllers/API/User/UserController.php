@@ -26,10 +26,14 @@ class UserController extends Controller
     {
         $request = app()->make('request');
         
-        $users = User::where('firstname', 'like', '%' . $request->filter . '%')
+        $users = User::orWhere('firstname', 'like', '%' . $request->filter . '%')
+            ->orWhere('middlename', 'like', '%' . $request->filter . '%')
+            ->orWhere('lastname', 'like', '%' . $request->filter . '%')
             ->subordinates(Auth::User())
             ->relTable()
+            ->orderBy('created_at', 'desc')
             ->get();
+
 
         return response()->json([
 
@@ -61,11 +65,16 @@ class UserController extends Controller
         $user->activation_code = str_random(30).time();
         $user->password = Hash::make($request->password);
         $user->update();
-        
+        $user->roles()->sync($request->roles);
+        $user->address()->update($request->address);
+        $user->information()->update($request->informations);
         // $user->notify(new UserRegisteredSuccessfully($user));
 
         return response()->json([
-                'success' => true
+                'success' => true,
+                'user' => User::where('id', $request->id)
+                ->relTable()
+                ->first()
             ]);
     }
 
@@ -77,7 +86,11 @@ class UserController extends Controller
      */
     public function show(User $user, Request $request)
     {
-        //
+        return response()->json([
+            'user' => User::where('id', $request->id)
+                ->relTable()
+                ->first()
+        ]);
     }
 
     /**
@@ -143,7 +156,11 @@ class UserController extends Controller
      */
     public function destroy(User $user, Request $request)
     {
-        //
+        $user = User::find($request->id);
+        $user->delete();
+        return response()->json([
+                'success' => true
+            ]);
     }
 
 

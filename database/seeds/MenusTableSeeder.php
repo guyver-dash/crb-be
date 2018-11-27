@@ -15,7 +15,7 @@ class MenusTableSeeder extends Seeder
 
         $menus = ['System Settings', 'Productions', 'Breeds', 'Purchases Modules', 'Sales', 'Inventories', 'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
         $sub_menu1 = [
-            'Users', 'Menus', 'Holdings', 'Companies', 'Company Statutory Table', 'Payroll Setup', 'Entities', 'User', 'Customers',
+            'Users', 'Roles', 'Menus', 'Holdings', 'Companies', 'Company Statutory Table', 'Payroll Setup', 'Entities', 'User', 'Customers',
             'Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
         foreach ($menus as $value) {
         	
