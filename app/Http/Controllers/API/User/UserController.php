@@ -62,7 +62,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->update();
         
-        $user->notify(new UserRegisteredSuccessfully($user));
+        // $user->notify(new UserRegisteredSuccessfully($user));
 
         return response()->json([
                 'success' => true
