@@ -68,7 +68,8 @@ class UserController extends Controller
         $user->roles()->sync($request->roles);
         $user->address()->update($request->address);
         $user->information()->update($request->informations);
-        // $user->notify(new UserRegisteredSuccessfully($user));
+        
+        $user->notify(new UserRegisteredSuccessfully($user));
 
         return response()->json([
                 'success' => true,

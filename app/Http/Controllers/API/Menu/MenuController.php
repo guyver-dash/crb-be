@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\API\Menu;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Menu;
+use Auth;
 
 class MenuController extends Controller
 {
+
+    public function __construct(Menu $menu){
+        $this->authorizeResource(Menu::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,10 +21,14 @@ class MenuController extends Controller
      */
     public function index()
     {
-        
+        $request = app()->make('request');
+        $menus = Menu::where('name', 'like', '%'.$request->filter . '%')
+            ->userMenus()
+            ->relTable()
+            ->get();
         return response()->json([
 
-            
+            'menus' => $this->paginate($menus)
         ]);
     }
 
@@ -39,7 +50,8 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        
     }
 
     /**
@@ -48,7 +60,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Menu $menu, Request $request)
     {
         //
     }
@@ -59,9 +71,17 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu, Request $request)
     {
-        //
+        
+        $menu = Menu::where('id', $request->id)->relTable()->first();
+        $superiorMenus =  Menu::superiors($menu->parent_id)->get();
+        return response()->json([
+            'menu' => $menu,
+            'submenus' => $menu->allChildren,
+            'superiorMenus' => $superiorMenus
+            // 'parentMenu' => $menu->parent
+        ]);
     }
 
     /**
@@ -71,9 +91,13 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Menu $menu, Request $request)
     {
-        //
+        $menu = Menu::find($request->id);
+        $menu->update($request->all());
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -82,11 +106,17 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Menu $menu, Request $request)
     {
         //
     }
 
+    public function paginate($collection){
+
+        $request =  app()->make('request');
+
+        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+    }
 
     
 }

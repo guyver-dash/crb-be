@@ -5,6 +5,7 @@ Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser');
 // Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
+
 	Route::get('details', 'API\User\UserController@details');
 	Route::resource('holdings', 'API\Holding\HoldingController');
 
@@ -17,6 +18,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	Route::get('user-subordinate-roles', 'API\Roles\RoleController@userSubRoles');
 	Route::resource('roles', 'API\Roles\RoleController');
+
+	Route::resource('menus', 'API\Menu\MenuController');
 
 });
 
