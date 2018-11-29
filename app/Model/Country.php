@@ -9,4 +9,9 @@ class Country extends Model
     
     protected $table = 'countries';
 
+    public function regions()
+    {
+        return $this->hasMany('App\Model\Region');
+    }
+
 }

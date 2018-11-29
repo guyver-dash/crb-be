@@ -30,3 +30,8 @@ Route::resource('business_types', 'API\BusinessType\BusinessTypeController');
 Route::resource('vat_types', 'API\VatType\VatTypeController');
 Route::resource('civil_status', 'API\CivilStatus\CivilStatusController');
 Route::resource('genders', 'API\Gender\GenderController');
+
+Route::get('barangays', 'Api\Location\LocationController@getSampleBarangays');
+Route::get('barangays/{barangay}/{limit}', 'Api\Location\LocationController@getBarangayByName');
+Route::get('barangay-by-city/{cityId}', 'Api\Location\LocationController@getBarangayByCityId');
+Route::get('cities-by-name/{city}/{limit}', 'Api\Location\LocationController@getCitiesByName');

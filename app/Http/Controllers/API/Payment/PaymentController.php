@@ -9,9 +9,6 @@ class PaymentController extends Controller
 {
     public function paywithCreditCard(Request $request)
     {
-<<<<<<< HEAD
-        
-=======
 
         // $shippingAddress = Paypalpayment::shippingAddress();
         // $shippingAddress->setLine1($request['delivery']['streetNo'])
@@ -33,7 +30,6 @@ class PaymentController extends Controller
         //     ->setFirstName($request['firstname'])
         //     ->setLastName($request['lastname']);
 
->>>>>>> bd662c902ba9eb5cda331c280973eb69277df2e4
         // ### Address
         // Base Address object used as shipping or billing
         // address in a payment. [Optional]
@@ -106,13 +102,8 @@ class PaymentController extends Controller
         // the above types and intent as 'sale'
 
         $redirectUrls = Paypalpayment::redirectUrls();
-<<<<<<< HEAD
-        $redirectUrls->setReturnUrl(url("/payments/success"))
-            ->setCancelUrl(url("/payments/fails"));
-=======
         $redirectUrls->setReturnUrl("http://localhost:3000/payments/success")
             ->setCancelUrl("http://localhost:3000/payments/fails");
->>>>>>> bd662c902ba9eb5cda331c280973eb69277df2e4
 
         $payment = Paypalpayment::payment();
 
