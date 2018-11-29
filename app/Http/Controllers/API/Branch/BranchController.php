@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\API\Branch;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Branch;
 
 class BranchController extends Controller
 {
+
+    public function __construct(){
+        $this->authorizeResource(Branch::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,13 @@ class BranchController extends Controller
      */
     public function index()
     {
-        //
+        $request = app()->make('request');
+        $branches = Branch::where('name', 'like', '%'.$request->filter . '%')
+            ->relTable()
+            ->get();
+        return response()->json([
+            'branches' => $this->paginate($branches)
+        ]);
     }
 
     /**
@@ -84,11 +95,10 @@ class BranchController extends Controller
         //
     }
 
+    public function paginate($collection){
 
-    public function getBranches($storeId){
+        $request =  app()->make('request');
 
-        return response()->json([
-                'branches' => Branch::where('store_id', $storeId)->get()
-            ]);
+        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
 }

@@ -2,17 +2,17 @@
 
 Route::post('login', 'Auth\LoginController@login');
 Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser');
-// Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
+
 	Route::post('logout', 'Auth\LoginController@logout');
 	Route::get('details', 'API\User\UserController@details');
-	Route::resource('holdings', 'API\Holding\HoldingController');
 
+	Route::resource('holdings', 'API\Holding\HoldingController');
 
 	Route::get('company-holdings', 'API\Company\CompanyController@companyHoldings');
 	Route::resource('companies', 'API\Company\CompanyController');
-
+	Route::resource('branches', 'API\Branch\BranchController');
 
 	Route::resource('users', 'API\User\UserController');
 
@@ -23,10 +23,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('menus', 'API\Menu\MenuController');
 
 	Route::resource('access_rights', 'API\AccessRight\AccessRightController');
+
+
 });
 
 
-Route::get('search-company', 'API\Company\CompanyController@searchCompany');
 Route::resource('countries', 'API\Country\CountryController');
 Route::resource('regions', 'API\Region\RegionController');
 Route::resource('provinces', 'API\Province\ProvinceController');

@@ -13,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        'App\Model\Branch' => 'App\Policies\BranchPolicy',
         'App\Model\AccessRight' => 'App\Policies\AccessRightPolicy',
         'App\Model\Holding' => 'App\Policies\HoldingPolicy',
         'App\Model\Company' => 'App\Policies\CompanyPolicy',
@@ -30,12 +31,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Passport::routes();
-        Gate::resource('holdings', 'App\Policies\HoldingPolicy');
-        Gate::resource('companies', 'App\Policies\CompanyPolicy');
         Gate::resource('users', 'App\Policies\UserPolicy');
         Gate::resource('roles', 'App\Policies\RolePolicy');
         Gate::resource('menus', 'App\Policies\MenuPolicy');
         Gate::resource('access_rights', 'App\Policies\AccessRightPolicy');
+        Gate::resource('holdings', 'App\Policies\HoldingPolicy');
+        Gate::resource('companies', 'App\Policies\CompanyPolicy');
+        Gate::resource('branches', 'App\Policies\BranchPolicy');
 
     }
 }
