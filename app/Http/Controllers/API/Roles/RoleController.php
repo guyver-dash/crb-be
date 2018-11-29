@@ -23,7 +23,9 @@ class RoleController extends Controller
     {
         $request = app()->make('request');
         $roles = Role::orWhere('name', 'like', '%'. $request->filter . '%')
-            ->subordinates(Auth::User())->relTable()->get();
+            ->subordinates(Auth::User())->relTable()
+            ->orderBy('created_at', 'desc')
+            ->get();
         return response()->json([
                 'roles' => $this->paginate($roles)
             ]);
@@ -47,7 +49,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Role::create($request->all());
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -58,7 +63,17 @@ class RoleController extends Controller
      */
     public function show(Role $role, Request $request)
     {
-        //
+        $role = Role::where('id', $request->id)->relTable()->first();
+        $subordinateRoles = Role::where('parent_id', '>=', $role->parent_id)
+            ->where('parent_id', '>=', $role->id)
+            ->get();
+        $superiorRoles =  Role::superiors($role->parent_id)->get();
+        return response()->json([
+            'role' => $role,
+            'superiorRoles' => $superiorRoles,
+            'subordinateRoles' => $subordinateRoles
+
+        ]);
     }
 
     /**
@@ -70,12 +85,11 @@ class RoleController extends Controller
     public function edit(Role $role, Request $request)
     {
         $role = Role::where('id', $request->id)->relTable()->first();
-        $availRoles = Role::where('parent_id', '>=', $role->parent_id)
-            ->where('parent_id', '>=', $role->id)
-            ->get();
+        $superiorRoles =  Role::superiors($role->parent_id)->get();
         return response()->json([
             'role' => $role,
-            'availRoles' => $availRoles
+            'superiorRoles' => $superiorRoles,
+            'subordinateRoles' => $role->children
 
         ]);
     }
@@ -89,7 +103,11 @@ class RoleController extends Controller
      */
     public function update(Role $role, Request $request)
     {
-        //
+        $role = Role::find($request->id);
+        $role->update($request->all());
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -100,7 +118,11 @@ class RoleController extends Controller
      */
     public function destroy(Role $role, Request $request)
     {
-        //
+        $role = Role::find($request->id);
+        $role->delete();
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function userSubRoles(){

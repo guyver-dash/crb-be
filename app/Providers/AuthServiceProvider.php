@@ -16,7 +16,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\Holding' => 'App\Policies\HoldingPolicy',
         'App\Model\Company' => 'App\Policies\CompanyPolicy',
         'App\Model\User' => 'App\Policies\UserPolicy',
-        'App\Model\Role' => 'App\Policies\RolePolicy'
+        'App\Model\Role' => 'App\Policies\RolePolicy',
+        'App\Model\Menu' => 'App\Policies\MenuPolicy'
     ];
 
     /**
@@ -32,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('companies', 'App\Policies\CompanyPolicy');
         Gate::resource('users', 'App\Policies\UserPolicy');
         Gate::resource('roles', 'App\Policies\RolePolicy');
+        Gate::resource('menus', 'App\Policies\MenuPolicy');
 
     }
 }

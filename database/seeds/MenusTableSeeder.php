@@ -21,7 +21,7 @@ class MenusTableSeeder extends Seeder
         	
         	     Menu::create([
                     'parent_id' => 0,
-        			'label' => $value,
+        			'description' => $value,
         			'name' => $value
         		]);
 
@@ -30,7 +30,7 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu1 as $submenu){
             Menu::create([
                 'parent_id' => 1,
-                'label' => $submenu,
+                'description' => $submenu,
                 'name' => $submenu
             ]);
         }

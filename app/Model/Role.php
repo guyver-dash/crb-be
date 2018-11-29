@@ -9,7 +9,7 @@ class Role extends Model
 {
     
     protected $table = 'roles';
-    protected $fillable = ['name', 'desc'];
+    protected $fillable = ['name', 'description', 'parent_id'];
 
 
     public function users(){
@@ -22,14 +22,26 @@ class Role extends Model
         return $this->belongsToMany('App\Model\AccessRight');
     }
 
+    public function parents(){
+        return $this->hasMany('App\Model\Role', 'id', 'parent_id');
+    }
     public function children() {
 
         return $this->hasMany('App\Model\Role', 'parent_id', 'id');
     }
 
+    public function allChildren()
+    {
+        return $this->children()->with('allChildren');
+    }
+
     public function scopeRelTable($query){
 
-        return $query->with(['children']);
+        return $query->with(['children', 'parents']);
+    }
+
+    public function scopeSuperiors($query, $parentId){
+        return $query->where('parent_id', '<', $parentId);
     }
 
     public function scopeSubordinates($query, User $user){
@@ -39,7 +51,7 @@ class Role extends Model
             
         return $query;
     }
-
+    
     public function scopeAvailRoles($query, $parentId, $roleId){
 
         $query->where('parent_id', '>=', $parentId);
@@ -52,10 +64,7 @@ class Role extends Model
 
     //     $q->min('parent_id');
     // }
-    public function allChildren()
-    {
-        return $this->children()->with('allChildren');
-    }
+    
 
     public function scopeChildLess($q){
 
