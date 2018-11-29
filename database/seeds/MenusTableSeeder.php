@@ -13,10 +13,13 @@ class MenusTableSeeder extends Seeder
     public function run()
     {
 
-        $menus = ['System Settings', 'Productions', 'Breeds', 'Purchases Modules', 'Sales', 'Inventories', 'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
+        $menus = ['System Settings', 'Inventories', 'Productions', 'Breeds', 'Purchases Modules', 'Sales',  'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
         $sub_menu1 = [
-            'Users', 'Roles', 'Menus', 'Holdings', 'Companies', 'Company Statutory Table', 'Payroll Setup', 'Entities', 'User', 'Customers',
-            'Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
+            'Users', 'Roles', 'Access Right', 'Menus', 'Holdings', 'Companies', 'Branches', 'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
+        
+        $sub_menu2 =[
+            'Braches'
+        ];
         foreach ($menus as $value) {
         	
         	     Menu::create([
@@ -30,6 +33,14 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu1 as $submenu){
             Menu::create([
                 'parent_id' => 1,
+                'description' => $submenu,
+                'name' => $submenu
+            ]);
+        }
+
+        foreach($sub_menu2 as $submenu){
+            Menu::create([
+                'parent_id' => 16,
                 'description' => $submenu,
                 'name' => $submenu
             ]);

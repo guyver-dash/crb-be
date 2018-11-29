@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function AauthAcessToken(){
+        return $this->hasMany('App\Model\OauthAccessToken');
+    }
+
     public function address(){
 
     	return $this->morphOne('App\Model\Address', 'addressable');

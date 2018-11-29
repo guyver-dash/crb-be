@@ -13,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        'App\Model\AccessRight' => 'App\Policies\AccessRightPolicy',
         'App\Model\Holding' => 'App\Policies\HoldingPolicy',
         'App\Model\Company' => 'App\Policies\CompanyPolicy',
         'App\Model\User' => 'App\Policies\UserPolicy',
@@ -34,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('users', 'App\Policies\UserPolicy');
         Gate::resource('roles', 'App\Policies\RolePolicy');
         Gate::resource('menus', 'App\Policies\MenuPolicy');
+        Gate::resource('access_rights', 'App\Policies\AccessRightPolicy');
 
     }
 }

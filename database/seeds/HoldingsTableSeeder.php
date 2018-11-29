@@ -29,7 +29,7 @@ class HoldingsTableSeeder extends Seeder
         	$Holding->save();
         }
 
-        for ($i=1; $i < 98; $i++) { 
+        for ($i=1; $i < 99; $i++) { 
             
             $holding = Holding::find($i);
 

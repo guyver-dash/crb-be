@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API\Menu;
+namespace App\Http\Controllers\API\AccessRight;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Menu;
+use App\Model\AccessRight;
 use Auth;
 
-class MenuController extends Controller
+class AccessRightController extends Controller
 {
 
-    public function __construct(Menu $menu){
-        $this->authorizeResource(Menu::class);
+    public function __construct(){
+        $this->authorizeResource(AccessRight::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,13 +23,12 @@ class MenuController extends Controller
     public function index()
     {
         $request = app()->make('request');
-        $menus = Menu::where('name', 'like', '%'.$request->filter . '%')
-            // ->userMenus()
+        $accessRights = AccessRight::where('name', 'like', '%'.$request->filter . '%')
             ->relTable()
             ->get();
         return response()->json([
 
-            'menus' => $this->paginate($menus)
+            'accessRights' => $this->paginate($accessRights)
         ]);
     }
 
@@ -50,13 +50,10 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        
-        Menu::create($request->all());
-
+        AccessRight::create($request->all());
         return response()->json([
             'success' => true
         ]);
-        
     }
 
     /**
@@ -65,11 +62,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Menu $menu, Request $request)
+    public function show(AccessRight $accessRight, Request $request)
     {
-        $menu = Menu::where('id', $request->id)->relTable()->first();
+        $accessRight = AccessRight::find($request->id);
         return response()->json([
-            'menu' => $menu
+            'accessRight' => $accessRight
         ]);
     }
 
@@ -79,16 +76,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Menu $menu, Request $request)
+    public function edit(AccessRight $accessRight, Request $request)
     {
-        
-        $menu = Menu::where('id', $request->id)->relTable()->first();
-        $superiorMenus =  Menu::superiors($menu->parent_id)->get();
+        $accessRight = AccessRight::find($request->id);
         return response()->json([
-            'menu' => $menu,
-            'submenus' => $menu->allChildren,
-            'superiorMenus' => $superiorMenus
-            // 'parentMenu' => $menu->parent
+            'accessRight' => $accessRight
         ]);
     }
 
@@ -99,12 +91,13 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Menu $menu, Request $request)
+    public function update(AccessRight $accessRight, Request $request)
     {
-        $menu = Menu::find($request->id);
-        $menu->update($request->all());
+        $accessRight = AccessRight::find($request->id);
+        $accessRight->update($request->all());
+
         return response()->json([
-            'success' => true
+            'success' => $request->all()
         ]);
     }
 
@@ -114,21 +107,13 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu, Request $request)
+    public function destroy(AccessRight $accessRight, Request $request)
     {
-        $menu = Menu::find($request->id);
-        $menu->children()->delete();
-        $menu->delete();
+        $accessRight = AccessRight::find($request->id);
+        $accessRight->delete();
 
         return response()->json([
             'success' => true
-        ]);
-    }
-
-    public function userSubMenus(){
-        $menus = Menu::userMenus()->get();
-        return response()->json([
-            'menus' => $menus
         ]);
     }
 
@@ -138,6 +123,4 @@ class MenuController extends Controller
 
         return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
-
-    
 }

@@ -70,24 +70,30 @@ class LoginController extends Controller
 
     public function logout(Request $request) {
 
-       
+        if (Auth::check()) {
+            Auth::user()->AauthAcessToken()->delete();
+         }
+
+         return response()->json([
+             'success' => true
+         ]);
     }
 
     public function userMenus(){
 
-        $user = User::where('id', Auth::User()->id)
-        ->whereHas('roles', function($q){
-            $q->where('parent_id', 0);
-        })->relTable()->first();
+        // $user = User::where('id', Auth::User()->id)
+        // ->whereHas('roles', function($q){
+        //     $q->where('parent_id', 0);
+        // })->relTable()->first();
     
-        $menu = [];
-        if($user != null){
-            $menu = \App\Model\Menu::with('allChildren')->get();
-            $menu = $menu->filter(function($item){
-                return $item->parent_id === 0;
-            });
-        }
-        
+        // $menu = [];
+        // if($user != null){
+        //     $menu = \App\Model\Menu::with('allChildren')->get();
+        //     $menu = $menu->filter(function($item){
+        //         return $item->parent_id === 0;
+        //     });
+        // }
+        $menu = \App\Model\Menu::with('allChildren')->get();
         return $menu;
     }
 
