@@ -24,7 +24,7 @@ class Branch extends Model
 
     public function scopeRelTable($query){
 
-        return $query->with(['address', 'company', 'businessInfo']);
+        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo']);
     }
 
     
