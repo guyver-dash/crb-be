@@ -23,6 +23,11 @@ class Company extends Model
         return $this->belongsTo('App\Model\Holding');
     }
 
+    public function accessRights(){
+
+        return $this->belongsToMany('App\Model\AccessRight');
+   }
+   
     public function businessInfo(){
 
         return $this->morphOne('App\Model\BusinessInfo', 'businessable');

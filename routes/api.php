@@ -12,6 +12,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	Route::get('company-holdings', 'API\Company\CompanyController@companyHoldings');
 	Route::resource('companies', 'API\Company\CompanyController');
+
+	Route::get('user-companies', 'API\Branch\BranchController@userCompanies');
 	Route::resource('branches', 'API\Branch\BranchController');
 
 	Route::resource('users', 'API\User\UserController');

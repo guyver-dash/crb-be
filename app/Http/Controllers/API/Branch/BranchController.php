@@ -6,6 +6,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Branch;
+use App\Model\Company;
+use Auth;
 
 class BranchController extends Controller
 {
@@ -23,6 +25,7 @@ class BranchController extends Controller
         $request = app()->make('request');
         $branches = Branch::where('name', 'like', '%'.$request->filter . '%')
             ->relTable()
+            ->orderBy('created_at', 'desc')
             ->get();
         
          
@@ -49,7 +52,14 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $branch = Branch::create($request['branch']);
+        $branch = Branch::find($branch->id);
+        $branch->address()->create($request['address']);
+        $branch->businessInfo()->create($request['businessInfo']);
+
+        return response()->json([
+                'success' => true
+            ]);
     }
 
     /**
@@ -60,7 +70,10 @@ class BranchController extends Controller
      */
     public function show(Branch $branch, Request $request)
     {
-        //
+        $branch = Branch::where('id',$request->id)->relTable()->first();
+        return response()->json([
+            'branch' => $branch
+        ]);
     }
 
     /**
@@ -78,7 +91,8 @@ class BranchController extends Controller
         }); 
         return response()->json([
             'branch' => $branch,
-            'role' => $roleBranch
+            'role' => $roleBranch,
+            'userRoles' => \Auth::user()->roles
         ]);
     }
 
@@ -91,7 +105,28 @@ class BranchController extends Controller
      */
     public function update(Branch $branch, Request $request)
     {
-        //
+        
+        $branch = Branch::find($request->id);
+        $branch->update($request->all());
+        $branch->address()->update([
+            'country_id' => $request->country_id,
+            'region_id' => $request->region_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'brgy_id' => $request->brgy_id
+        ]);
+        $branch->businessInfo()->update([
+            'business_type_id' => $request->business_type_id,
+            'vat_type_id' => $request->vat_type_id,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'tin' => $request->tin,
+            'website' => $request->website
+        ]);
+        return response()->json([
+            'branch' => Branch::where('id',$request->id)->relTable()->first(),
+            'success' => true
+        ]);
     }
 
     /**
@@ -102,7 +137,24 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch, Request $request)
     {
-        //
+        
+        $branch = Branch::find($request->id);
+        $branch->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function userCompanies(){
+        $companies = Company::whereHas('accessRights.roles.users', function($q){
+            return $q->where('users.id', Auth::User()->id);
+        })->get();
+        return response()->json([
+            'userCompanies' => $companies
+        ]);
+       
+      
     }
 
     public function paginate($collection){
