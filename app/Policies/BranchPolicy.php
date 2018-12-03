@@ -25,7 +25,7 @@ class BranchPolicy
      */
     public function view(User $user, Branch $branch)
     {
-        //
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class BranchPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -48,7 +48,7 @@ class BranchPolicy
      */
     public function update(User $user, Branch $branch)
     {
-        //
+        return true;
     }
 
     /**
@@ -60,7 +60,7 @@ class BranchPolicy
      */
     public function delete(User $user, Branch $branch)
     {
-        //
+        return true;
     }
 
     /**
@@ -72,7 +72,7 @@ class BranchPolicy
      */
     public function restore(User $user, Branch $branch)
     {
-        //
+        return true;
     }
 
     /**
@@ -84,6 +84,6 @@ class BranchPolicy
      */
     public function forceDelete(User $user, Branch $branch)
     {
-        //
+        return true;
     }
 }

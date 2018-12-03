@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\Model\AccessRight;
-
 class AccessRightTableSeeder extends Seeder
 {
     /**
@@ -44,6 +43,47 @@ class AccessRightTableSeeder extends Seeder
             }
 
         }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $accessRight = AccessRight::find($i);
+                $accessRight->holdings()->attach($accessRight->id, [
+                    'holding_id' => $a,
+                    'access_right_id' => $accessRight->id
+                ]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $accessRight = AccessRight::find($i);
+                $accessRight->companies()->attach($accessRight->id, [
+                    'company_id' => $a,
+                    'access_right_id' => $accessRight->id
+                ]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $accessRight = AccessRight::find($i);
+                $accessRight->branches()->attach($accessRight->id, [
+                    'branch_id' => $a,
+                    'access_right_id' => $accessRight->id
+                ]);
+            }
+
+        }
+
+        
         
     }
 }

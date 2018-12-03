@@ -24,6 +24,8 @@ class BranchController extends Controller
         $branches = Branch::where('name', 'like', '%'.$request->filter . '%')
             ->relTable()
             ->get();
+        
+         
         return response()->json([
             'branches' => $this->paginate($branches)
         ]);
@@ -56,7 +58,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Branch $branch, Request $request)
     {
         //
     }
@@ -67,9 +69,17 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Branch $branch, Request $request)
     {
-        //
+        
+        $branch = Branch::where('id',$request->id)->relTable()->first();
+        $roleBranch = Branch::whereHas('accessRight.roles', function($q){
+            return $q->whereIn('roles.id',[]);
+        }); 
+        return response()->json([
+            'branch' => $branch,
+            'role' => $roleBranch
+        ]);
     }
 
     /**
@@ -79,7 +89,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Branch $branch, Request $request)
     {
         //
     }
@@ -90,7 +100,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Branch $branch, Request $request)
     {
         //
     }
