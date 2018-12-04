@@ -1,9 +1,10 @@
 <?php
 
-Route::get('example', function(){
+Route::get('bank_accounts', function(){
 
-   $role =  App\Model\Role::with('allChildrenRoles')->first();
-    dd($role);
+   $bankAccounts =  App\Model\BankAccount::where('id', 1)->first();
+    dd($bankAccounts);
+
 });
 
 Route::get('menus', function(){

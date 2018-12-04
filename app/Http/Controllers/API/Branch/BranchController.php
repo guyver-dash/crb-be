@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Branch;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,6 +23,9 @@ class BranchController extends Controller
      */
     public function index()
     {
+
+        Log::info('User Access the branch:'. Auth::User());
+
         $request = app()->make('request');
         $branches = Branch::where('name', 'like', '%'.$request->filter . '%')
             ->relTable()
