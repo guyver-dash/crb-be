@@ -7,9 +7,9 @@ Route::get('bank_accounts', function(){
 
 });
 
-Route::get('menus', function(){
+Route::get('classes', function(){
 
-    $menus = App\Model\Menu::with('allChildren')->first();
+    $menus = App\Model\Branch::find(1)->classs()->with('allChildren')->get();
 
     dd($menus);
 });

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemTypesTable extends Migration
+class CreateClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateItemTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_types', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('classable_id');
+            $table->string('classable_type');
             $table->string('name');
-            $table->longtext('desc');
+            $table->longText('desc');
+            $table->integer('parent_id');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateItemTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_types');
+        Schema::dropIfExists('classes');
     }
 }
