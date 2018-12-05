@@ -17,9 +17,9 @@ class Branch extends Model
     	return $this->morphOne('App\Model\Address', 'addressable');
     }
 
-    public function classs(){
+    public function category(){
 
-    	return $this->morphOne('App\Model\Classs', 'classable');
+    	return $this->morphOne('App\Model\Category', 'categorable');
     }
 
     public function company(){

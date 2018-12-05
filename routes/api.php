@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('menus', 'API\Menu\MenuController');
 
 	Route::resource('access_rights', 'API\AccessRight\AccessRightController');
+	Route::resource('categories', 'API\Category\CategoryController');
 
 
 });

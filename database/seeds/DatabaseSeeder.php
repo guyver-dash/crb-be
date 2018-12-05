@@ -16,8 +16,7 @@ use App\Model\Company;
 use App\Model\Gender;
 use App\Model\CivilStatus;
 use App\Model\BankAccount;
-use App\Model\Classs;
-
+use App\Model\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -45,7 +44,7 @@ class DatabaseSeeder extends Seeder
         AccessRight::truncate();
         Company::truncate();
         BankAccount::truncate();
-        Classs::truncate();
+        Category::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $this->call(CivilStatusTableSeeder::class);
         $this->call(GendersTableSeeder::class);
@@ -62,6 +61,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AccessRightTableSeeder::class);
         $this->call(BusinessInfosTableSeeder::class);
         $this->call(BankAccountsTableSeeder::class);
-        $this->call(ClassesTableSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
     }
 }
