@@ -17,6 +17,7 @@ use App\Model\Gender;
 use App\Model\CivilStatus;
 use App\Model\BankAccount;
 use App\Model\Category;
+use App\Model\Package;
 
 class DatabaseSeeder extends Seeder
 {
@@ -45,7 +46,9 @@ class DatabaseSeeder extends Seeder
         Company::truncate();
         BankAccount::truncate();
         Category::truncate();
+        Package::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        
         $this->call(CivilStatusTableSeeder::class);
         $this->call(GendersTableSeeder::class);
         $this->call(VatTypesTableSeeder::class);
@@ -62,5 +65,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BusinessInfosTableSeeder::class);
         $this->call(BankAccountsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
+        $this->call(PackagesTableSeeder::class);
     }
 }
