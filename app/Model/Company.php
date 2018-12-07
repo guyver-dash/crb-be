@@ -15,7 +15,12 @@ class Company extends Model
 
     public function branches(){
 
-        return $this->hasMany('App\Model\Branch', 'id', 'branch_id');
+        return $this->hasMany('App\Model\Branch', 'id', 'company_id');
+    }
+
+    public function trademarks(){
+
+        return $this->hasMany('App\Model\Trademark', 'id', 'company_id');
     }
 
     public function holding(){

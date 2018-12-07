@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\API\Packages;
+namespace App\Http\Controllers\API\Trademark;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Package;
+use App\Model\Trademark;
 
-class PackageController extends Controller
+class TrademarkController extends Controller
 {
+    public function __construct(){
+
+        $this->authorizeResource(Trademark::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,14 +21,15 @@ class PackageController extends Controller
     public function index()
     {
         $request = app()->make('request');
-        $packages = Package::where('name', 'like', '%'.$request->filter . '%')
-            ->get();
+
+        $trademarks =  Trademark::where('name', 'like', '%'. $request->filter . '%')
+            ->relTable()->orderBy('created_at', 'desc')->get();
 
         return response()->json([
 
-            'packages' => $this->paginate($packages)
-        ]);
+            'trademarks' => $this->paginate($trademarks)
 
+        ]);
     }
 
     /**
@@ -45,12 +50,10 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        
-        Package::create($request->all());
+        Trademark::create($request->all());
         return response()->json([
             'success' => true
         ]);
-
     }
 
     /**
@@ -59,12 +62,11 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package, Request $request)
+    public function show(Trademark $trademark, Request $request)
     {
-        $package = Package::find($request->id);
-
         return response()->json([
-            'package' => $package
+
+            'trademark' => Trademark::where('id',$request->id)->relTable()->first()
         ]);
     }
 
@@ -74,12 +76,11 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package, Request $request)
+    public function edit(Trademark $trademark, Request $request)
     {
-        $package = Package::find($request->id);
-
         return response()->json([
-            'package' => $package
+
+            'trademark' => Trademark::where('id',$request->id)->relTable()->first()
         ]);
     }
 
@@ -90,9 +91,10 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Package $package, Request $request)
+    public function update(Trademark $trademark, Request $request)
     {
-        Package::find($request->id)->update($request->all());
+        $trademark = Trademark::find($request->id);
+        $trademark->update($request->all());
 
         return response()->json([
             'success' => true
@@ -105,9 +107,10 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package, Request $request)
+    public function destroy(Trademark $trademark, Request $request)
     {
-        Package::find($request->id)->delete();
+        
+        Trademark::find($request->id)->delete();
         return response()->json([
             'success' => true
         ]);

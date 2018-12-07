@@ -16,6 +16,10 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('user-companies', 'API\Branch\BranchController@userCompanies');
 	Route::resource('branches', 'API\Branch\BranchController');
 
+	Route::resource('trademarks', 'API\Trademark\TrademarkController');
+	Route::resource('franchisees', 'API\Franchisee\FranchiseeController');
+
+
 	Route::resource('users', 'API\User\UserController');
 
 	Route::get('user-subordinate-roles', 'API\Roles\RoleController@userSubRoles');

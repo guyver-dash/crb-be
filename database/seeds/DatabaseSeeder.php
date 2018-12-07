@@ -18,6 +18,8 @@ use App\Model\CivilStatus;
 use App\Model\BankAccount;
 use App\Model\Category;
 use App\Model\Package;
+use App\Model\Trademark;
+use App\Model\Franchisee;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,6 +49,9 @@ class DatabaseSeeder extends Seeder
         BankAccount::truncate();
         Category::truncate();
         Package::truncate();
+        Trademark::truncate();
+        Franchisee::truncate();
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
         $this->call(CivilStatusTableSeeder::class);
@@ -60,11 +65,13 @@ class DatabaseSeeder extends Seeder
         $this->call(HoldingsTableSeeder::class);
         $this->call(CompaniesTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
+        $this->call(TrademarksTableSeeder::class);
         $this->call(ImagesTableSeeder::class);
         $this->call(AccessRightTableSeeder::class);
         $this->call(BusinessInfosTableSeeder::class);
         $this->call(BankAccountsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(PackagesTableSeeder::class);
+        $this->call(FranchiseesTableSeeder::class);
     }
 }

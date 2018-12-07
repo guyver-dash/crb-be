@@ -22,7 +22,6 @@ class Holding extends Model
         static::deleting(function($holding) {
             // $holding->companies()->delete();
             // $holding->address()->delete();
-            // $holding->roles()->detach();
         });
     }
 
@@ -35,12 +34,6 @@ class Holding extends Model
 
         return $this->belongsToMany('App\Model\User', 'holding_user', 'user_id', 'holding_id');
     }
-
-    public function roles(){
-
-        return $this->belongsToMany('App\Model\Role', 'holding_role', 'role_id', 'holding_id');
-    }
-
 
     public function images(){
 
@@ -60,7 +53,7 @@ class Holding extends Model
 
     public function scopeRelTable($query){
 
-    	return $query->with(['address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'companies', 'images', 'roles', 'businessInfo.businessType', 'businessInfo.vatType']);
+    	return $query->with(['address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'companies', 'images', 'businessInfo.businessType', 'businessInfo.vatType']);
     }
 
     public function getCreatedAtAttribute($val){

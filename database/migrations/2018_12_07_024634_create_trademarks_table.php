@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHoldingRoleTable extends Migration
+class CreateTrademarksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateHoldingRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('holding_role', function (Blueprint $table) {
+        Schema::create('trademarks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('holding_id')->unsigned()->nullable();
-            $table->foreign('holding_id')->references('id')->on('holdings');
-            $table->integer('role_id')->unsigned()->nullable();
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->foreign('company_id')->references('id')
+                ->on('companies');
+            $table->string('name');
+            $table->string('desc');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateHoldingRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('holding_role');
+        Schema::dropIfExists('trademarks');
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\Packages;
+namespace App\Http\Controllers\API\Franchisee;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Package;
+use App\Model\Franchisee;
 
-class PackageController extends Controller
+class FranchiseeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,14 +17,15 @@ class PackageController extends Controller
     public function index()
     {
         $request = app()->make('request');
-        $packages = Package::where('name', 'like', '%'.$request->filter . '%')
+        $franchisees = Franchisee::where('name', 'like', '%'.$request->filter . '%')
+            ->relTable()
+            ->orderBy('created_at', 'desc')
             ->get();
-
+        
+         
         return response()->json([
-
-            'packages' => $this->paginate($packages)
+            'franchisees' => $this->paginate($franchisees)
         ]);
-
     }
 
     /**
@@ -45,12 +46,7 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        
-        Package::create($request->all());
-        return response()->json([
-            'success' => true
-        ]);
-
+        //
     }
 
     /**
@@ -59,13 +55,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package, Request $request)
+    public function show($id)
     {
-        $package = Package::find($request->id);
-
-        return response()->json([
-            'package' => $package
-        ]);
+        //
     }
 
     /**
@@ -74,13 +66,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package, Request $request)
+    public function edit($id)
     {
-        $package = Package::find($request->id);
-
-        return response()->json([
-            'package' => $package
-        ]);
+        //
     }
 
     /**
@@ -90,13 +78,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Package $package, Request $request)
+    public function update(Request $request, $id)
     {
-        Package::find($request->id)->update($request->all());
-
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     /**
@@ -105,12 +89,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package, Request $request)
+    public function destroy($id)
     {
-        Package::find($request->id)->delete();
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     public function paginate($collection){
