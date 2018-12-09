@@ -3,6 +3,12 @@
 Route::post('login', 'Auth\LoginController@login');
 Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser');
 
+Route::group(['namespace' => 'Auth','prefix' => 'password'], function () {    
+    Route::post('create', 'ResetPasswordController@create');
+    Route::get('find/{token}', 'ResetPasswordController@find');
+    Route::post('reset', 'ResetPasswordController@reset');
+});
+
 Route::group(['middleware' => 'auth:api'], function(){
 
 	Route::post('logout', 'Auth\LoginController@logout');

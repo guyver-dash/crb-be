@@ -1,5 +1,4 @@
 <?php
-
 Route::get('bank_accounts', function(){
 
    $bankAccounts =  App\Model\BankAccount::where('id', 1)->first();
