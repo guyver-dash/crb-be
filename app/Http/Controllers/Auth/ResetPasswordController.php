@@ -140,7 +140,7 @@ class ResetPasswordController extends Controller
         return response()->json([
                 'user' => $user,
                 'success' => true,
-                'message' => 'You have successfully reset your password.'
+                'message' => 'You have successfully reset your password. You my now login.'
             ]);
     }
 
