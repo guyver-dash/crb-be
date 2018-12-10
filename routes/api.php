@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('user-companies', 'API\Branch\BranchController@userCompanies');
 	Route::resource('branches', 'API\Branch\BranchController');
 
+	Route::get('user-trademarks', 'API\Trademark\TrademarkController@userTrademarks');
 	Route::resource('trademarks', 'API\Trademark\TrademarkController');
 	Route::resource('franchisees', 'API\Franchisee\FranchiseeController');
 
@@ -38,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('categories', 'API\Category\CategoryController');
 
 	Route::resource('packages', 'API\Packages\PackageController');
+	Route::resource('vendors', 'API\Vendor\VendorController');
 
 });
 

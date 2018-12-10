@@ -9,6 +9,10 @@ use App\Model\Franchisee;
 
 class FranchiseeController extends Controller
 {
+    public function __construct(){
+
+        $this->authorizeResource(Franchisee::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +59,7 @@ class FranchiseeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Franchisee $franchisee, Request $request)
     {
         //
     }
@@ -66,9 +70,12 @@ class FranchiseeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Franchisee $franchisee, Request $request)
     {
-        //
+       $franchisee = Franchisee::where('id', $request->id)->relTable()->first();
+       return response()->json([
+           'franchisee' => $franchisee
+       ]);
     }
 
     /**
@@ -78,9 +85,32 @@ class FranchiseeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Franchisee $franchisee, Request $request)
     {
-        //
+        $address =  $request->all()['address'];
+        $businessInfo =  $request->all()['business_info'];
+        $franchisee = Franchisee::find($request->all()['id']);
+        $franchisee->address()->update([
+            'country_id' => $address['country_id'],
+            'region_id' =>  $address['region_id'],
+            'province_id' => $address['province_id'],
+            'city_id' => $address['city_id'],
+            'brgy_id' =>$address['brgy_id']
+        ]);
+        $franchisee->businessInfo()->update([
+            'business_type_id' => $businessInfo['business_type_id'],
+            'vat_type_id' => $businessInfo['vat_type_id'],
+            'telephone' => $businessInfo['telephone'],
+            'email' => $businessInfo['email'],
+            'tin' => $businessInfo['tin'],
+            'website' => $businessInfo['website']
+        ]);
+        $franchisee->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'request' => $request->all()
+        ]);
     }
 
     /**
@@ -89,7 +119,7 @@ class FranchiseeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Franchisee $franchisee, Request $request)
     {
         //
     }

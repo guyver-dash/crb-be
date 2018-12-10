@@ -11,6 +11,11 @@ class Trademark extends Model
     protected $table = 'trademarks';
     protected $fillable = ['company_id', 'name', 'desc'];
 
+    public function accessRights()
+    {
+        return $this->morphToMany('App\Model\AccessRight', 'accessable');
+    }
+    
     public function company(){
         return $this->belongsTo('App\Model\Company');
     }

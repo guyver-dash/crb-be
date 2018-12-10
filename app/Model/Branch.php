@@ -12,6 +12,8 @@ class Branch extends Model
         'name', 'desc', 'company_id'
     ];
 
+    
+
     public function address(){
 
     	return $this->morphOne('App\Model\Address', 'addressable');
@@ -36,9 +38,9 @@ class Branch extends Model
         return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo']);
     }
 
-    public function accessRight(){
-
-        return $this->belongsToMany('App\Model\AccessRight');
+    public function accessRights()
+    {
+        return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
 
     

@@ -20,6 +20,7 @@ use App\Model\Category;
 use App\Model\Package;
 use App\Model\Trademark;
 use App\Model\Franchisee;
+use App\Model\Vendor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -51,7 +52,7 @@ class DatabaseSeeder extends Seeder
         Package::truncate();
         Trademark::truncate();
         Franchisee::truncate();
-
+        Vendor::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
         $this->call(CivilStatusTableSeeder::class);
@@ -73,5 +74,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriesTableSeeder::class);
         $this->call(PackagesTableSeeder::class);
         $this->call(FranchiseesTableSeeder::class);
+        $this->call(VendorsTableSeeder::class);
     }
 }

@@ -25,6 +25,10 @@ class Holding extends Model
         });
     }
 
+    public function accessRights()
+    {
+        return $this->morphToMany('App\Model\AccessRight', 'accessable');
+    }
     
     public function companies(){
 

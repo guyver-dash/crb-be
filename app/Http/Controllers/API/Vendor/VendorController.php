@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\API\Trademark;
+namespace App\Http\Controllers\API\Vendor;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Trademark;
-use Auth;
+use App\Model\Vendor;
 
-class TrademarkController extends Controller
+class VendorController extends Controller
 {
     public function __construct(){
 
-        $this->authorizeResource(Trademark::class);
+        $this->authorizeResource(Vendor::class);
     }
     /**
      * Display a listing of the resource.
@@ -22,14 +21,14 @@ class TrademarkController extends Controller
     public function index()
     {
         $request = app()->make('request');
-
-        $trademarks =  Trademark::where('name', 'like', '%'. $request->filter . '%')
-            ->relTable()->orderBy('created_at', 'desc')->get();
-
+        $vendors = Vendor::where('name', 'like', '%'.$request->filter . '%')
+            ->relTable()
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+         
         return response()->json([
-
-            'trademarks' => $this->paginate($trademarks)
-
+            'vendors' => $this->paginate($vendors)
         ]);
     }
 
@@ -51,10 +50,7 @@ class TrademarkController extends Controller
      */
     public function store(Request $request)
     {
-        Trademark::create($request->all());
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     /**
@@ -63,12 +59,9 @@ class TrademarkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Trademark $trademark, Request $request)
+    public function show($id)
     {
-        return response()->json([
-
-            'trademark' => Trademark::where('id',$request->id)->relTable()->first()
-        ]);
+        //
     }
 
     /**
@@ -77,12 +70,9 @@ class TrademarkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trademark $trademark, Request $request)
+    public function edit($id)
     {
-        return response()->json([
-
-            'trademark' => Trademark::where('id',$request->id)->relTable()->first()
-        ]);
+        //
     }
 
     /**
@@ -92,14 +82,9 @@ class TrademarkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Trademark $trademark, Request $request)
+    public function update(Request $request, $id)
     {
-        $trademark = Trademark::find($request->id);
-        $trademark->update($request->all());
-
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     /**
@@ -108,22 +93,9 @@ class TrademarkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trademark $trademark, Request $request)
+    public function destroy($id)
     {
-        
-        Trademark::find($request->id)->delete();
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function userTrademarks(){
-        $trademarks = Trademark::whereHas('accessRights.roles.users', function($q){
-            return $q->where('users.id', Auth::User()->id);
-        })->get();
-        return response()->json([
-            'userTrademarks' => $trademarks
-        ]);
+        //
     }
 
     public function paginate($collection){

@@ -13,6 +13,11 @@ class Company extends Model
     	'name', 'desc'
     ];
 
+    public function vendors(){
+
+        return $this->hasMany('App\Model\Vendor', 'id', 'company_id');
+    }
+
     public function branches(){
 
         return $this->hasMany('App\Model\Branch', 'id', 'company_id');
@@ -28,10 +33,10 @@ class Company extends Model
         return $this->belongsTo('App\Model\Holding');
     }
 
-    public function accessRights(){
-
-        return $this->belongsToMany('App\Model\AccessRight');
-   }
+    public function accessRights()
+    {
+        return $this->morphToMany('App\Model\AccessRight', 'accessable');
+    }
    
     public function businessInfo(){
 

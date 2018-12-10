@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Model\Franchisee;
 use App\Model\Address;
+use App\Model\AccessRight;
 
 class FranchiseesTableSeeder extends Seeder
 {
@@ -40,6 +41,10 @@ class FranchiseesTableSeeder extends Seeder
             $newAddress->city_id = $cities[rand(1, 65)];
             $newAddress->brgy_id = rand(1, 42029);
             $franchisee->address()->save($newAddress);
+
+            $franchisee = Franchisee::find($i);
+            $accessRight = AccessRight::find(rand(1, 5));
+            $accessRight->franchisees()->attach([$i]);
         }
 
     }

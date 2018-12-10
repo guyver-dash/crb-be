@@ -25,9 +25,9 @@ class Menu extends Model
         return $this->children()->with('allChildren');
     } 
     
-    public function accessRight(){
-
-        return $this->belongsToMany('App\Model\AccessRight');
+    public function accessRights()
+    {
+        return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
 
     public function scopeUserMenus($query){

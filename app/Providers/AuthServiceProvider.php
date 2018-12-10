@@ -21,7 +21,9 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\User' => 'App\Policies\UserPolicy',
         'App\Model\Role' => 'App\Policies\RolePolicy',
         'App\Model\Menu' => 'App\Policies\MenuPolicy',
-        'App\Model\Trademark' => 'App\Policies\TrademarkPolicy'
+        'App\Model\Trademark' => 'App\Policies\TrademarkPolicy',
+        'App\Model\Franchisee' => 'App\Policies\FranchiseePolicy',
+        'App\Model\Vendor' => 'App\Policies\VendorPolicy'
     ];
 
     /**
@@ -42,5 +44,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('branches', 'App\Policies\BranchPolicy');
         Gate::resource('categories', 'App\Policies\CategoryPolicy');
         Gate::resource('trademarks', 'App\Policies\TrademarkPolicy');
+        Gate::resource('franchisees', 'App\Policies\FranchiseePolicy');
+        Gate::resource('vendors', 'App\Policies\VendorPolicy');
     }
 }
