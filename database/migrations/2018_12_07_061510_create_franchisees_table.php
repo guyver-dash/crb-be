@@ -18,10 +18,9 @@ class CreateFranchiseesTable extends Migration
             $table->integer('trademark_id')->unsigned()->nullable();
             $table->foreign('trademark_id')->references('id')
                 ->on('trademarks');
-            $table->integer('franchiseable_id');
-            $table->string('franchiseable_type');
+            $table->integer('franchisable_id');
+            $table->string('franchisable_type');
             $table->string('name');
-            $table->longText('desc');
             $table->timestamps();
         });
     }

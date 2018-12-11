@@ -23,28 +23,10 @@ class FranchiseesTableSeeder extends Seeder
         for ($i=1; $i < 99; $i++) { 
             $franchisee = new Franchisee();
             $franchisee->trademark_id = $i;
-            $franchisee->franchiseable_id = $i;
-            $franchisee->franchiseable_type = 'App\Model\Branch';
+            $franchisee->franchisable_id = $i;
+            $franchisee->franchisable_type = 'App\Model\Branch';
         	$franchisee->name = $faker->company;
-            $franchisee->desc = $faker->sentence($nbWords = 6, $variableNbWords = true);
             $franchisee->save();
-            
-            $franchisee = Franchisee::find($i);
-
-            $newAddress = new Address();
-            $newAddress->street_lot_blk = $faker->streetAddress;
-            $newAddress->latitude = $faker->latitude($min = 9, $max = 11); 
-            $newAddress->longitude = $faker->longitude($min = 122, $max = 124);
-            $newAddress->country_id = 173;
-            $newAddress->region_id = rand(1, 17);
-            $newAddress->province_id = $provinces[rand(1, 80)];
-            $newAddress->city_id = $cities[rand(1, 65)];
-            $newAddress->brgy_id = rand(1, 42029);
-            $franchisee->address()->save($newAddress);
-
-            $franchisee = Franchisee::find($i);
-            $accessRight = AccessRight::find(rand(1, 5));
-            $accessRight->franchisees()->attach([$i]);
         }
 
     }

@@ -6,6 +6,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Company;
+use Auth;
 
 class CompanyController extends Controller
 {
@@ -149,5 +150,16 @@ class CompanyController extends Controller
         return response()->json([
             'holdings' => $company->holding
         ]);
+    }
+
+    public function userCompanies(){
+        $companies = Company::whereHas('accessRights.roles.users', function($q){
+            return $q->where('users.id', Auth::User()->id);
+        })->get();
+        return response()->json([
+            'userCompanies' => $companies
+        ]);
+       
+      
     }
 }

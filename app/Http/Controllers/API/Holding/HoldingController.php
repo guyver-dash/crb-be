@@ -154,6 +154,18 @@ class HoldingController extends Controller
     }
 
 
+    public function userHoldings(){
+        $holdings = Holding::whereHas('accessRights.roles.users', function($q){
+            return $q->where('users.id', Auth::User()->id);
+        })->get();
+        return response()->json([
+            'userHoldings' => $holdings
+        ]);
+       
+      
+    }
+
+
     public function paginate($collection){
 
         $request =  app()->make('request');

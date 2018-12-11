@@ -120,7 +120,7 @@ class TrademarkController extends Controller
     public function userTrademarks(){
         $trademarks = Trademark::whereHas('accessRights.roles.users', function($q){
             return $q->where('users.id', Auth::User()->id);
-        })->get();
+        })->relTable()->get();
         return response()->json([
             'userTrademarks' => $trademarks
         ]);

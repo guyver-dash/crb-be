@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\DateTimeFormat;
+use App\Model\Branch;
 
 class Franchisee extends Model
 {
@@ -19,22 +20,21 @@ class Franchisee extends Model
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
 
-    public function address(){
-
-    	return $this->morphOne('App\Model\Address', 'addressable');
-    }
-
-    public function businessInfo(){
-
-        return $this->morphOne('App\Model\BusinessInfo', 'businessable');
-    }
-
     public function trademarks(){
         return $this->hasOne('App\Model\Trademark', 'id', 'trademark_id');
     }
 
+    public function franchisable(){
+
+        return $this->morphTo();
+    }
+
+    public function branch(){
+        return $this->belongsTo(Branch::class);
+    }
+
     public function scopeRelTable($query){
 
-        return $query->with(['address.region','address.province', 'address.city', 'address.brgy',  'businessInfo', 'trademarks.company', 'accessRights.roles.users']);
+        return $query->with(['trademarks.company', 'accessRights.roles.users', 'franchisable']);
     }
 }

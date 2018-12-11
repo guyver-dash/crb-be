@@ -7,6 +7,7 @@ use App\Model\Holding;
 use App\Model\Menu;
 use App\Model\Branch;
 use App\Model\Trademark;
+use App\Model\Franchisee;
 
 class AccessRightTableSeeder extends Seeder
 {
@@ -90,6 +91,17 @@ class AccessRightTableSeeder extends Seeder
                 $trademark = Trademark::find($a);
                 $accessRight = AccessRight::find($i);
                 $accessRight->trademarks()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $trademark = Franchisee::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->franchisees()->attach([$a]);
             }
 
         }

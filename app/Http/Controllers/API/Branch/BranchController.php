@@ -150,12 +150,12 @@ class BranchController extends Controller
         ]);
     }
 
-    public function userCompanies(){
-        $companies = Company::whereHas('accessRights.roles.users', function($q){
+    public function userBranches(){
+        $branches = Branch::whereHas('accessRights.roles.users', function($q){
             return $q->where('users.id', Auth::User()->id);
         })->get();
         return response()->json([
-            'userCompanies' => $companies
+            'userBranches' => $branches
         ]);
        
       

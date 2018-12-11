@@ -50,7 +50,20 @@ class FranchiseeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $franchisee = Franchisee::create([
+            'name' => $request->all()['name'],
+            'desc' => $request->all()['desc'],
+        ]);
+        $franchisee = Franchisee::find($franchisee->id);
+        $franchisee->address()->update($request->all());
+        $franchisee->businessInfo()->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'request' => $request->all()
+        ]);
+        
     }
 
     /**
@@ -87,24 +100,6 @@ class FranchiseeController extends Controller
      */
     public function update(Franchisee $franchisee, Request $request)
     {
-        $address =  $request->all()['address'];
-        $businessInfo =  $request->all()['business_info'];
-        $franchisee = Franchisee::find($request->all()['id']);
-        $franchisee->address()->update([
-            'country_id' => $address['country_id'],
-            'region_id' =>  $address['region_id'],
-            'province_id' => $address['province_id'],
-            'city_id' => $address['city_id'],
-            'brgy_id' =>$address['brgy_id']
-        ]);
-        $franchisee->businessInfo()->update([
-            'business_type_id' => $businessInfo['business_type_id'],
-            'vat_type_id' => $businessInfo['vat_type_id'],
-            'telephone' => $businessInfo['telephone'],
-            'email' => $businessInfo['email'],
-            'tin' => $businessInfo['tin'],
-            'website' => $businessInfo['website']
-        ]);
         $franchisee->update($request->all());
 
         return response()->json([

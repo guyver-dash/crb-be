@@ -14,12 +14,15 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('logout', 'Auth\LoginController@logout');
 	Route::get('details', 'API\User\UserController@details');
 
+	Route::get('user-holdings', 'API\Holding\HoldingController@userHoldings');
 	Route::resource('holdings', 'API\Holding\HoldingController');
 
+	Route::get('user-companies', 'API\Company\CompanyController@userCompanies');
 	Route::get('company-holdings', 'API\Company\CompanyController@companyHoldings');
 	Route::resource('companies', 'API\Company\CompanyController');
 
-	Route::get('user-companies', 'API\Branch\BranchController@userCompanies');
+	
+	Route::get('user-branches', 'API\Branch\BranchController@userBranches');
 	Route::resource('branches', 'API\Branch\BranchController');
 
 	Route::get('user-trademarks', 'API\Trademark\TrademarkController@userTrademarks');
@@ -41,6 +44,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('packages', 'API\Packages\PackageController');
 	Route::resource('vendors', 'API\Vendor\VendorController');
 
+	Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');
+	Route::get('modelable-user-models', 'API\Modelable\ModelableController@userModels');
 });
 
 
