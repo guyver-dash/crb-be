@@ -15,9 +15,6 @@ class CreateVendorsTable extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id')->unsigned()->nullable();
-            $table->foreign('company_id')->references('id')
-                ->on('companies');
             $table->integer('branch_id')->unsigned()->nullable();
             $table->foreign('branch_id')->references('id')
                 ->on('branches');

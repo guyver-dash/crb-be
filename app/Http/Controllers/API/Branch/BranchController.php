@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Branch;
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Branch;
@@ -161,10 +160,5 @@ class BranchController extends Controller
       
     }
 
-    public function paginate($collection){
-
-        $request =  app()->make('request');
-
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
-    }
+    
 }

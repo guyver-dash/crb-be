@@ -12,7 +12,7 @@ class Franchisee extends Model
     
     protected $table = 'franchisees';
     protected $fillable = [
-        'name', 'desc', 'franchiseable_id', 'franchiseable_type', 'trade_id'
+        'name', 'desc', 'franchisable_id', 'franchisable_type', 'trademark_id'
     ];
 
     public function accessRights()

@@ -16,7 +16,6 @@ class VendorsTableSeeder extends Seeder
         for($a=1; $a < 98; $a++) {
 
             Vendor::create([
-                'company_id' => $a,
                 'branch_id' => $a,
                 'vendor_id' => $a,
                 'name' => $faker->sentence($nbWords = 4, $variableNbWords = true),

@@ -4,9 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Traits\DateTimeFormat;
 
 class Company extends Model
 {
+    
+    use DateTimeFormat;
     
     protected $table = 'companies';
     protected $fillable = [
@@ -51,11 +54,6 @@ class Company extends Model
     public function scopeRelTable($q){
 
         return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy']);
-    }
-
-    public function getCreatedAtAttribute($val){
-
-        return Carbon::parse($val)->toDayDateTimeString();
     }
 
     

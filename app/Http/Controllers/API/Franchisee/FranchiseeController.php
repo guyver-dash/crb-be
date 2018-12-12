@@ -20,15 +20,17 @@ class FranchiseeController extends Controller
      */
     public function index()
     {
-        $request = app()->make('request');
-        $franchisees = Franchisee::where('name', 'like', '%'.$request->filter . '%')
-            ->relTable()
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
          
         return response()->json([
-            'franchisees' => $this->paginate($franchisees)
+
+            'franchisees' => $this->paginate(
+
+                Franchisee::where('name', 'like', '%'. app()->make('request')->filter . '%')
+                    ->relTable()
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+
+            )
         ]);
     }
 
@@ -51,13 +53,7 @@ class FranchiseeController extends Controller
     public function store(Request $request)
     {
         
-        $franchisee = Franchisee::create([
-            'name' => $request->all()['name'],
-            'desc' => $request->all()['desc'],
-        ]);
-        $franchisee = Franchisee::find($franchisee->id);
-        $franchisee->address()->update($request->all());
-        $franchisee->businessInfo()->update($request->all());
+        $franchisee = Franchisee::create($request->all());
 
         return response()->json([
             'success' => true,
@@ -74,7 +70,9 @@ class FranchiseeController extends Controller
      */
     public function show(Franchisee $franchisee, Request $request)
     {
-        //
+       return response()->json([
+           'franchisee' => Franchisee::where('id', $request->id)->relTable()->first()
+       ]);
     }
 
     /**
@@ -85,9 +83,8 @@ class FranchiseeController extends Controller
      */
     public function edit(Franchisee $franchisee, Request $request)
     {
-       $franchisee = Franchisee::where('id', $request->id)->relTable()->first();
        return response()->json([
-           'franchisee' => $franchisee
+           'franchisee' =>Franchisee::where('id', $request->id)->relTable()->first()
        ]);
     }
 
@@ -116,7 +113,11 @@ class FranchiseeController extends Controller
      */
     public function destroy(Franchisee $franchisee, Request $request)
     {
-        //
+        Franchisee::find($request->id)->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function paginate($collection){
