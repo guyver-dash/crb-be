@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API\Commissary;
+namespace App\Http\Controllers\API\OtherVendor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Commissary;
+use App\Model\OtherVendor;
 use App\Traits\PaginateCollection;
 
-class CommissaryController extends Controller
+class OtherVendorController extends Controller
 {
     use PaginateCollection;
 
     public function __construct(){
 
-        $this->authorizeResource(Commissary::class);
+        $this->authorizeResource(OtherVendor::class);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +24,8 @@ class CommissaryController extends Controller
     {
         return response()->json([
 
-            'commissaries' => $this->paginate(
-                Commissary::where('name', 'like', '%'. app()->make('request')->filter . '%')
+            'otherVendors' => $this->paginate(
+                OtherVendor::where('name', 'like', '%'. app()->make('request')->filter . '%')
                         ->relTable()
                         ->orderBy('created_at', 'desc')
                         ->get()
@@ -51,12 +50,12 @@ class CommissaryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Commissary $commissary, Request $request)
+    public function store(OtherVendor $otherVendor, Request $request)
     {
-        $commissary = Commissary::create($request->all());
-        $commissary = Commissary::find($commissary->id);
-        $commissary->address()->create($request['address']);
-        $commissary->businessInfo()->create($request['business_info']);
+        $otherVendor = OtherVendor::create($request->all());
+        $otherVendor = OtherVendor::find($otherVendor->id);
+        $otherVendor->address()->create($request['address']);
+        $otherVendor->businessInfo()->create($request['business_info']);
 
         return response()->json([
                 'success' => true
@@ -69,10 +68,10 @@ class CommissaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Commissary $commissary, Request $request)
+    public function show(OtherVendor $otherVendor, Request $request)
     {
         return response()->json([
-            'commissary' => Commissary::where('id', $request->id)
+            'otherVendor' => OtherVendor::where('id', $request->id)
                             ->relTable()
                             ->first()
         ]);
@@ -84,14 +83,13 @@ class CommissaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Commissary $commissary, Request $request)
+    public function edit(OtherVendor $otherVendor, Request $request)
     {
         return response()->json([
-            'commissary' => Commissary::where('id', $request->id)
+            'otherVendor' => OtherVendor::where('id', $request->id)
                             ->relTable()
                             ->first()
         ]);
-
     }
 
     /**
@@ -101,18 +99,18 @@ class CommissaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Commissary $commissary, Request $request)
+    public function update(OtherVendor $otherVendor, Request $request)
     {
-        $commissary = Commissary::find($request->id);
-        $commissary->update($request->all());
-        $commissary->address()->update([
+        $otherVendor = OtherVendor::find($request->id);
+        $otherVendor->update($request->all());
+        $otherVendor->address()->update([
             'country_id' => $request->address['country_id'],
             'region_id' =>  $request->address['region_id'],
             'province_id' =>  $request->address['province_id'],
             'city_id' =>  $request->address['city_id'],
             'brgy_id' =>  $request->address['brgy_id'],
         ]);
-        $commissary->businessInfo()->update([
+        $otherVendor->businessInfo()->update([
             'business_type_id' => $request->business_info['business_type_id'],
             'vat_type_id' => $request->business_info['vat_type_id'],
             'telephone' => $request->business_info['telephone'],
@@ -131,9 +129,9 @@ class CommissaryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Commissary $commissary, Request $request)
+    public function destroy(OtherVendor $otherVendor, Request $request)
     {
-        Commissary::find($request->id)->delete();
+        OtherVendor::find($request->id)->delete();
 
         return response()->json([
             'success' => true

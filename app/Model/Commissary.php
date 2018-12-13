@@ -14,6 +14,15 @@ class Commissary extends Model
     	'name', 'desc'
     ]; 
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($commissary) {
+            $commissary->address()->delete();
+            $commissary->businessInfo()->delete();
+        });
+    }
+
     public function businessInfo(){
 
         return $this->morphOne('App\Model\BusinessInfo', 'businessable');

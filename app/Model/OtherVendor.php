@@ -5,22 +5,20 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\DateTimeFormat;
 
-class Logistic extends Model
+class OtherVendor extends Model
 {
-
     use DateTimeFormat;
-    
-    protected $table = 'logistics';
+    protected $table = 'other_vendors';
     protected $fillable = [
     	'name', 'desc'
-    ];
+    ]; 
 
     public static function boot() {
         parent::boot();
 
-        static::deleting(function($logistic) {
-            $logistic->address()->delete();
-            $logistic->businessInfo()->delete();
+        static::deleting(function($otherVendor) {
+            $otherVendor->address()->delete();
+            $otherVendor->businessInfo()->delete();
         });
     }
 

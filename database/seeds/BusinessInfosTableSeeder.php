@@ -109,5 +109,21 @@ class BusinessInfosTableSeeder extends Seeder
 
             ]);
         }
+
+        for ($i = 1; $i < 99; $i++) {
+
+            BusinessInfo::create([
+
+                'businessable_id' => $i,
+                'businessable_type' => 'App\Model\OtherVendor', // ,
+                'business_type_id' => rand(1, 2),
+                'vat_type_id' => rand(1, 2),
+                'telephone' => $faker->phoneNumber,
+                'email' => $faker->safeEmail,
+                'tin' => $faker->phoneNumber,
+                'website' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+
+            ]);
+        }
     }
 }

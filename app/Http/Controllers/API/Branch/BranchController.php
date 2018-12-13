@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Branch;
 use App\Model\Company;
+use App\Traits\PaginateCollection;
+
 use Auth;
 
 class BranchController extends Controller
 {
-
+    use PaginateCollection;
+    
     public function __construct(){
         $this->authorizeResource(Branch::class);
     }

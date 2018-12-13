@@ -23,7 +23,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	Route::resource('logistics', 'API\Logistic\LogisticController');
 	Route::resource('commissaries', 'API\Commissary\CommissaryController');
-	
+	Route::resource('other_businesses', 'API\OtherBusiness\OtherBusinessController');
+	Route::resource('other_vendors', 'API\OtherVendor\OtherVendorController');
+
 	Route::get('user-branches', 'API\Branch\BranchController@userBranches');
 	Route::resource('branches', 'API\Branch\BranchController');
 
