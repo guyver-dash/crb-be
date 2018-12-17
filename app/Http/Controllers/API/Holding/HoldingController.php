@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\API\Holding;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Holding;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HoldingController extends Controller
 {
     public function __construct()
     {
-        
+
         $this->authorizeResource(Holding::class);
     }
 
@@ -27,10 +27,9 @@ class HoldingController extends Controller
         $collection = Holding::relTable()->get();
 
         return response()->json([
-                'holdings' => $collection
-            ]);  
+            'holdings' => $collection,
+        ]);
 
-        
     }
 
     /**
@@ -40,7 +39,7 @@ class HoldingController extends Controller
      */
     public function create()
     {
-       
+
     }
 
     /**
@@ -54,25 +53,25 @@ class HoldingController extends Controller
         $holding = Holding::create($request->all());
         $holding = Holding::find($holding->id);
         $holding->address()->create([
-                'country_id' => $request->country_id,
-                'region_id' => $request->region_id,
-                'province_id' => $request->province_id,
-                'city_id' => $request->city_id,
-                'brgy_id' => $request->brgy_id,
-                'street_lot_blk' => $request->street_lot_blk
-            ]);
+            'country_id' => $request->country_id,
+            'region_id' => $request->region_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'brgy_id' => $request->brgy_id,
+            'street_lot_blk' => $request->street_lot_blk,
+        ]);
         $holding->businessInfo()->create([
-                'business_type_id' => $request->business_type_id,
-                'vat_type_id' => $request->vat_type_id,
-                'telephone' => $request->telephone,
-                'email' => $request->email,
-                'tin' => $request->tin,
-                'website' => $request->website
-            ]);
+            'business_type_id' => $request->business_type_id,
+            'vat_type_id' => $request->vat_type_id,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'tin' => $request->tin,
+            'website' => $request->website,
+        ]);
 
         return response()->json([
-                'success' => $request->all()
-            ]);
+            'success' => $request->all(),
+        ]);
     }
 
     /**
@@ -86,8 +85,8 @@ class HoldingController extends Controller
         $holding = Holding::where('id', $request->id)->relTable()->first();
 
         return response()->json([
-                'holding' => $holding
-            ]);
+            'holding' => $holding,
+        ]);
     }
 
     /**
@@ -98,12 +97,12 @@ class HoldingController extends Controller
      */
     public function edit(Holding $holding, Request $request)
     {
-        
+
         $holding = Holding::where('id', $request->id)->relTable()->first();
 
         return response()->json([
-                'holding' => $holding
-            ]);
+            'holding' => $holding,
+        ]);
     }
 
     /**
@@ -119,23 +118,23 @@ class HoldingController extends Controller
         $holding = Holding::where('id', $request->id)->first();
         $holding->update($request->all());
         $holding->address()->update([
-                'country_id' => $request->country_id,
-                'region_id' => $request->region_id,
-                'province_id' => $request->province_id,
-                'city_id' => $request->city_id,
-                'brgy_id' => $request->brgy_id
-            ]);
+            'country_id' => $request->country_id,
+            'region_id' => $request->region_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'brgy_id' => $request->brgy_id,
+        ]);
         $holding->businessInfo()->update([
-                'business_type_id' => $request->business_type_id,
-                'vat_type_id' => $request->vat_type_id,
-                'telephone' => $request->telephone,
-                'email' => $request->email,
-                'tin' => $request->tin,
-                'website' => $request->website
-            ]);
+            'business_type_id' => $request->business_type_id,
+            'vat_type_id' => $request->vat_type_id,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'tin' => $request->tin,
+            'website' => $request->website,
+        ]);
         return response()->json([
-                'holding' => Holding::where('id', $request->id)->first()
-            ]);
+            'holding' => Holding::where('id', $request->id)->first(),
+        ]);
     }
 
     /**
@@ -149,26 +148,25 @@ class HoldingController extends Controller
         $holding = Holding::find($request->id);
         $holding->delete();
         return response()->json([
-                'success' => true
-            ]);
+            'success' => true,
+        ]);
     }
 
-
-    public function userHoldings(){
-        $holdings = Holding::whereHas('accessRights.roles.users', function($q){
+    public function userHoldings()
+    {
+        $holdings = Holding::whereHas('accessRights.roles.users', function ($q) {
             return $q->where('users.id', Auth::User()->id);
         })->get();
         return response()->json([
-            'userHoldings' => $holdings
+            'userHoldings' => $holdings,
         ]);
-       
-      
+
     }
 
+    public function paginate($collection)
+    {
 
-    public function paginate($collection){
-
-        $request =  app()->make('request');
+        $request = app()->make('request');
 
         return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
