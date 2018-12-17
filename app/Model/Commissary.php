@@ -33,7 +33,13 @@ class Commissary extends Model
     	return $this->morphOne('App\Model\Address', 'addressable');
     }
 
+    public function items()
+    {
+        return $this->morphToMany('App\Model\Item', 'vendorable')->withPivot('id','rank', 'dis_percentage');
+    }
+
+
     public function scopeRelTable($query){
-        return $query->with(['businessInfo', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy']);
+        return $query->with(['businessInfo', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'items']);
     }
 }

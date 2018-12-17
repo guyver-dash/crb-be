@@ -40,13 +40,19 @@ class Branch extends Model
 
     public function scopeRelTable($query){
 
-        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo']);
+        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items']);
     }
 
     public function accessRights()
     {
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
+
+    public function items()
+    {
+        return $this->morphToMany('App\Model\Item', 'vendorable')->withPivot('id','rank', 'dis_percentage');
+    }
+
 
     
 

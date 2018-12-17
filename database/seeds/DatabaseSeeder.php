@@ -21,6 +21,7 @@ use App\Model\Package;
 use App\Model\Trademark;
 use App\Model\Franchisee;
 use App\Model\OtherVendor;
+use App\Model\Item;
 use App\Model\Vendor;
 
 class DatabaseSeeder extends Seeder
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
         Franchisee::truncate();
         OtherVendor::truncate();
         Vendor::truncate();
+        Item::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
         $this->call(CivilStatusTableSeeder::class);
@@ -79,6 +81,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LogisticsTableSeeder::class);
         $this->call(CommissariesTableSeeder::class);
         $this->call(OtherVendorsTableSeeder::class);
+        $this->call(ItemsTableSeeder::class);
         $this->call(VendorsTableSeeder::class);
     }
 }

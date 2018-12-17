@@ -46,6 +46,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('categories', 'API\Category\CategoryController');
 
 	Route::resource('packages', 'API\Packages\PackageController');
+	Route::get('packages-all', 'API\Packages\PackageController@all');
+
+	Route::get('vendorables-count', 'API\Vendors\VendorableController@vendorablesCount');
+	Route::resource('vendorables', 'API\Vendors\VendorableController');
+	Route::resource('items', 'API\Item\ItemController');
 	Route::resource('vendors', 'API\Vendor\VendorController');
 
 	Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');

@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API\Packages;
+namespace App\Http\Controllers\API\Item;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Traits\PaginateCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Package;
+use App\Model\Item;
 
-class PackageController extends Controller
+class ItemController extends Controller
 {
+    use PaginateCollection;
+
+    public function __construct(){
+
+        $this->authorizeResource(Item::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,15 +22,16 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $request = app()->make('request');
-        $packages = Package::where('name', 'like', '%'.$request->filter . '%')
-            ->get();
-
         return response()->json([
 
-            'packages' => $this->paginate($packages)
-        ]);
+            'items' => $this->paginate(
+                Item::where('name', 'like', '%'. app()->make('request')->filter . '%')
+                        ->relTable()
+                        ->orderBy('created_at', 'desc')
+                        ->get()
+            )
 
+        ]);
     }
 
     /**
@@ -43,14 +50,9 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Item $item, Request $request)
     {
-        
-        Package::create($request->all());
-        return response()->json([
-            'success' => true
-        ]);
-
+        //
     }
 
     /**
@@ -59,12 +61,12 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package, Request $request)
+    public function show(Item $item, Request $request)
     {
-        $package = Package::find($request->id);
-
         return response()->json([
-            'package' => $package
+            'item' => Item::where('id', $request->id)
+                            ->relTable()
+                            ->first()
         ]);
     }
 
@@ -74,12 +76,12 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package, Request $request)
+    public function edit(Item $item, Request $request)
     {
-        $package = Package::find($request->id);
-
         return response()->json([
-            'package' => $package
+            'item' => Item::where('id', $request->id)
+                            ->relTable()
+                            ->first()
         ]);
     }
 
@@ -90,9 +92,10 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Package $package, Request $request)
+    public function update(Item $item, Request $request)
     {
-        Package::find($request->id)->update($request->all());
+        $item = Item::find($request->id);
+        $item->update($request->all());
 
         return response()->json([
             'success' => true
@@ -105,24 +108,12 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package, Request $request)
+    public function destroy(Item $item, Request $request)
     {
-        Package::find($request->id)->delete();
+        Item::find($request->id)->delete();
+
         return response()->json([
-            'success' => true
+            'item' => true
         ]);
-    }
-
-    public function all(){
-        return response()->json([
-            'packages' => Package::all()
-        ]);
-    }
-
-    public function paginate($collection){
-
-        $request =  app()->make('request');
-
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
 }
