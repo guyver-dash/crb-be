@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\API\Company;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Company;
 use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CompanyController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->authorizeResource(Company::class);
     }
@@ -25,12 +26,43 @@ class CompanyController extends Controller
 
         $request = app()->make('request');
 
-        $companies =  Company::where('name', 'like', '%'. $request->filter . '%')
+        $sortDirection = $request->descending === 'false' ? 'asc' : 'desc';
+
+        $companies = Company::where('name', 'like', '%' . $request->filter . '%')
+        // ->when($request->sortBy === 'holding', function ($q) use ($sortDirection) {
+        //     $q->orWhereHas('holding', function ($qh) use ($sortDirection) {
+        //         $qh->orderBy('name', $sortDirection);
+        //     });
+        // })
+            ->when($request->sortBy === 'name', function ($q) use ($sortDirection) {
+                $q->orderBy('name', $sortDirection);
+            })
+            ->orWhereHas('holding', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address', function ($q1) use ($request) {
+                $q1->where('street_lot_blk', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.brgy', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.province', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.city', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.region', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
             ->relTable()->get();
 
         return response()->json([
 
-            'companies' => $this->paginate($companies)
+            'companies' => $this->paginate($companies),
+            'sortBy' => $request->sortBy,
+            'descending' => $request->descending,
+            'direction' => $sortDirection,
 
         ]);
     }
@@ -66,7 +98,7 @@ class CompanyController extends Controller
     {
         return response()->json([
 
-            'company' => Company::where('id',$request->id)->relTable()->first()
+            'company' => Company::where('id', $request->id)->relTable()->first(),
         ]);
     }
 
@@ -78,10 +110,10 @@ class CompanyController extends Controller
      */
     public function edit(Company $company, Request $request)
     {
-        
+
         return response()->json([
 
-            'company' => Company::where('id',$request->id)->relTable()->first()
+            'company' => Company::where('id', $request->id)->relTable()->first(),
         ]);
     }
 
@@ -98,24 +130,24 @@ class CompanyController extends Controller
         $company = Company::where('id', $request->id)->first();
         $company->update($request->all());
         $company->address()->update([
-                'country_id' => $request->country_id,
-                'region_id' => $request->region_id,
-                'province_id' => $request->province_id,
-                'city_id' => $request->city_id,
-                'brgy_id' => $request->brgy_id
-            ]);
+            'country_id' => $request->country_id,
+            'region_id' => $request->region_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'brgy_id' => $request->brgy_id,
+        ]);
         $company->businessInfo()->update([
-                'business_type_id' => $request->business_type_id,
-                'vat_type_id' => $request->vat_type_id,
-                'telephone' => $request->telephone,
-                'email' => $request->email,
-                'tin' => $request->tin,
-                'website' => $request->website
-            ]);
-        
+            'business_type_id' => $request->business_type_id,
+            'vat_type_id' => $request->vat_type_id,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'tin' => $request->tin,
+            'website' => $request->website,
+        ]);
+
         return response()->json([
-            'company' => Company::where('id',$request->id)->relTable()->first(),
-            'success' => true
+            'company' => Company::where('id', $request->id)->relTable()->first(),
+            'success' => true,
         ]);
     }
 
@@ -130,36 +162,35 @@ class CompanyController extends Controller
         $company = Company::find($request->id);
         $company->delete();
         return response()->json([
-                'success' => true
-            ]);
+            'success' => true,
+        ]);
     }
 
+    public function paginate($collection)
+    {
 
-
-    public function paginate($collection){
-
-        $request =  app()->make('request');
+        $request = app()->make('request');
 
         return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
     }
 
-
-    public function companyHoldings(Request $request){
+    public function companyHoldings(Request $request)
+    {
         $company = Company::where('id', $request->id)
-        ->with('holding')->first();
+            ->with('holding')->first();
         return response()->json([
-            'holdings' => $company->holding
+            'holdings' => $company->holding,
         ]);
     }
 
-    public function userCompanies(){
-        $companies = Company::whereHas('accessRights.roles.users', function($q){
+    public function userCompanies()
+    {
+        $companies = Company::whereHas('accessRights.roles.users', function ($q) {
             return $q->where('users.id', Auth::User()->id);
         })->get();
         return response()->json([
-            'userCompanies' => $companies
+            'userCompanies' => $companies,
         ]);
-       
-      
+
     }
 }
