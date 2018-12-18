@@ -20,6 +20,17 @@ class CreateVendorablesTable extends Migration
             $table->string("vendorable_type");
             $table->integer('rank');
             $table->integer('dis_percentage');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->decimal('price');
+            $table->integer('volume');
+            $table->longText('remarks');
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->foreign('created_by')->references('id')
+                ->on('users');
+                $table->integer('approved_by')->unsigned()->nullable();
+                $table->foreign('approved_by')->references('id')
+                    ->on('users');
             $table->timestamps();
         });
     }

@@ -8,6 +8,8 @@ use App\Model\Menu;
 use App\Model\Branch;
 use App\Model\Trademark;
 use App\Model\Franchisee;
+use App\Model\Logistic;
+use App\Model\Commissary;
 
 class AccessRightTableSeeder extends Seeder
 {
@@ -102,6 +104,28 @@ class AccessRightTableSeeder extends Seeder
                 $trademark = Franchisee::find($a);
                 $accessRight = AccessRight::find($i);
                 $accessRight->franchisees()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $trademark = Logistic::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->logistics()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $trademark = Commissary::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->commissaries()->attach([$a]);
             }
 
         }
