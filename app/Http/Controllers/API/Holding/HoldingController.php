@@ -24,10 +24,41 @@ class HoldingController extends Controller
     public function index()
     {
 
-        $collection = Holding::relTable()->get();
+        // $holdings = Holding::relTable()->get();
+
+        // return response()->json([
+        //     'holdings' => $collection,
+        // ]);
+
+        $request = app()->make('request');
+
+        $sortDirection = $request->descending === 'false' ? 'asc' : 'desc';
+
+        $holdings = Holding::where('name', 'like', '%' . $request->filter . '%')
+            ->when($request->sortBy === 'name', function ($q) use ($sortDirection) {
+                $q->orderBy('name', $sortDirection);
+            })
+            ->orWhereHas('address', function ($q1) use ($request) {
+                $q1->where('street_lot_blk', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.brgy', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.province', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.city', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->orWhereHas('address.region', function ($q1) use ($request) {
+                $q1->where('description', 'like', '%' . $request->filter . '%');
+            })
+            ->relTable()->get();
 
         return response()->json([
-            'holdings' => $collection,
+
+            'holdings' => $this->paginate($holdings),
+
         ]);
 
     }
@@ -167,7 +198,8 @@ class HoldingController extends Controller
     {
 
         $request = app()->make('request');
+        $perPage = $request->perPage === '0' ? $collection->count() :  $request->perPage;
 
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+        return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
     }
 }
