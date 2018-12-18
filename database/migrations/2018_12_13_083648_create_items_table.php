@@ -27,6 +27,8 @@ class CreateItemsTable extends Migration
             $table->integer('minimum');
             $table->integer('maximum');
             $table->integer('reorder_level');
+            $table->integer("itemable_id");
+            $table->string("itemable_type");
             $table->timestamps();
         });
     }
