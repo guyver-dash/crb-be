@@ -51,9 +51,9 @@ class AccessRight extends Model
         return $this->morphedByMany('App\Model\Logistic', 'accessable');
     }
 
-    public function commissaries()
+    public function otherVendors()
     {
-        return $this->morphedByMany('App\Model\Commissary', 'accessable');
+        return $this->morphedByMany('App\Model\OtherVendor', 'accessable');
     }
  
     public function roles(){

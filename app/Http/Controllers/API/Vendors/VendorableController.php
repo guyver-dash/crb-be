@@ -8,6 +8,7 @@ use App\Traits\PaginateCollection;
 use App\Model\Item;
 use App\Model\User;
 use Carbon\Carbon;
+use Auth;
 
 class VendorableController extends Controller
 {
@@ -25,7 +26,11 @@ class VendorableController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->first();
         
-        $vendors = collect([$items->branches, $items->logistics, $items->commissaries])->flatten(1);
+        $vendors = collect([$items->branches, $items->commissaries, $items->logistics, $items->otherVendors])
+                        ->filter(function($item){
+                            return $item != null;
+                        })
+                        ->flatten(1);
         return response()->json([
 
             'vendors' => $this->paginate($vendors) 
@@ -52,7 +57,24 @@ class VendorableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $vendor =   $request->vendorable_type::where('id', $request->vendorable_id)
+                        ->relTable()
+                        ->first();
+        $startDate = Carbon::parse($request->start_date)->format('Y-m-d');
+        $endDAte = Carbon::parse($request->end_date)->format('Y-m-d');
+        $vendor->items()->attach($request->item_id, [
+            'created_by' => Auth::User()->id,
+            'rank' => $request->rank ,
+            'dis_percentage' => $request->dis_percentage,
+            'start_date' => $startDate,
+            'end_date' => $endDAte,
+            'price' => $request->price,
+            'volume' => $request->volume,
+            'remarks' => $request->remarks,
+            'vendorable_id' => $request->vendorable_id,
+            'vendorable_type' => $request->vendorable_type
+        ]);
     }
 
     /**
@@ -64,11 +86,26 @@ class VendorableController extends Controller
     public function show($id)
     {
         $request = app()->make('request');
-        $vendor =  $request->vendorable_type::where('id', $request->vendorable_id)->relTable()->first();
-        ;
+        $vendor =  $request->vendorable_type::where('id', $request->vendorable_id)
+                    ->relTable()
+                    ->first();
+        
+        $vendorable = $vendor->items()
+                    ->newPivotStatement()
+                    ->where('id', $request->id)
+                    ->first();
+        $createdBy = User::find($vendorable->created_by);
+        $approvedBy = User::find($vendorable->approved_by);
+
+        if ($approvedBy !== null) {
+            $approvedBy = $approvedBy->lastname . ', ' . $approvedBy->middlename. ' ' . $approvedBy->lastname;
+        }
+
         return response()->json([
             'vendorName' => $vendor->name,
-            'vendorable' => $vendor->items->where('id', $request->id)->first()
+            'createdBy' => $createdBy->lastname . ', ' . $createdBy->middlename . ' ' . $createdBy->lastname,
+            'approvedBy' =>  $approvedBy,
+            'vendorable' => $vendorable
         ]);
     }
 
@@ -84,16 +121,23 @@ class VendorableController extends Controller
         $vendor =  $request->vendorable_type::where('id', $request->vendorable_id)
                     ->relTable()
                     ->first();
-        $item = $vendor->items
+        
+        $vendorable = $vendor->items()
+                    ->newPivotStatement()
                     ->where('id', $request->id)
                     ->first();
-        $createdBy = User::find($item->pivot->created_by);
-        $approvedBy = User::find($item->pivot->approved_by);
+        $createdBy = User::find($vendorable->created_by);
+        $approvedBy = User::find($vendorable->approved_by);
+
+        if ($approvedBy !== null) {
+            $approvedBy = $approvedBy->lastname . ', ' . $approvedBy->middlename. ' ' . $approvedBy->lastname;
+        }
+
         return response()->json([
             'vendorName' => $vendor->name,
             'createdBy' => $createdBy->lastname . ', ' . $createdBy->middlename . ' ' . $createdBy->lastname,
-            'approvedBy' => $approvedBy->lastname . ', ' . $approvedBy->middlename. ' ' . $approvedBy->lastname,
-            'vendorable' => $item
+            'approvedBy' =>  $approvedBy,
+            'vendorable' => $vendorable
         ]);
     }
 
@@ -107,20 +151,20 @@ class VendorableController extends Controller
     public function update(Request $request, $id)
     {
         $request = app()->make('request');
-        $vendor = $request->pivot['vendorable_type']::where('id', $request->pivot['vendorable_id'])->first();
-        $startDate = Carbon::parse($request->pivot['start_date'])->format('Y-m-d');
-        $endDAte = Carbon::parse($request->pivot['end_date'])->format('Y-m-d');
+        $vendor = $request->vendorable_type::where('id', $request->vendorable_id)->first();
+        $startDate = Carbon::parse($request->start_date)->format('Y-m-d');
+        $endDAte = Carbon::parse($request->end_date)->format('Y-m-d');
 
         $vendor->items()->newPivotStatement()
-                    ->where('id', $request->pivot['id'])
+                    ->where('id', $request->id)
                     ->update([
-                            'rank' => $request->pivot['rank'] ,
-                            'dis_percentage' => $request->pivot['dis_percentage'],
+                            'rank' => $request->rank ,
+                            'dis_percentage' => $request->dis_percentage,
                             'start_date' => $startDate,
                             'end_date' => $endDAte,
-                            'price' => $request->pivot['price'],
-                            'volume' => $request->pivot['volume'],
-                            'remarks' => $request->pivot['remarks']
+                            'price' => $request->price,
+                            'volume' => $request->volume,
+                            'remarks' => $request->remarks
                         ]);
 
         return response()->json([
@@ -137,7 +181,19 @@ class VendorableController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $request = app()->make('request');
+        $vendor =  $request->vendorable_type::where('id', $request->vendorable_id)
+                    ->relTable()
+                    ->first();
+        
+        $vendorable = $vendor->items()
+                    ->newPivotStatement()
+                    ->where('id', $request->id)
+                    ->delete();
+        
+        return response()->json([
+            'success' => true
+        ]);
     }
 
 

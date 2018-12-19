@@ -55,9 +55,27 @@ class ItemsTableSeeder extends Seeder
 
         for($a=1; $a < 98; $a++) {
 
+            $branch = Branch::find($a);
+            $item = Item::find($a);
+            $item->branches()->attach($branch->id, [
+                'rank' => rand(1, 3),
+                'dis_percentage' => rand(10, 90),
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::tomorrow('Europe/London'),
+                'volume' => rand(200, 3000),
+                'price' => rand(200, 5000),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'created_by' => rand(1, 98),
+                'approved_by'   => rand(1, 98)
+            ]);
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
             $otherVendor = OtherVendor::find($a);
             $item = Item::find($a);
-            $item->commissaries()->attach($otherVendor->id, [
+            $item->otherVendors()->attach($otherVendor->id, [
                 'rank' => rand(1, 3),
                 'dis_percentage' => rand(10, 90),
                 'start_date' => Carbon::now(),

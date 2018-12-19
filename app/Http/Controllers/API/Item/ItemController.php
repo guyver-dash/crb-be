@@ -113,8 +113,12 @@ class ItemController extends Controller
      */
     public function destroy(Item $item, Request $request)
     {
-        Item::find($request->id)->delete();
-
+        $item = Item::find($request->id);
+        $item->branches()->detach();
+        $item->logistics()->detach();
+        $item->commissaries()->detach();
+        $item->otherVendors()->detach();
+        $item->delete();
         return response()->json([
             'item' => true
         ]);

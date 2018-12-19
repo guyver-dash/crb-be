@@ -32,7 +32,17 @@ class OtherVendor extends Model
     	return $this->morphOne('App\Model\Address', 'addressable');
     }
 
+    public function accessRights()
+    {
+        return $this->morphToMany('App\Model\AccessRight', 'accessable');
+    }
+
+    public function items()
+    {
+        return $this->morphToMany('App\Model\Item', 'vendorable')->withPivot('id','rank', 'dis_percentage', 'start_date', 'end_date', 'price', 'volume', 'remarks', 'created_by', 'approved_by');
+    }
+
     public function scopeRelTable($query){
-        return $query->with(['businessInfo', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy']);
+        return $query->with(['items', 'businessInfo', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy']);
     }
 }

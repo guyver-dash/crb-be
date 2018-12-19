@@ -10,6 +10,7 @@ use App\Model\Trademark;
 use App\Model\Franchisee;
 use App\Model\Logistic;
 use App\Model\Commissary;
+use App\Model\OtherVendor;
 
 class AccessRightTableSeeder extends Seeder
 {
@@ -123,9 +124,9 @@ class AccessRightTableSeeder extends Seeder
 
             for ($i=1; $i < 5; $i++) { 
                 
-                $trademark = Commissary::find($a);
+                $trademark = OtherVendor::find($a);
                 $accessRight = AccessRight::find($i);
-                $accessRight->commissaries()->attach([$a]);
+                $accessRight->otherVendors()->attach([$a]);
             }
 
         }
