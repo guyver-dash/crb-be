@@ -170,8 +170,10 @@ class CompanyController extends Controller
     {
 
         $request = app()->make('request');
+        $perPage = $request->perPage === '0' ? $collection->count() :  $request->perPage;
 
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+        // return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+        return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
     }
 
     public function companyHoldings(Request $request)
