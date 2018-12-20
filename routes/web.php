@@ -13,6 +13,13 @@ Route::get('classes', function(){
     dd($menus);
 });
 
+Route::get('branch-items', function(){
+
+    $items = App\Model\Logistic::where('id', 3)->with('items.logistics')->get();
+
+    dd($items);
+});
+
 Route::get('user-menu', function(){
 
     $user = App\Model\User::where('id',1)

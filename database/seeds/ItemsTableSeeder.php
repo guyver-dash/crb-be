@@ -5,6 +5,7 @@ use App\Model\Item;
 use App\Model\Logistic;
 use App\Model\OtherVendor;
 use Carbon\Carbon;
+use App\Model\Branch;
 
 class ItemsTableSeeder extends Seeder
 {
