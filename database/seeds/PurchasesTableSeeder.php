@@ -28,15 +28,21 @@ class PurchasesTableSeeder extends Seeder
 
             $purchase->items()->attach($purchase->id,[
                 'item_id' => $i,
-                'purchase_id' => $purchase->id
+                'purchase_id' => $purchase->id,
+                'qty' => rand(3, 2000),
+                'price' => rand(5, 5000)
             ]);
             $purchase->items()->attach($purchase->id,[
-                'item_id' => rand(2, 99),
-                'purchase_id' => $purchase->id
+                'item_id' => rand(1, 98),
+                'purchase_id' => $purchase->id,
+                'qty' => rand(3, 2000),
+                'price' => rand(5, 5000)
             ]);
             $purchase->items()->attach($purchase->id,[
-                'item_id' => rand(2, 99),
-                'purchase_id' => $purchase->id
+                'item_id' => rand(1, 98),
+                'purchase_id' => $purchase->id,
+                'qty' => rand(3, 2000),
+                'price' => rand(5, 5000)
             ]);
         }
     }

@@ -4,12 +4,19 @@ namespace App\Http\Controllers\API\Purchase;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repo\Purchase\PurchaseInterface;
 use App\Model\Purchase;
-use App\Traits\PaginateCollection;
 
 class PurchaseController extends Controller
 {
-    use PaginateCollection;
+
+    protected $purchase;
+
+    public function __construct(PurchaseInterface $purchase){
+        $this->purchase = $purchase;
+        $this->authorizeResource(Purchase::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +26,12 @@ class PurchaseController extends Controller
     {
         return response()->json([
 
-            'purchases' => $this->paginate(
-                Purchase::where('name', 'like', '%'. app()->make('request')->filter . '%')
-                        ->relTable()
-                        ->orderBy('created_at', 'desc')
-                        ->get()
+            'purchases' => $this->purchase->paginate(
+                $this->purchase
+                    ->where('name', 'like', '%'. app()->make('request')->filter . '%')
+                    ->relTable()
+                    ->orderBy('created_at', 'desc')
+                    ->get()
             )
 
         ]);
@@ -45,7 +53,7 @@ class PurchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Purchase $purchase, Request $request)
     {
         //
     }
@@ -56,7 +64,7 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Purchase $purchase, Request $request)
     {
         //
     }
@@ -67,9 +75,13 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Purchase $purchase, Request $request)
     {
-        //
+       return response()->json([
+           'purchase' => $this->purchase->where('id', '=', $request->id)
+                                        ->relTable()
+                                        ->first()
+       ]);
     }
 
     /**
@@ -79,9 +91,32 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Purchase $purchase, Request $request)
     {
-        //
+        // $items = $this->purchase->where('id', '=', $request->id)
+        // ->with([
+        //     'items.logistics',
+        //     'items.otherVendors',
+        //     'items.branches',
+        //     'items.commissaries',
+        //     'commissaries.items.purchases' => function($q) use ($request) {
+        //         $q->where('purchases.id', $request->id);
+        //     }
+        // ])
+        // ->get();
+
+        //     $k = collect($items->map(function($item){
+        //         return [
+        //             $item->branches,
+        //             $item->logistics,
+        //             $item->otherBranches,
+        //             $item->commissaries
+        //         ];
+        //     }))->flatten(1)->filter(function($item){
+        //         return $item != null;
+        //     })->filter(function($item){
+        //         return count($item) > 0;
+        //     })->flatten(1);
     }
 
     /**
@@ -90,8 +125,27 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Purchase $purchase, Request $request)
     {
         //
+    }
+
+    public function notedBy(Request $request){
+
+        $this->purchase->notedBy($request);
+        
+        return response()->json([
+            'success' => true
+        ]);
+
+    }
+    public function approvedBy(Request $request){
+
+        $this->purchase->approvedBy($request);
+        
+        return response()->json([
+            'success' => true
+        ]);
+
     }
 }

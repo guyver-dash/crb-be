@@ -38,15 +38,21 @@ class Item extends Model
         return $this->hasOne('App\Model\Package', 'id', 'package_id');
     }
 
-
     public function vendorable($model){
 
         return $this->morphedByMany($model,'vendorable')
                     ->withPivot(['id','rank', 'dis_percentage', 'start_date', 'end_date', 'price', 'volume', 'remarks', 'created_by', 'approved_by']);
 
     }
+
+    public function purchases(){
+        return $this->belongsToMany('App\Model\Purchase', 'item_purchase', 'item_id', 'purchase_id')
+                    ->withPivot('qty', 'price')
+                    ->withTimestamps();
+    }
+
     public function scopeRelTable($query){
 
-        return $query->with(['package', 'logistics', 'otherVendors']);
+        return $query->with(['package', 'logistics', 'otherVendors', 'branches', 'commissaries', 'purchases']);
     }
 }

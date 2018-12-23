@@ -3,10 +3,13 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use App\Traits\DateTimeFormat;
 
 class Purchase extends Model
 {
     
+    use DateTimeFormat;
     protected $table = 'purchases';
     protected $fillable = [
         'purchasable_type', 'purchasable_id', 'purchase_no',
@@ -29,7 +32,31 @@ class Purchase extends Model
         return $this->hasOne('App\Model\User', 'id', 'prepared_by');
     }
 
-    public function scopeRelTable($q){
-        return $q->with(['purchasable', 'items', 'preparedBy']);
+    public function notedBy(){
+        return $this->hasOne('App\Model\User', 'id', 'noted_by');
     }
+
+    public function approvedBy(){
+        return $this->hasOne('App\Model\User', 'id', 'approved_by');
+    }
+
+    public function scopeRelTable($q){
+        return $q->with(['purchasable', 'items', 'preparedBy', 'notedBy', 'approvedBy']);
+    }
+
+    public function getOrderDateAttribute($val){
+
+        return Carbon::parse($val)->toFormattedDateString();
+    }
+
+    public function getNotedDateAttribute($val){
+
+        return Carbon::parse($val)->toFormattedDateString();
+    }
+
+    public function getApprovedDateAttribute($val){
+
+        return Carbon::parse($val)->toFormattedDateString();
+    }
+
 }

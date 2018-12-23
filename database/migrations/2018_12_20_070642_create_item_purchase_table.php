@@ -21,6 +21,8 @@ class CreateItemPurchaseTable extends Migration
             $table->integer('purchase_id')->unsigned()->nullable();
             $table->foreign('purchase_id')->references('id')
                 ->on('purchases');
+            $table->integer('qty');
+            $table->decimal('price');
             $table->timestamps();
         });
     }
