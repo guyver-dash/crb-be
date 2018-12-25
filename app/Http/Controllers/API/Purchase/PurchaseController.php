@@ -66,7 +66,12 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase, Request $request)
     {
-        //
+        return response()->json([
+            'purchase' => $this->purchase
+                            ->where('id', '=', $request->id)
+                            ->relTable()
+                            ->first()
+        ]);
     }
 
     /**
@@ -78,9 +83,10 @@ class PurchaseController extends Controller
     public function edit(Purchase $purchase, Request $request)
     {
        return response()->json([
-           'purchase' => $this->purchase->where('id', '=', $request->id)
-                                        ->relTable()
-                                        ->first()
+           'purchase' => $this->purchase
+                            ->where('id', '=', $request->id)
+                            ->relTable()
+                            ->first()
        ]);
     }
 
@@ -93,30 +99,14 @@ class PurchaseController extends Controller
      */
     public function update(Purchase $purchase, Request $request)
     {
-        // $items = $this->purchase->where('id', '=', $request->id)
-        // ->with([
-        //     'items.logistics',
-        //     'items.otherVendors',
-        //     'items.branches',
-        //     'items.commissaries',
-        //     'commissaries.items.purchases' => function($q) use ($request) {
-        //         $q->where('purchases.id', $request->id);
-        //     }
-        // ])
-        // ->get();
-
-        //     $k = collect($items->map(function($item){
-        //         return [
-        //             $item->branches,
-        //             $item->logistics,
-        //             $item->otherBranches,
-        //             $item->commissaries
-        //         ];
-        //     }))->flatten(1)->filter(function($item){
-        //         return $item != null;
-        //     })->filter(function($item){
-        //         return count($item) > 0;
-        //     })->flatten(1);
+        $this->purchase->find($request->id)
+                ->update([
+                    'name' => $request->name
+                ]);
+        
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -127,7 +117,10 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase, Request $request)
     {
-        //
+        $this->purchase->delete($request->id);
+        return response()->json([
+            'success' => $purchase
+        ]);
     }
 
     public function notedBy(Request $request){
@@ -142,10 +135,9 @@ class PurchaseController extends Controller
     public function approvedBy(Request $request){
 
         $this->purchase->approvedBy($request);
-        
+
         return response()->json([
             'success' => true
         ]);
-
     }
 }

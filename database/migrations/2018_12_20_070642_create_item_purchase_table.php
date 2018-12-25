@@ -23,6 +23,11 @@ class CreateItemPurchaseTable extends Migration
                 ->on('purchases');
             $table->integer('qty');
             $table->decimal('price');
+            $table->decimal('freight')->nullable();
+            $table->string('approved_by')->nullable();
+            $table->datetime('date_approved')->nullable();
+            $table->datetime('date_delivery')->nullable();
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

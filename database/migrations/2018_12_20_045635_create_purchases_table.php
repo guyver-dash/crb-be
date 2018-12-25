@@ -25,11 +25,11 @@ class CreatePurchasesTable extends Migration
             $table->integer('prepared_by')->unsigned()->nullable();
             $table->foreign('prepared_by')->references('id')
                 ->on('users');
-            $table->date('noted_date')->nullable();
+            $table->datetime('noted_date')->nullable();
             $table->integer('noted_by')->unsigned()->nullable();
             $table->foreign('noted_by')->references('id')
                 ->on('users');
-            $table->date('approved_date')->nullable();
+            $table->datetime('approved_date')->nullable();
             $table->integer('approved_by')->unsigned()->nullable();
             $table->foreign('approved_by')->references('id')
                 ->on('users');

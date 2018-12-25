@@ -58,7 +58,8 @@ class PurchaseItemsController extends Controller
             })->flatten(1);      
             
         return response()->json([
-            'purchaseItems' => $this->paginate($k)
+            'purchaseItems' => $this->paginate($k),
+            'purchase' => Purchase::where('id', $request->id)->relTable()->first()
         ]);
 
     }

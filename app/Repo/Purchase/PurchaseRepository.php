@@ -16,6 +16,11 @@ class PurchaseRepository extends BaseRepository implements PurchaseInterface{
     
     }
 
+    public function delete($purchaseId){
+        $purchase = $this->find($purchaseId);
+        $purchase->items()->detach();
+        $purchase->delete();
+    }
     public function notedBy($request){
       $this->modelName->find( $request->id )
             ->update([
@@ -25,11 +30,33 @@ class PurchaseRepository extends BaseRepository implements PurchaseInterface{
     }
 
     public function approvedBy($request){
-      $this->modelName->find( $request->id )
-        ->update([
+     
+      $purchase = $this->modelName->find( $request->id );
+
+      if($purchase->noted_by === null){
+        return response()->json(['message'=>'Invalid approve without noted by...'], 401); 
+      }
+        $purchase->update([
             'approved_by' => Auth::User()->id,
-            'approved_date' => Carbon::now()
+            'approved_date' => Carbon::now(),
+            'purchase_status_id' => 2
         ]);
+        
+
+        foreach($purchase->items as $item){
+            
+            //send Email Notification to vendors... and wait for confirmation by the vendors
+            //for delivery date
+
+            $purchase->items()
+                ->newPivotStatement()
+                ->where('id', $item->pivot->id)
+                ->update([
+                    'token' => $item->id . str_random(60) 
+                ]);
+
+        }
+
     }
 
 }

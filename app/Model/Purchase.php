@@ -12,6 +12,7 @@ class Purchase extends Model
     use DateTimeFormat;
     protected $table = 'purchases';
     protected $fillable = [
+        'name',
         'purchasable_type', 'purchasable_id', 'purchase_no',
         'purchase_status_id', 'purchase_status_id', 'prepared_by',
         'noted_date', 'noted_by', 'approved_date', 'approved_by', 'order_date',
@@ -20,7 +21,9 @@ class Purchase extends Model
     ];
 
     public function items(){
-        return $this->belongsToMany('App\Model\Item', 'item_purchase', 'item_id', 'purchase_id')->withTimestamps();
+        return $this->belongsToMany('App\Model\Item', 'item_purchase', 'purchase_id', 'item_id')
+                    ->withPivot('id', 'qty', 'price', 'freight', 'approved_by', 'date_approved', 'date_delivery', 'token')
+                    ->withTimestamps();
     }
 
     public function purchasable(){
@@ -46,17 +49,23 @@ class Purchase extends Model
 
     public function getOrderDateAttribute($val){
 
-        return Carbon::parse($val)->toFormattedDateString();
+        return Carbon::parse($val)->toDayDateTimeString();
     }
 
     public function getNotedDateAttribute($val){
 
-        return Carbon::parse($val)->toFormattedDateString();
+        if($val != null){
+            return Carbon::parse($val)->toDayDateTimeString();
+        }
+       
     }
 
     public function getApprovedDateAttribute($val){
 
-        return Carbon::parse($val)->toFormattedDateString();
+        if($val != null){
+            return Carbon::parse($val)->toDayDateTimeString();
+        }
+        
     }
 
 }

@@ -13,7 +13,7 @@ class ModelableController extends Controller
     public function userModels(Request $request){
 
         $userModels = $request->modelType::whereHas('accessRights.roles.users', function($q){
-            return $q->where('users.id', Auth::User()->id);
+            // return $q->where('users.id', Auth::User()->id);
         })->get();
         return response()->json([
             'userModels' => $userModels

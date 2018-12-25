@@ -47,7 +47,7 @@ class Item extends Model
 
     public function purchases(){
         return $this->belongsToMany('App\Model\Purchase', 'item_purchase', 'item_id', 'purchase_id')
-                    ->withPivot('qty', 'price')
+                    ->withPivot('id', 'qty', 'price', 'freight', 'approved_by', 'date_approved', 'date_delivery', 'token')
                     ->withTimestamps();
     }
 

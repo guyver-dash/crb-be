@@ -33,10 +33,20 @@ class AccessRightTableSeeder extends Seeder
             $accessRight = AccessRight::find($accessRight->id);
             $accessRight->roles()->attach($accessRight->id, [
 
-                    'role_id' => rand(1, 2),
+                    'role_id' => 1,
                     'access_right_id' => $accessRight->id
                 ]);
+            $accessRight->roles()->attach($accessRight->id, [
 
+                    'role_id' => 2,
+                    'access_right_id' => $accessRight->id
+                ]);
+            
+                $accessRight->roles()->attach($accessRight->id, [
+
+                    'role_id' => 3,
+                    'access_right_id' => $accessRight->id
+                ]);
             
         }
 
@@ -116,6 +126,17 @@ class AccessRightTableSeeder extends Seeder
                 $trademark = Logistic::find($a);
                 $accessRight = AccessRight::find($i);
                 $accessRight->logistics()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $trademark = Commissary::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->commissaries()->attach([$a]);
             }
 
         }
