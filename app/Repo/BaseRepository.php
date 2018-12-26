@@ -8,7 +8,7 @@ class BaseRepository implements BaseInterface{
     protected $modelName;
 
     public function where($name, $operator, $value){
-
+       
        return $this->modelName->where($name, $operator, $value);
     }
 

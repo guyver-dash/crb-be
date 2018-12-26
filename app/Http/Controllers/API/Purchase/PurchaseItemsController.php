@@ -103,7 +103,7 @@ class PurchaseItemsController extends Controller
                 $pivot
             );
         return response()->json([
-            'success' => $pivot
+            'success' => true
         ]);
     }
 
@@ -115,6 +115,15 @@ class PurchaseItemsController extends Controller
      */
     public function destroy(Purchase $purchase, Request $request)
     {
-       
+       $this->purchase->find($request->id)
+            ->items()
+            ->newPivotStatement()
+            ->where('id', '=', $request->pivotId)
+            ->delete();
+        
+        return response()->json([
+            'success' => true
+        ]);
+
     }
 }
