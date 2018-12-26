@@ -5,12 +5,18 @@ namespace App\Http\Controllers\API\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Purchase;
-use App\Traits\PaginateCollection;
 use App\Model\Item;
+use App\Repo\Purchase\PurchaseInterface;
 
 class PurchaseItemsController extends Controller
 {
-    use PaginateCollection;
+
+    protected $purchase;
+
+    public  function __construct(PurchaseInterface $purchase){
+
+        $this->purchase = $purchase;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,44 +27,10 @@ class PurchaseItemsController extends Controller
 
         $request = app()->make('request');
 
-        $items = Item::whereHas('purchases', function($q) use ($request) {
-                        $q->where('purchase_id', $request->id);
-                    })
-                    ->with([
-                        'logistics.items.package',
-                        'logistics.items.purchases'=> function($q) use ($request) {
-                            $q->where('purchases.id', $request->id);
-                        },
-                        'otherVendors.items.package',
-                        'otherVendors.items.purchases' => function($q) use ($request) {
-                            $q->where('purchases.id', $request->id);
-                        },
-                        'branches.items.package',
-                        'branches.items.purchases' => function($q) use ($request) {
-                            $q->where('purchases.id', $request->id);
-                        },
-                        'commissaries.items.package',
-                        'commissaries.items.purchases' => function($q) use ($request) {
-                            $q->where('purchases.id', $request->id);
-                        }
-                    ])
-                    ->get();
-
-            $k = collect($items->map(function($item){
-                return [
-                    $item->branches,
-                    $item->logistics,
-                    $item->otherBranches,
-                    $item->commissaries
-                ];
-            }))->flatten(1)->filter(function($item){
-                return $item != null;
-            })->filter(function($item){
-                return count($item) > 0;
-            })->flatten(1);      
-            
         return response()->json([
-            'purchaseItems' => $this->paginate($k),
+            'purchaseItems' => $this->purchase->paginate(
+                $this->purchase->purchase_items($request)
+            ),
             'purchase' => Purchase::where('id', $request->id)->relTable()->first()
         ]);
 
@@ -80,7 +52,7 @@ class PurchaseItemsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Purchase $purchase, Request $request)
     {
         //
     }
@@ -91,7 +63,7 @@ class PurchaseItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Purchase $purchase, Request $request)
     {
         //
     }
@@ -102,9 +74,12 @@ class PurchaseItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Purchase $purchase, Request $request)
     {
-        //
+        
+        return response()->json([
+            'purchase_item' => $this->purchase->purchase_item( $request )
+        ]);
     }
 
     /**
@@ -114,9 +89,22 @@ class PurchaseItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Purchase $purchase, Request $request)
     {
-        //
+        $pivot = collect(
+            collect($request->items)->first()['purchases']
+        )->first()['pivot'];
+
+        $this->purchase->find($pivot['purchase_id'])
+            ->items()
+            ->newPivotStatement()
+            ->where('id', '=', $pivot['id'])
+            ->update(
+                $pivot
+            );
+        return response()->json([
+            'success' => $pivot
+        ]);
     }
 
     /**
@@ -125,8 +113,8 @@ class PurchaseItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Purchase $purchase, Request $request)
     {
-        //
+       
     }
 }

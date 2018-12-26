@@ -12,6 +12,10 @@ class BaseRepository implements BaseInterface{
        return $this->modelName->where($name, $operator, $value);
     }
 
+    public function update($array){
+        return $this->modelName->update($array);
+    }
+
     public function find($id){
         return $this->modelName->find($id);
     }
