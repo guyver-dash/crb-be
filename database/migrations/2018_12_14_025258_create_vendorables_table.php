@@ -24,6 +24,7 @@ class CreateVendorablesTable extends Migration
             $table->date('end_date');
             $table->decimal('price');
             $table->integer('volume');
+            $table->decimal('freight');
             $table->longText('remarks');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')

@@ -11,6 +11,7 @@ use App\Repo\Purchase\PurchaseInterface;
 class PurchaseItemsController extends Controller
 {
 
+
     protected $purchase;
 
     public  function __construct(PurchaseInterface $purchase){
@@ -31,7 +32,7 @@ class PurchaseItemsController extends Controller
             'purchaseItems' => $this->purchase->paginate(
                 $this->purchase->purchase_items($request)
             ),
-            'purchase' => Purchase::where('id', $request->id)->relTable()->first()
+            'purchase' => $this->purchase->where('id', $request->id)->relTable()->first()
         ]);
 
     }
@@ -54,7 +55,11 @@ class PurchaseItemsController extends Controller
      */
     public function store(Purchase $purchase, Request $request)
     {
-        //
+        
+
+        return response()->json([
+            'success' => $this->purchase->store($request)
+        ]);
     }
 
     /**
@@ -91,17 +96,9 @@ class PurchaseItemsController extends Controller
      */
     public function update(Purchase $purchase, Request $request)
     {
-        $pivot = collect(
-            collect($request->items)->first()['purchases']
-        )->first()['pivot'];
-
-        $this->purchase->find($pivot['purchase_id'])
-            ->items()
-            ->newPivotStatement()
-            ->where('id', '=', $pivot['id'])
-            ->update(
-                $pivot
-            );
+        
+        $this->purchase->update($request);
+        
         return response()->json([
             'success' => true
         ]);

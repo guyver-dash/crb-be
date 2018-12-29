@@ -68,6 +68,56 @@ class PurchaseItemsRepository extends PurchaseRepository implements PurchaseInte
       
         
     }
+
+    public function store($request){
+
+       $item = Item::where('id', $request->item['value'])->first();
+        
+       if($item->branches != null){
+           
+            $this->createByEntity($item, $item->branches, $request);
+            
+       }elseif($item->logitics != null){
+
+       }
+
+       return response()->json([
+            'success' => true
+       ]);
+
+
+    }
+
+    public function update($request){
+
+        $pivot = collect(
+            collect($request->items)->first()['purchases']
+        )->first()['pivot'];
+
+        $this->find($pivot['purchase_id'])
+            ->items()
+            ->newPivotStatement()
+            ->where('id', '=', $pivot['id'])
+            ->update(
+                $pivot
+            );
+    }
+
+    public function createByEntity($item, $entities, $request){
+
+            $entity = $entities->first();
+            $qty = ($request->qty * $entity->pivot->dis_percentage) / 100;
+            $item->purchases()->attach($item->id,[
+                'item_id' => $item->id,
+                'purchase_id' => $request->purchaseId,
+                'qty' => $qty,
+                'price' => $entity->pivot->price,
+                'freight' => $entity->pivot->freight,
+                'token' => $item->id . str_random(60)
+            ]);
+
+            //Send Email...
+    }
     
 
 }

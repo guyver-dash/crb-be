@@ -58,8 +58,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('purchases', 'API\Purchase\PurchaseController');
 	Route::resource('purchase_items', 'API\Purchase\PurchaseItemsController');
 
+	Route::resource('ingredients', 'API\Ingredient\IngredientController');
+
 	Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');
 	Route::get('modelable-user-models', 'API\Modelable\ModelableController@userModels');
+	Route::get('modelable-selected-item', 'API\Modelable\ModelableController@selectedItem');
 });
 
 

@@ -20,6 +20,10 @@ class MenusTableSeeder extends Seeder
         $sub_menu2 =[
            'Other Vendors', 'Packages', 'Categories', 'Items', 'Purchase Request'
         ];
+
+        $sub_menu3 =[
+            'Ingredients', 'Production Boards', 'Scalers', 'Mixers and Molders', 'Proofing', 'Ovens'
+         ];
         foreach ($menus as $value) {
         	
         	     Menu::create([
@@ -41,6 +45,14 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu2 as $submenu){
             Menu::create([
                 'parent_id' => 2,
+                'description' => $submenu,
+                'name' => $submenu
+            ]);
+        }
+
+        foreach($sub_menu3 as $submenu){
+            Menu::create([
+                'parent_id' => 3,
                 'description' => $submenu,
                 'name' => $submenu
             ]);

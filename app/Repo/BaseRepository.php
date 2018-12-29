@@ -6,9 +6,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class BaseRepository implements BaseInterface{
 
     protected $modelName;
+    public function all(){
 
-    public function where($name, $operator, $value){
-       
+        return $this->modelName->all();
+    }
+    
+    public function where($name, $operator, $value = null){
+        
+       if($value === null){
+        return $this->modelName->where($name, $operator);
+       }
        return $this->modelName->where($name, $operator, $value);
     }
 
@@ -21,9 +28,10 @@ class BaseRepository implements BaseInterface{
     }
 
     public function paginate($collection){
+        
+        $request = app()->make('request');
+        $perPage = $request->perPage === '0' ? $collection->count() :  $request->perPage;
 
-        $request =  app()->make('request');
-
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+        return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
     }
 }

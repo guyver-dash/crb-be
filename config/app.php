@@ -163,6 +163,7 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
         App\Providers\PurchaseServiceProvider::class,
+        App\Providers\IngredientServiceProvider::class,
 
     ],
 

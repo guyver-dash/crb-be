@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Model\Items;
 
 class Branch extends Model
 {
+    use Items;
+    
     protected $table = 'branches';
 
     protected $fillable = [
@@ -47,14 +50,6 @@ class Branch extends Model
     {
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
-
-    public function items()
-    {
-        return $this->morphToMany('App\Model\Item', 'vendorable')->withPivot('id','rank', 'dis_percentage', 'start_date', 'end_date', 'price', 'volume', 'remarks', 'created_by', 'approved_by');
-    }
-
-
-    
 
     
 }

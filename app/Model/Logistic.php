@@ -4,11 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\DateTimeFormat;
+use App\Traits\Model\Items;
 
 class Logistic extends Model
 {
 
-    use DateTimeFormat;
+    use DateTimeFormat, Items;
     
     protected $table = 'logistics';
     protected $fillable = [
@@ -37,11 +38,6 @@ class Logistic extends Model
     public function purchase(){
 
     	return $this->morphMany('App\Model\Address', 'purchasable');
-    }
-
-    public function items()
-    {
-        return $this->morphToMany('App\Model\Item', 'vendorable')->withPivot('id','rank', 'dis_percentage', 'start_date', 'end_date', 'price', 'volume', 'remarks', 'created_by', 'approved_by');
     }
 
     public function accessRights()

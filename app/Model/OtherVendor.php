@@ -4,10 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\DateTimeFormat;
+use App\Traits\Model\Items;
 
 class OtherVendor extends Model
 {
-    use DateTimeFormat;
+    use DateTimeFormat, Items;
     protected $table = 'other_vendors';
     protected $fillable = [
     	'name', 'desc'
@@ -35,11 +36,6 @@ class OtherVendor extends Model
     public function accessRights()
     {
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
-    }
-
-    public function items()
-    {
-        return $this->morphToMany('App\Model\Item', 'vendorable')->withPivot('id','rank', 'dis_percentage', 'start_date', 'end_date', 'price', 'volume', 'remarks', 'created_by', 'approved_by');
     }
 
     public function scopeRelTable($query){

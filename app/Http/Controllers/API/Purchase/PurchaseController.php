@@ -10,6 +10,7 @@ use App\Model\Purchase;
 class PurchaseController extends Controller
 {
 
+
     protected $purchase;
 
     public function __construct(PurchaseInterface $purchase){
@@ -68,7 +69,7 @@ class PurchaseController extends Controller
     {
         return response()->json([
             'purchase' => $this->purchase
-                            ->where('id', '=', $request->id)
+                            ->where('id', $request->id)
                             ->relTable()
                             ->first()
         ]);
@@ -84,7 +85,7 @@ class PurchaseController extends Controller
     {
        return response()->json([
            'purchase' => $this->purchase
-                            ->where('id', '=', $request->id)
+                            ->where('id', $request->id)
                             ->relTable()
                             ->first()
        ]);
@@ -134,10 +135,8 @@ class PurchaseController extends Controller
     }
     public function approvedBy(Request $request){
 
-        $this->purchase->approvedBy($request);
+       return $this->purchase->approvedBy($request);
 
-        return response()->json([
-            'success' => true
-        ]);
+        
     }
 }

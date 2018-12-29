@@ -103,6 +103,10 @@ class PurchaseRepository extends BaseRepository implements PurchaseInterface{
                 ]);
 
         }
+    
+        return response()->json([
+            'success' => true
+        ]);
 
     }
 

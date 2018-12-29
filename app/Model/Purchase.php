@@ -20,6 +20,8 @@ class Purchase extends Model
         'invoice_no', 'received_date', 'received_by', 'received_by'
     ];
 
+    // protected $appends = ['pivot_approved_by']; 
+
     public function items(){
         return $this->belongsToMany('App\Model\Item', 'item_purchase', 'purchase_id', 'item_id')
                     ->withPivot('id', 'qty', 'price', 'freight', 'approved_by', 'date_approved', 'date_delivery', 'token')
@@ -44,9 +46,13 @@ class Purchase extends Model
     }
 
     public function scopeRelTable($q){
-        return $q->with(['purchasable', 'items', 'preparedBy', 'notedBy', 'approvedBy']);
+        return $q->with(['items', 'preparedBy', 'notedBy', 'approvedBy','purchasable']);
     }
 
+    public function getIdAttribute($val){
+
+        return $val;
+    }
     public function getOrderDateAttribute($val){
 
         return Carbon::parse($val)->toDayDateTimeString();
@@ -67,5 +73,22 @@ class Purchase extends Model
         }
         
     }
+
+    // public function getPivotApprovedByAttribute(){
+
+    //     return $this->items->map(function($item){
+
+    //         return [
+    //             'pivot_id' => $item->pivot->id,
+    //             'item_id' => $item->pivot->item_id,
+    //             'purchase_id' => $item->pivot->purchase_id,
+    //             'date_approved' => Carbon::parse($item->pivot->date_approved)->toDayDateTimeString()
+    //         ];
+                
+    //     });
+       
+        
+    // }
+
 
 }
