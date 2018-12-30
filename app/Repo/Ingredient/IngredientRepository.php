@@ -13,4 +13,11 @@ class IngredientRepository extends BaseRepository implements IngredientInterface
     
     }
 
+    public function showEdit($request){
+
+        return $this->modelName->where('id', $request->id)
+                                ->relTable()
+                                ->first();
+    }
+
 }

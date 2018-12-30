@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Purchase;
-use App\Model\Item;
 use App\Repo\Purchase\PurchaseInterface;
 
 class PurchaseItemsController extends Controller

@@ -41,6 +41,26 @@ class IngredientsTableSeeder extends Seeder
                     'item_id' => rand(1, 98),
                     'qty' => rand(5, 200)
                 ]);
+                $ingredient->items()->attach($ingredient->id, [
+                    'ingredient_id' => $ingredient->id,
+                    'item_id' => rand(1, 98),
+                    'qty' => rand(5, 200)
+                ]);
+                $ingredient->items()->attach($ingredient->id, [
+                    'ingredient_id' => $ingredient->id,
+                    'item_id' => rand(1, 98),
+                    'qty' => rand(5, 200)
+                ]);
+                $ingredient->items()->attach($ingredient->id, [
+                    'ingredient_id' => $ingredient->id,
+                    'item_id' => rand(1, 98),
+                    'qty' => rand(5, 200)
+                ]);
+                $ingredient->items()->attach($ingredient->id, [
+                    'ingredient_id' => $ingredient->id,
+                    'item_id' => rand(1, 98),
+                    'qty' => rand(5, 200)
+                ]);
             }
         }
         

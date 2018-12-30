@@ -15,7 +15,9 @@ class ModelableController extends Controller
 
         $userModels = $request->modelType::whereHas('accessRights.roles.users', function($q){
             // $q->where('users.id', Auth::User()->id);
-        })->where('name', 'like', '%'. $request->name . '%')->get();
+        })
+        // ->where('name', 'like', '%'. $request->name . '%')
+        ->get();
         return response()->json([
             'userModels' => $userModels
         ]);

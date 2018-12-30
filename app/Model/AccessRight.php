@@ -65,7 +65,13 @@ class AccessRight extends Model
     {
         return $this->morphedByMany('App\Model\Item', 'accessable');
     }
- 
+
+    public function ingredients()
+    {
+        return $this->morphedByMany('App\Model\Ingredient', 'accessable');
+    }
+
+
     public function roles(){
         return $this->belongsToMany('App\Model\Role', 'access_right_role', 'access_right_id', 'role_id');
     }

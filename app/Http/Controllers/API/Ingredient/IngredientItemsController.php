@@ -4,22 +4,19 @@ namespace App\Http\Controllers\API\Ingredient;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Ingredient;
 use App\Repo\Ingredient\IngredientInterface;
+use App\Model\Ingredient;
 
-class IngredientController extends Controller
+class IngredientItemsController extends Controller
 {
-
 
     protected $ingredient;
 
-    public function __construct(IngredientInterface $ingredient)
-    {
+    public function __construct(IngredientInterface $ingredient){
+
         $this->authorizeResource(Ingredient::class);
         $this->ingredient = $ingredient;
-        
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,17 +24,12 @@ class IngredientController extends Controller
      */
     public function index()
     {
-
         return response()->json([
-            'ingredients' => $this->ingredient->paginate(
-                $this->ingredient
-                    ->where('name', 'like', '%'. app()->make('request')->filter . '%')
-                    ->relTable()
-                    ->orderBy('created_at', 'desc')
-                    ->get()
+            'ingredientItems' => $this->ingredient->paginate(
+                    $this->ingredient->ingredientItems( app()->make('request') )
             )
+            
         ]);
-
     }
 
     /**
@@ -67,11 +59,9 @@ class IngredientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ingredient $ingredient, Request $request)
+    public function show($id)
     {
-        return response()->json([
-            'ingredient' => $this->ingredient->showEdit($request)
-       ]);
+        //
     }
 
     /**
@@ -80,11 +70,9 @@ class IngredientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ingredient $ingredient, Request $request)
+    public function edit($id)
     {
-       return response()->json([
-            'ingredient' => $this->ingredient->showEdit($request)
-       ]);
+        //
     }
 
     /**
@@ -94,12 +82,9 @@ class IngredientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Ingredient $ingredient, Request $request)
+    public function update(Request $request, $id)
     {
-        $this->ingredient->find($request->id)->update($request->all());
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     /**
@@ -108,14 +93,8 @@ class IngredientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ingredient $ingredient, Request $request)
+    public function destroy($id)
     {
-        
-        $this->ingredient->find($request->id)->delete();
-        
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
-
 }

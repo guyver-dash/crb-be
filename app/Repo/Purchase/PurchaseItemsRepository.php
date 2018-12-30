@@ -72,14 +72,34 @@ class PurchaseItemsRepository extends PurchaseRepository implements PurchaseInte
     public function store($request){
 
        $item = Item::where('id', $request->item['value'])->first();
-        
+
+        // collect($item->branches, $item->logistics, $item->otherVendors, $item->commissaries)->filter(function($entities){
+
+        //     return $entities != null;
+
+        // })->map(function($entity) use ($item, $request) {
+
+        //     if($entity != null){
+        //         $this->createByEntity($item, $entity, $request );
+        //     }
+
+        // });
+
        if($item->branches != null){
            
             $this->createByEntity($item, $item->branches, $request);
             
        }elseif($item->logitics != null){
 
-       }
+            $this->createByEntity($item, $item->logitics, $request);
+       }elseif($item->otherVendors != null){
+
+            $this->createByEntity($item, $item->otherVendors, $request);
+
+       }elseif($item->commissaries != null){
+
+            $this->createByEntity($item, $item->commissaries, $request);
+        }
 
        return response()->json([
             'success' => true

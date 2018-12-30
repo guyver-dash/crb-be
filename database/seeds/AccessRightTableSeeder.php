@@ -12,6 +12,7 @@ use App\Model\Logistic;
 use App\Model\Commissary;
 use App\Model\OtherVendor;
 use App\Model\Item;
+use App\Model\Ingredient;
 
 class AccessRightTableSeeder extends Seeder
 {
@@ -160,6 +161,17 @@ class AccessRightTableSeeder extends Seeder
                 $item = Item::find($a);
                 $accessRight = AccessRight::find($i);
                 $accessRight->items()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $item = Ingredient::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->ingredients()->attach([$a]);
             }
 
         }
