@@ -37,7 +37,7 @@ class Menu extends Model
     }
 
     public function scopeRelTable($query){
-       return $query->with(['accessRight.roles.users', 'allChildren', 'parent']);
+       return $query->with(['accessRights.roles.users', 'allChildren', 'parent']);
     }
 
     public function scopeSuperiors($query, $parentId){

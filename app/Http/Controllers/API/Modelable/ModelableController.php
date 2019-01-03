@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Model\Item;
+use App\Repo\BaseRepository;
 
 class ModelableController extends Controller
 {
@@ -32,14 +33,22 @@ class ModelableController extends Controller
         ]);
     }
 
-    // public function selectedItem(Request $request){
-    //     $item = Item::whereHas('accessRights.roles.users', function($q){
-    //         $q->where('users.id', Auth::User()->id);
-    //     })->where('id', $request->itemId)->first();
+    public function selectedItem(Request $request){
+        $vendor = $request->modelType::where('id', $request->id)
+                    ->relTable()
+                    ->first();
 
-    //     $entities = collect([$item->branches, $item->commissaries, $item->otherVendors, $item->logistics]);
-    //     return response()->json([
-    //         'vendors' => $entities->flatten(1)
-    //     ]);
-    // }
+        $baseRepository = new BaseRepository();
+        
+        return response()->json([
+            'vendors' => $baseRepository->paginate(
+                $vendor->items->filter(function($i) use ($request) {
+                    if($request->string != ''){
+                        return false !== stristr($i->name, $request->string);
+                    }
+                    return true;
+                 })
+            )
+        ]);
+    }
 }

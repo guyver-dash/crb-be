@@ -4,12 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Traits\DateTimeFormat;
+use App\Traits\Model\Globals;
 
 class AccessRight extends Model
 {
 
-    use DateTimeFormat;
+    use Globals;
     
     protected $table = 'access_rights';
 

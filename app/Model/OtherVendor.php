@@ -4,11 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\DateTimeFormat;
-use App\Traits\Model\Items;
+use App\Traits\Model\Globals;
 
 class OtherVendor extends Model
 {
-    use DateTimeFormat, Items;
+    use Globals;
     protected $table = 'other_vendors';
     protected $fillable = [
     	'name', 'desc'

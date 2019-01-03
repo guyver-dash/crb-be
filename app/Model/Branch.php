@@ -3,11 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Model\Items;
+use App\Traits\Model\Globals;
 
 class Branch extends Model
 {
-    use Items;
+    use Globals;
     
     protected $table = 'branches';
 
@@ -40,7 +40,7 @@ class Branch extends Model
 
         return $this->morphOne('App\Model\BusinessInfo', 'businessable');
     }
-
+    
     public function scopeRelTable($query){
 
         return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items']);

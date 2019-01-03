@@ -56,7 +56,14 @@ class PurchaseController extends Controller
      */
     public function store(Purchase $purchase, Request $request)
     {
-        //
+       $items = collect($request->items)->pluck('value');
+       $purchase = $this->purchase->find( $this->purchase->create($request)->id );
+
+       $purchase->items()->attach($items);
+       return response()->json([
+           'success' => $items
+       ]);
+
     }
 
     /**

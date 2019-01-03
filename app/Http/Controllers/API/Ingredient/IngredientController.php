@@ -32,7 +32,9 @@ class IngredientController extends Controller
             'ingredients' => $this->ingredient->paginate(
                 $this->ingredient
                     ->where('name', 'like', '%'. app()->make('request')->filter . '%')
-                    ->relTable()
+                    ->with(['company' => function($q){
+                        $q->select(['id', 'name']);
+                    }]) 
                     ->orderBy('created_at', 'desc')
                     ->get()
             )
@@ -70,7 +72,7 @@ class IngredientController extends Controller
     public function show(Ingredient $ingredient, Request $request)
     {
         return response()->json([
-            'ingredient' => $this->ingredient->showEdit($request)
+            'ingredient' => $this->ingredient->where('id', $request->id)->first()
        ]);
     }
 
@@ -83,7 +85,7 @@ class IngredientController extends Controller
     public function edit(Ingredient $ingredient, Request $request)
     {
        return response()->json([
-            'ingredient' => $this->ingredient->showEdit($request)
+            'ingredient' => $this->ingredient->where('id', $request->id)->first()
        ]);
     }
 

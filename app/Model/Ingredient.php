@@ -3,11 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\DateTimeFormat;
+use App\Traits\Model\Globals;
 
 class Ingredient extends Model
 {
-    use DateTimeFormat;
+    use Globals;
     
     protected $table = 'ingredients';
     protected $fillable = [

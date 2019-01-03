@@ -3,12 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\DateTimeFormat;
+use App\Traits\Model\Globals;
 use App\Model\Branch;
 
 class Franchisee extends Model
 {
-    use DateTimeFormat;
+    use Globals;
     
     protected $table = 'franchisees';
     protected $fillable = [

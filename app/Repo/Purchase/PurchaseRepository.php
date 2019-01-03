@@ -17,6 +17,17 @@ class PurchaseRepository extends BaseRepository implements PurchaseInterface{
     
     }
 
+    public function create($request){
+
+       return $this->modelName->create([
+            'name' => $request->purchaseRequest['name'],
+            'purchasable_id' => $request->purchaseRequest['purchasable_id'],
+            'purchasable_type' => $request->purchaseRequest['purchasable_type'],
+            'purchase_status_id' => 1,
+            'purchase_no' => rand(6000, 10000),
+            'prepared_by' => Auth::User()->id
+        ]);
+    }
     public function purchaseItems($request){
 
         $items = Item::whereHas('purchases', function($q) use ($request) {

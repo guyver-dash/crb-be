@@ -16,6 +16,11 @@ class Item extends Model
 
     protected $appends = ['pivot_date_approved', 'pivot_date_delivery']; 
 
+    public function itemable(){
+
+    	return $this->morphTo();
+    }
+
     public function logistics()
     {
         return $this->vendorable('App\Model\Logistic');
