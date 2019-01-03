@@ -49,5 +49,4 @@ class Address extends Model
         return $this->hasOne('App\Model\Brgy', 'id', 'brgy_id');
     }
 
-    
 }

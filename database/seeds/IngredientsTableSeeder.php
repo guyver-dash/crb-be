@@ -12,6 +12,8 @@ class IngredientsTableSeeder extends Seeder
      */
     public function run()
     {
+
+        $faker = Faker\Factory::create();
         
         $names = [
             'cheese bread',
@@ -32,7 +34,8 @@ class IngredientsTableSeeder extends Seeder
                $ingredient = Ingredient::create([
                     'company_id' => $i,
                     'name' => $name,
-                    'pcs' => rand(100, 500)
+                    'pcs' => rand(100, 500),
+                    'methods' => $faker->sentence($nbWords = 20, $variableNbWords = true)
                 ]);
 
                 $ingredient = Ingredient::find($ingredient->id);

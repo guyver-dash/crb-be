@@ -20,6 +20,7 @@ class CreateIngredientsTable extends Migration
                 ->on('companies');
             $table->string('name');
             $table->integer('pcs');
+            $table->longText('methods');
             $table->timestamps();
         });
     }
