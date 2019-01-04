@@ -85,7 +85,28 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = Company::create($request->all());
+        $holding = Company::find($company->id);
+        $company->address()->create([
+            'country_id' => $request->country_id,
+            'region_id' => $request->region_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'brgy_id' => $request->brgy_id,
+            'street_lot_blk' => $request->street_lot_blk,
+        ]);
+        $company->businessInfo()->update([
+            'business_type_id' => $request->business_type_id,
+            'vat_type_id' => $request->vat_type_id,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'tin' => $request->tin,
+            'website' => $request->website,
+        ]);
+
+        return response()->json([
+            'success' => $request->all(),
+        ]);
     }
 
     /**
@@ -126,7 +147,6 @@ class CompanyController extends Controller
      */
     public function update(Company $company, Request $request)
     {
-
         $company = Company::where('id', $request->id)->first();
         $company->update($request->all());
         $company->address()->update([
