@@ -162,6 +162,9 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
+        App\Providers\HoldingServiceProvider::class,
+        App\Providers\PurchaseServiceProvider::class,
+        App\Providers\IngredientServiceProvider::class,
 
     ],
 

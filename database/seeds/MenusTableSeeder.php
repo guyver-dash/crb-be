@@ -18,8 +18,12 @@ class MenusTableSeeder extends Seeder
             'Users', 'Roles', 'Access Right', 'Menus', 'Holdings', 'Companies', 'Branches', 'Trademarks', 'Franchisees', 'Logistics', 'Commissaries',  'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
         
         $sub_menu2 =[
-           'Other Vendors', 'Packages', 'Categories', 'Items'
+           'Other Vendors', 'Packages', 'Categories', 'Items', 'Purchase Request'
         ];
+
+        $sub_menu3 =[
+            'Ingredients', 'Production Boards', 'Scalers', 'Mixers and Molders', 'Proofing', 'Ovens'
+         ];
         foreach ($menus as $value) {
         	
         	     Menu::create([
@@ -41,6 +45,14 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu2 as $submenu){
             Menu::create([
                 'parent_id' => 2,
+                'description' => $submenu,
+                'name' => $submenu
+            ]);
+        }
+
+        foreach($sub_menu3 as $submenu){
+            Menu::create([
+                'parent_id' => 3,
                 'description' => $submenu,
                 'name' => $submenu
             ]);

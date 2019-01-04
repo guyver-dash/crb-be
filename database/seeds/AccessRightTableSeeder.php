@@ -11,6 +11,8 @@ use App\Model\Franchisee;
 use App\Model\Logistic;
 use App\Model\Commissary;
 use App\Model\OtherVendor;
+use App\Model\Item;
+use App\Model\Ingredient;
 
 class AccessRightTableSeeder extends Seeder
 {
@@ -33,10 +35,20 @@ class AccessRightTableSeeder extends Seeder
             $accessRight = AccessRight::find($accessRight->id);
             $accessRight->roles()->attach($accessRight->id, [
 
-                    'role_id' => rand(1, 2),
+                    'role_id' => 1,
                     'access_right_id' => $accessRight->id
                 ]);
+            $accessRight->roles()->attach($accessRight->id, [
 
+                    'role_id' => 2,
+                    'access_right_id' => $accessRight->id
+                ]);
+            
+                $accessRight->roles()->attach($accessRight->id, [
+
+                    'role_id' => 3,
+                    'access_right_id' => $accessRight->id
+                ]);
             
         }
 
@@ -124,9 +136,42 @@ class AccessRightTableSeeder extends Seeder
 
             for ($i=1; $i < 5; $i++) { 
                 
+                $trademark = Commissary::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->commissaries()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
                 $trademark = OtherVendor::find($a);
                 $accessRight = AccessRight::find($i);
                 $accessRight->otherVendors()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $item = Item::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->items()->attach([$a]);
+            }
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            for ($i=1; $i < 5; $i++) { 
+                
+                $item = Ingredient::find($a);
+                $accessRight = AccessRight::find($i);
+                $accessRight->ingredients()->attach([$a]);
             }
 
         }

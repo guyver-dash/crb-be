@@ -6,6 +6,7 @@ use App\Model\Logistic;
 use App\Model\OtherVendor;
 use Carbon\Carbon;
 use App\Model\Branch;
+use App\Model\Commissary;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -47,6 +48,7 @@ class ItemsTableSeeder extends Seeder
                 'end_date' => Carbon::tomorrow('Europe/London'),
                 'volume' => rand(200, 3000),
                 'price' => rand(200, 5000),
+                'freight' => rand(200, 5000),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -65,6 +67,26 @@ class ItemsTableSeeder extends Seeder
                 'end_date' => Carbon::tomorrow('Europe/London'),
                 'volume' => rand(200, 3000),
                 'price' => rand(200, 5000),
+                'freight' => rand(200, 5000),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'created_by' => rand(1, 98),
+                'approved_by'   => rand(1, 98)
+            ]);
+
+        }
+
+        for($a=1; $a < 98; $a++) {
+
+            $commissary = Commissary::find($a);
+            $item = Item::find($a);
+            $item->commissaries()->attach($commissary->id, [
+                'rank' => rand(1, 3),
+                'dis_percentage' => rand(10, 90),
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::tomorrow('Europe/London'),
+                'volume' => rand(200, 3000),
+                'price' => rand(200, 5000),
+                'freight' => rand(200, 5000),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -83,6 +105,7 @@ class ItemsTableSeeder extends Seeder
                 'end_date' => Carbon::tomorrow('Europe/London'),
                 'volume' => rand(200, 3000),
                 'price' => rand(200, 5000),
+                'freight' => rand(200, 5000),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)

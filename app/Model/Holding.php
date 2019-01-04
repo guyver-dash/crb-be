@@ -65,5 +65,4 @@ class Holding extends Model
         return Carbon::parse($val)->toDayDateTimeString();
     }
 
-    
 }

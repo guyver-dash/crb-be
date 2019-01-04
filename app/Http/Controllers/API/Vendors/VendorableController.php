@@ -26,14 +26,15 @@ class VendorableController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->first();
         
-        $vendors = collect([$items->branches, $items->commissaries, $items->logistics, $items->otherVendors])
+        return response()->json([
+
+            'vendors' => $this->paginate(
+                collect([$items->branches, $items->commissaries, $items->logistics, $items->otherVendors])
                         ->filter(function($item){
                             return $item != null;
                         })
-                        ->flatten(1);
-        return response()->json([
-
-            'vendors' => $this->paginate($vendors) 
+                        ->flatten(1)
+                ) 
 
         ]);
 

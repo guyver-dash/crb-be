@@ -4,12 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Traits\DateTimeFormat;
+use App\Traits\Model\Globals;
 
 class AccessRight extends Model
 {
 
-    use DateTimeFormat;
+    use Globals;
     
     protected $table = 'access_rights';
 
@@ -51,11 +51,27 @@ class AccessRight extends Model
         return $this->morphedByMany('App\Model\Logistic', 'accessable');
     }
 
+    public function commissaries()
+    {
+        return $this->morphedByMany('App\Model\Commissary', 'accessable');
+    }
+
     public function otherVendors()
     {
         return $this->morphedByMany('App\Model\OtherVendor', 'accessable');
     }
- 
+
+    public function items()
+    {
+        return $this->morphedByMany('App\Model\Item', 'accessable');
+    }
+
+    public function ingredients()
+    {
+        return $this->morphedByMany('App\Model\Ingredient', 'accessable');
+    }
+
+
     public function roles(){
         return $this->belongsToMany('App\Model\Role', 'access_right_role', 'access_right_id', 'role_id');
     }
