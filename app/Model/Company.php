@@ -27,6 +27,11 @@ class Company extends Model
         return $this->hasMany('App\Model\Branch', 'id', 'company_id');
     }
 
+    public function AccountingStandard(){
+
+        return $this->hasMany('App\Model\AccountingStandard', 'id', 'company_id');
+    }
+
     public function trademarks(){
 
         return $this->hasMany('App\Model\Trademark', 'id', 'company_id');

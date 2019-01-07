@@ -13,7 +13,7 @@ class AccountingStandardsTableSeeder extends Seeder
     public function run()
     {
         
-        $masks = [ 'company standard' => '##-####-##-##', 'bsp' => '##-##-##-##-##'];
+        $masks = [ 'IAS' => '##-####-##-##', 'BSP' => '##-##-##-##-##', 'NGAS' => '##-##-##-##-##'];
 
         foreach($masks as $key => $value){
             AccountingStandard::create([
@@ -21,5 +21,6 @@ class AccountingStandardsTableSeeder extends Seeder
                 'mask' => $value
             ]);
         }
+
     }
 }
