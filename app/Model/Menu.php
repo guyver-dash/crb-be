@@ -13,7 +13,7 @@ class Menu extends Model
 
     
 	public function parent(){
-        return $this->hasMany('App\Model\Menu', 'id', 'parent_id');
+        return $this->hasOne('App\Model\Menu', 'id', 'parent_id');
     }
 	public function children() {
 

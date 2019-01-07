@@ -31,8 +31,107 @@ class ItemsTableSeeder extends Seeder
                 'price' => rand(20, 5000),
                 'qty' => rand(20, 5000),
                 'package_id' => rand(1, 15), 
-                'minimum' =>  rand(20, 5000),
-                'maximum' =>  rand(20, 5000),
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+            Item::create([
+                'itemable_id' => rand(1, 99),
+                'itemable_type' => 'App\Model\Branch',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+            Item::create([
+                'itemable_id' => rand(1, 99),
+                'itemable_type' => 'App\Model\Branch',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+
+            Item::create([
+                'itemable_id' => $i,
+                'itemable_type' => 'App\Model\Logistic',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+            Item::create([
+                'itemable_id' => rand(1, 99),
+                'itemable_type' => 'App\Model\Logistic',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+            Item::create([
+                'itemable_id' => rand(1, 99),
+                'itemable_type' => 'App\Model\Logistic',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+            Item::create([
+                'itemable_id' => $i,
+                'itemable_type' => 'App\Model\Commissary',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
+                'reorder_level' => rand(1, 100)
+            ]);
+            Item::create([
+                'itemable_id' => rand(1, 99),
+                'itemable_type' => 'App\Model\Commissary',
+                'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
+                'barcode' => $faker->ean13,
+                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+                'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+                'price' => rand(20, 5000),
+                'qty' => rand(20, 5000),
+                'package_id' => rand(1, 15), 
+                'minimum' =>  rand(20, 200),
+                'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
         }

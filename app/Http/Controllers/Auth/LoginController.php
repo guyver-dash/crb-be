@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Model\User;
-
+use App\Model\Menu;
 class LoginController extends Controller
 {
     /*
@@ -93,7 +93,8 @@ class LoginController extends Controller
         //         return $item->parent_id === 0;
         //     });
         // }
-        $menu = \App\Model\Menu::with('allChildren')->get();
+
+        $menu = Menu::where('parent_id', '=', 0)->with('allChildren')->get();
         return $menu;
     }
 
