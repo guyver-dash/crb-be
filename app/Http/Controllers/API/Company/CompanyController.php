@@ -95,7 +95,7 @@ class CompanyController extends Controller
             'brgy_id' => $request->brgy_id,
             'street_lot_blk' => $request->street_lot_blk,
         ]);
-        $company->businessInfo()->update([
+        $company->businessInfo()->create([
             'business_type_id' => $request->business_type_id,
             'vat_type_id' => $request->vat_type_id,
             'telephone' => $request->telephone,

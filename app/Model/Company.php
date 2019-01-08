@@ -14,7 +14,7 @@ class Company extends Model
     
     protected $table = 'companies';
     protected $fillable = [
-    	'name', 'desc'
+    	'name', 'desc', 'holding_id'
     ];
 
     public function vendors(){
