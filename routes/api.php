@@ -16,6 +16,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	Route::get('user-holdings', 'API\Holding\HoldingController@userHoldings');
 	Route::resource('holdings', 'API\Holding\HoldingController');
+	// get random holdings for dropdown
+	Route::get('get-random-holdings', 'API\Holding\HoldingController@getRandomHoldings');
+	Route::get('get-holdings-by-name', 'API\Holding\HoldingController@getHoldingsByName');
 
 	Route::get('user-companies', 'API\Company\CompanyController@userCompanies');
 	Route::get('company-holdings', 'API\Company\CompanyController@companyHoldings');

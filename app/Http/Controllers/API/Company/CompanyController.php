@@ -57,14 +57,12 @@ class CompanyController extends Controller
             })
             ->relTable()->get();
 
-        return response()->json([
-
+        return [
             'companies' => $this->paginate($companies),
             'sortBy' => $request->sortBy,
             'descending' => $request->descending,
             'direction' => $sortDirection,
-
-        ]);
+        ];
     }
 
     /**
