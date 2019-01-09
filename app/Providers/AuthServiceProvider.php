@@ -29,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model\Item' => 'App\Policies\ItemPolicy',
         'App\Model\Vendor' => 'App\Policies\VendorPolicy',
         'App\Model\Purchase' => 'App\Policies\PurchasePolicy',
-        'App\Model\Ingredient' => 'App\Policies\IngredientPolicy'
+        'App\Model\Ingredient' => 'App\Policies\IngredientPolicy',
+        'App\Model\AccountingStandard' => 'App\Policies\AccountingStandardPolicy'
     ];
 
     /**
@@ -59,5 +60,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::resource('purchases', 'App\Policies\PurchasePolicy');
         Gate::resource('ingredients', 'App\Policies\IngredientPolicy');
         Gate::resource('ingredient_items', 'App\Policies\IngredientPolicy');
+        Gate::resource('account_standards', 'App\Policies\AccountingStandard');
     }
 }

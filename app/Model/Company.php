@@ -27,6 +27,11 @@ class Company extends Model
         return $this->hasMany('App\Model\Branch', 'id', 'company_id');
     }
 
+    public function chartAccounts(){
+
+        return $this->hasMany('App\Model\ChartAccount', 'company_id', 'id');
+    }
+
     public function AccountingStandard(){
 
         return $this->hasMany('App\Model\AccountingStandard', 'id', 'company_id');
@@ -59,7 +64,7 @@ class Company extends Model
 
     public function scopeRelTable($q){
 
-        return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy']);
+        return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'chartAccounts']);
     }
 
     

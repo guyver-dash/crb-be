@@ -26,7 +26,6 @@ use App\Model\Purchase;
 use App\Model\PurchaseStatus;
 use App\Model\Ingredient;
 use App\Model\AccountingStandard;
-use App\Model\ChartCategory;
 use App\Model\ChartAccount;
 
 class DatabaseSeeder extends Seeder
@@ -58,13 +57,11 @@ class DatabaseSeeder extends Seeder
         Category::truncate();
         Package::truncate();
         Trademark::truncate();
-        Franchisee::truncate();
         OtherVendor::truncate();
         Item::truncate();
         Purchase::truncate();
         PurchaseStatus::truncate();
         Ingredient::truncate();
-        ChartCategory::truncate();
         AccountingStandard::truncate();
         ChartAccount::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
@@ -96,7 +93,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PurchasesTableSeeder::class);
         $this->call(IngredientsTableSeeder::class);
         $this->call(AccountingStandardsTableSeeder::class);
-        $this->call(ChartCategoriesTableSeeder::class);
         $this->call(ChartAccountsTableSeeder::class);
     }
 }

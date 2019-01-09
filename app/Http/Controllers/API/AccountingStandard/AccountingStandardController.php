@@ -14,8 +14,9 @@ class AccountingStandardController extends Controller
     
     public function __construct(AccountingStandardInterface $accSta)
     {
+        $this->authorizeResource(AccountingStandard::class);
         $this->accSta = $accSta;
-        // $this->authorizeResource(AccountingStandard::class);
+        
     }
 
     /**
@@ -69,7 +70,7 @@ class AccountingStandardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(AccountingStandard $accountingStandard, Request $request)
     {
         return response()->json([
             'accountingStandard' => $this->accSta->where('id', $request->id)->first()
@@ -82,7 +83,7 @@ class AccountingStandardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit(AccountingStandard $accountingStandard, Request $request)
     {
         return response()->json([
             'accountingStandard' => $this->accSta->where('id', $request->id)->first()
@@ -96,7 +97,7 @@ class AccountingStandardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(AccountingStandard $accountingStandard, Request $request)
     {
         $this->accSta->where('id', $request->id)->first()->update( $request->all() );
 
@@ -111,7 +112,7 @@ class AccountingStandardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(AccountingStandard $accountingStandard, Request $request)
     {
         $this->accSta->where('id', $request->id)->first()->delete();
 

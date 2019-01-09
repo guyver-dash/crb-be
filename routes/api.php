@@ -62,6 +62,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::resource('ingredient_items', 'API\Ingredient\IngredientItemsController');
 
 	Route::resource('accounting_standards', 'API\AccountingStandard\AccountingStandardController');
+	Route::get('chart-account-search', 'API\ChartAccount\ChartAccountController@search');
+	Route::get('chart-account-companies', 'API\ChartAccount\ChartAccountController@companies');
+	Route::resource('chart_account', 'API\ChartAccount\ChartAccountController');
 
 	Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');
 	Route::get('modelable-user-models', 'API\Modelable\ModelableController@userModels');

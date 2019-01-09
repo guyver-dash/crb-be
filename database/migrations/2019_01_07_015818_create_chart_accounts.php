@@ -18,10 +18,13 @@ class CreateChartAccounts extends Migration
             $table->integer('company_id')->unsigned()->nullable();
             $table->foreign('company_id')->references('id')
                 ->on('companies');
+            $table->integer('parent_id')->nullable();
             $table->string('name');
-            $table->integer('chart_category_id')->unsigned()->nullable();
-            $table->foreign('chart_category_id')->references('id')
-                ->on('chart_categories');
+            $table->integer('account_code')->nullable();
+            $table->string('account_display');
+            $table->integer('accounting_standard_id')->unsigned()->nullable();
+            $table->foreign('accounting_standard_id')->references('id')
+                ->on('accounting_standards');
             $table->timestamps();
         });
     }

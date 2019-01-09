@@ -166,6 +166,7 @@ return [
         App\Providers\PurchaseServiceProvider::class,
         App\Providers\IngredientServiceProvider::class,
         App\Providers\AccountingStandardServiceProvider::class,
+        App\Providers\ChartAccountServiceProvider::class,
 
     ],
 
