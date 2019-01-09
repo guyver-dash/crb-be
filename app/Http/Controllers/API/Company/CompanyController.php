@@ -4,16 +4,17 @@ namespace App\Http\Controllers\API\Company;
 
 use App\Http\Controllers\Controller;
 use App\Model\Company;
+use App\Repo\Company\CompanyInterface;
 use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class CompanyController extends Controller
 {
+    protected $companyRepo;
 
-    public function __construct()
+    public function __construct(CompanyInterface $company)
     {
-
+        $this->companyRepo = $company;
         $this->authorizeResource(Company::class);
     }
     /**
@@ -23,48 +24,13 @@ class CompanyController extends Controller
      */
     public function index()
     {
-
-        $request = app()->make('request');
-
-        $sortDirection = $request->descending === 'false' ? 'asc' : 'desc';
-
-        $companies = Company::where('name', 'like', '%' . $request->filter . '%')
-        // ->when($request->sortBy === 'holding', function ($q) use ($sortDirection) {
-        //     $q->orWhereHas('holding', function ($qh) use ($sortDirection) {
-        //         $qh->orderBy('name', $sortDirection);
-        //     });
-        // })
-            ->when($request->sortBy === 'name', function ($q) use ($sortDirection) {
-                $q->orderBy('name', $sortDirection);
-            })
-            ->orWhereHas('holding', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->filter . '%');
-            })
-            ->orWhereHas('address', function ($q1) use ($request) {
-                $q1->where('street_lot_blk', 'like', '%' . $request->filter . '%');
-            })
-            ->orWhereHas('address.brgy', function ($q1) use ($request) {
-                $q1->where('description', 'like', '%' . $request->filter . '%');
-            })
-            ->orWhereHas('address.province', function ($q1) use ($request) {
-                $q1->where('description', 'like', '%' . $request->filter . '%');
-            })
-            ->orWhereHas('address.city', function ($q1) use ($request) {
-                $q1->where('description', 'like', '%' . $request->filter . '%');
-            })
-            ->orWhereHas('address.region', function ($q1) use ($request) {
-                $q1->where('description', 'like', '%' . $request->filter . '%');
-            })
-            ->relTable()->get();
-
-        return response()->json([
-
-            'companies' => $this->paginate($companies),
-            'sortBy' => $request->sortBy,
-            'descending' => $request->descending,
-            'direction' => $sortDirection,
-
-        ]);
+        return [
+            'companies' => $this->companyRepo->paginate($this->companyRepo->entityNameAddress(app()->make('request'))
+                    ->relTable()
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+            ),
+        ];
     }
 
     /**
@@ -85,8 +51,8 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $company = Company::create($request->all());
-        $holding = Company::find($company->id);
+        $company = $this->companyRepo->create($request->all());
+        $company = $this->companyRepo->find($company->id);
         $company->address()->create([
             'country_id' => $request->country_id,
             'region_id' => $request->region_id,
@@ -95,7 +61,7 @@ class CompanyController extends Controller
             'brgy_id' => $request->brgy_id,
             'street_lot_blk' => $request->street_lot_blk,
         ]);
-        $company->businessInfo()->update([
+        $company->businessInfo()->create([
             'business_type_id' => $request->business_type_id,
             'vat_type_id' => $request->vat_type_id,
             'telephone' => $request->telephone,
@@ -190,7 +156,7 @@ class CompanyController extends Controller
     {
 
         $request = app()->make('request');
-        $perPage = $request->perPage === '0' ? $collection->count() :  $request->perPage;
+        $perPage = $request->perPage === '0' ? $collection->count() : $request->perPage;
 
         // return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
         return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);

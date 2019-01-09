@@ -1,42 +1,46 @@
-<?php 
+<?php
 
 namespace App\Repo;
-use App\Model\BusinessInfo;
+
 use App\Model\Address;
+use App\Model\BusinessInfo;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class BaseRepository implements BaseInterface{
+class BaseRepository implements BaseInterface
+{
 
     protected $modelName;
 
-    public function all(){
-
+    public function all()
+    {
         return $this->modelName->all();
     }
-    
-    public function create($array){
 
+    public function create($array)
+    {
         return $this->modelName->create($array);
     }
-    public function where($name, $operator, $value = null){
-        
-       if($value === null){
-        return $this->modelName->where($name, $operator);
-       }
-       return $this->modelName->where($name, $operator, $value);
+
+    public function where($name, $operator, $value = null)
+    {
+        if ($value === null) {
+            return $this->modelName->where($name, $operator);
+        }
+        return $this->modelName->where($name, $operator, $value);
     }
 
-    public function update($array){
+    public function update($array)
+    {
         return $this->modelName->update($array);
     }
 
-    public function find($id){
+    public function find($id)
+    {
         return $this->modelName->find($id);
     }
 
-
-    public function entityNameAddress($request){
-
+    public function entityNameAddress($request)
+    {
         return $this->modelName->where('name', 'like', '%' . $request->filter . '%')
             ->when($request->sortBy === 'name', function ($q) use ($request) {
                 $q->orderBy('name', $request->descending === 'false' ? 'asc' : 'desc');
@@ -58,34 +62,32 @@ class BaseRepository implements BaseInterface{
             });
     }
 
-    public function paginate($collection){
-        
+    public function paginate($collection)
+    {
         $request = app()->make('request');
-        $perPage = $request->perPage === '0' ? $collection->count() :  $request->perPage;
+        $perPage = $request->perPage === '0' ? $collection->count() : $request->perPage;
 
         return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
     }
 
-    public function addressFillable($array){
-
+    public function addressFillable($array)
+    {
         $address = new Address;
 
-        return collect($array)->filter(function($value, $key) use ($address) {
-            return in_array($key, $address->getFillable() );
+        return collect($array)->filter(function ($value, $key) use ($address) {
+            return in_array($key, $address->getFillable());
         })->toArray();
-        
+
     }
 
-    public function businessInfoFillable($array){
-
+    public function businessInfoFillable($array)
+    {
         $businessInfo = new BusinessInfo;
 
-        return collect($array)->filter(function($value, $key) use ($businessInfo) {
-            return in_array($key, $businessInfo->getFillable() );
+        return collect($array)->filter(function ($value, $key) use ($businessInfo) {
+            return in_array($key, $businessInfo->getFillable());
         })->toArray();
 
     }
 
-
-    
 }
