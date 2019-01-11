@@ -223,9 +223,9 @@ class HoldingController extends Controller
         ]);
     }
 
-    public function asyncValidation($val)
+    public function asyncValidation($fieldName, $val)
     {
-        $result = $this->holdingRepo->asyncValidate($val);
+        $result = $this->holdingRepo->asyncValidate([ $fieldName => $val ]);
         if ($result === TRUE) {
             return [
                 'success' => 1

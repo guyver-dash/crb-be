@@ -11,21 +11,22 @@ use Validator;
 class HoldingRepository extends BaseRepository implements HoldingInterface
 {
 
+    private $rules;
+
     public function __construct()
     {
 
         $this->modelName = new Holding();
-
+        // temporary validation
+        $this->rules =  [
+            'name' => 'required|unique:holdings|max:255',
+            'desc' => 'required',
+        ];
     }
 
     public function create($data)
     {
-        // temporary validation
-        $validator = Validator::make($data, [
-            'name' => 'required|unique:holdings|max:255',
-            'desc' => 'required',
-        ]);
-
+        $validator = Validator::make($data, $this->rules);
         if ($validator->fails()) {
             return $validator->errors();
         }
@@ -47,12 +48,8 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
 
     public function asyncValidate($data)
     {
-        // temporary validation
-        $validator = Validator::make($data, [
-            'name' => 'required|unique:holdings|max:255',
-            'desc' => 'required',
-        ]);
-
+        $rule = [ key($data) => $this->rules[key($data)] ];
+        $validator = Validator::make($data, $rule);
         if ($validator->fails()) {
             return $validator->errors();
         }
