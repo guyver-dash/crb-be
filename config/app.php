@@ -168,7 +168,7 @@ return [
         App\Providers\IngredientServiceProvider::class,
         App\Providers\AccountingStandardServiceProvider::class,
         App\Providers\ChartAccountServiceProvider::class,
-
+        App\Providers\TransactionTypeServiceProvider::class,
     ],
 
     /*

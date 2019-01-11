@@ -15,7 +15,7 @@ class ChartAccountController extends Controller
     public function __construct(ChartAccountInterface $chartAccount)
     {
 
-        // $this->authorizeResource(AccountChart::class);
+        $this->authorizeResource(ChartAccount::class);
         $this->chartAccount = $chartAccount;
         
     }
@@ -58,10 +58,9 @@ class ChartAccountController extends Controller
     public function store(Request $request)
     {
         
-        $chartAccount = $this->chartAccount->create($request->all());
 
         return response()->json([
-            'success' => true
+            'success' => $this->chartAccount->create($request)
         ]);
 
     }
@@ -75,7 +74,8 @@ class ChartAccountController extends Controller
     public function show(Request $request)
     {
         return response()->json([
-            'chartAccount' => $this->chartAccount->where('id', $request->id)->first()
+            'chartAccount' => $this->chartAccount->where('id', $request->id)
+                                ->first()
         ]);
     }
 
@@ -97,9 +97,14 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->chartAccount->find($request->id)
+            ->update($request->all());
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -108,9 +113,13 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $this->chartAccount->find($request->id)->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function companies(){
@@ -128,15 +137,14 @@ class ChartAccountController extends Controller
     public function search(){
 
         $request = app()->make('request');
-        $chartAccounts = $this->chartAccount->where('company_id', $request->companyId)
-                                ->where('name', 'like', '%'.$request->filter . '%')
-                                ->relTable()
-                                ->orderBy('created_at', 'asc')
-                                ->get();
         
-                                return response()->json([
-                                    'chartAccounts' => $chartAccounts
-                                ]);
+            return response()->json([
+               'chartAccounts' => $this->chartAccount->where('company_id', $request->companyId)
+                                        ->where('name', 'like', '%'.$request->filter . '%')
+                                        ->relTable()
+                                        ->orderBy('created_at', 'asc')
+                                        ->get()
+            ]);
     }
 
     

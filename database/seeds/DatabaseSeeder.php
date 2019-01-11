@@ -26,6 +26,7 @@ use App\Model\Purchase;
 use App\Model\PurchaseStatus;
 use App\Model\Ingredient;
 use App\Model\AccountingStandard;
+use App\Model\Taccount;
 use App\Model\ChartAccount;
 
 class DatabaseSeeder extends Seeder
@@ -64,6 +65,7 @@ class DatabaseSeeder extends Seeder
         Ingredient::truncate();
         AccountingStandard::truncate();
         ChartAccount::truncate();
+        TAccount::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
         $this->call(CivilStatusTableSeeder::class);
@@ -93,6 +95,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PurchasesTableSeeder::class);
         $this->call(IngredientsTableSeeder::class);
         $this->call(AccountingStandardsTableSeeder::class);
+        $this->call(TaccountsTableSeeder::class);
         $this->call(ChartAccountsTableSeeder::class);
+        $this->call(TransactionTypesTableSeeder::class);
     }
 }

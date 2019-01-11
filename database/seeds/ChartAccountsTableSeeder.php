@@ -23,8 +23,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => 0,
                 'name' => $categories[$i-1],
                 'account_code' => $i . '0',
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => $i . '0' . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
@@ -38,8 +40,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => 1,
                 'name' => 'Assets-' . $i,
                 'account_code' => rand(1, 99),
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => 10 . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
@@ -51,8 +55,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => 2,
                 'name' => 'Liabilities' . '-'. $i,
                 'account_code' =>rand(1, 99),
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => 20 . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
@@ -64,8 +70,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => 3,
                 'name' => 'Capital/Equities' . '-'. $i,
                 'account_code' =>rand(1, 99),
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => 30 . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
@@ -76,8 +84,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => 4,
                 'name' => 'Incomes' . '-'. $i,
                 'account_code' =>rand(1, 99),
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => 40 . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
@@ -89,8 +99,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => 5,
                 'name' => 'Expenses' . '-'. $i,
                 'account_code' =>rand(1, 99),
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => 50 . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
@@ -102,8 +114,10 @@ class ChartAccountsTableSeeder extends Seeder
                 'parent_id' => rand(6,98),
                 'name' => 'random' . '-'. $i,
                 'account_code' =>rand(1, 99),
+                'taccount_id' => rand(1, 2) ,
                 'account_display' => 50 . '-' . rand(1, 99) . '-' . rand(1, 99) . '-' . rand(1, 99),
-                'accounting_standard_id' => rand(1, 2)
+                'accounting_standard_id' => rand(1, 2),
+                'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true)
             ]);
         	
         }
