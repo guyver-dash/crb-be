@@ -61,11 +61,12 @@ class HoldingController extends Controller
         $result = $this->holdingRepo->create($request->all());
         if ($result === TRUE) {
             return [
-                'success' => $request->all(),
+                'success' => 1,
+                'message' => 'Successfully created holding '.$request['name'].'.',
             ];
         } else {
             return response([
-                'error' => 1,
+                'success' => 0,
                 'message' => $result,
             ], 500);
         }
@@ -220,6 +221,22 @@ class HoldingController extends Controller
             'direction' => $sortDirection,
 
         ]);
+    }
+
+    public function asyncValidation($fieldName, $val)
+    {
+        $result = $this->holdingRepo->asyncValidate([ $fieldName => $val ]);
+        if ($result === TRUE) {
+            return [
+                'success' => 1
+            ];
+        } else {
+            return response([
+                'success' => 0,
+                'message' => $result,
+            ], 500);
+        }
+        
     }
 
 }
