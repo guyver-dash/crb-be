@@ -33,6 +33,7 @@ class PurchaseItemsRepository extends PurchaseRepository implements PurchaseInte
                     $q->where('purchases.id', $request->id);
                 },
             ])
+            ->orderBy('id', 'asc')
             ->get();
 
         return collect($items->map(function ($item) {

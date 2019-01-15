@@ -27,7 +27,11 @@ class ItemController extends Controller
             'items' => $this->paginate(
                 Item::where('name', 'like', '%'. app()->make('request')->filter . '%')
                         ->relTable()
-                        ->orderBy('created_at', 'desc')
+                        /**
+                         * Beware of changing order by to 'desc' on development stage.
+                         * Some items don't have vendors...
+                         */
+                        ->orderBy('created_at', 'asc')
                         ->get()
             )
 

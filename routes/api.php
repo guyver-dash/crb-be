@@ -71,9 +71,13 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('taccounts', 'API\TAccount\TAccountController@index');
 	Route::resource('chart_account', 'API\ChartAccount\ChartAccountController');
 
+	Route::get('transaction-type-companies', 'API\TransactionType\TransactionTypeController@companies');
+	Route::resource('transaction_types', 'API\TransactionType\TransactionTypeController');
+
 	Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');
 	Route::get('modelable-user-models', 'API\Modelable\ModelableController@userModels');
 	Route::get('modelable-selected-item', 'API\Modelable\ModelableController@selectedItem');
+	Route::get('modelable-chart-account', 'API\Modelable\ModelableController@chartAccount');
 });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Repo;
 
+use App\Model\Company;
 use App\Model\Address;
 use App\Model\BusinessInfo;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -72,22 +73,29 @@ class BaseRepository implements BaseInterface
 
     public function addressFillable($array)
     {
-        $address = new Address;
 
         return collect($array)->filter(function ($value, $key) use ($address) {
-            return in_array($key, $address->getFillable());
+            return in_array($key, Address::getFillable());
         })->toArray();
 
     }
 
     public function businessInfoFillable($array)
     {
-        $businessInfo = new BusinessInfo;
 
         return collect($array)->filter(function ($value, $key) use ($businessInfo) {
-            return in_array($key, $businessInfo->getFillable());
+            return in_array($key, BusinessInfo::getFillable());
         })->toArray();
 
+    }
+
+
+    public function companiesNamePaginate($request){
+        return $this->paginate( 
+                            Company::where('name', 'like', '%'.$request->filter . '%')
+                                ->orderBy('created_at', 'asc')
+                                ->get() 
+                            );
     }
 
 }

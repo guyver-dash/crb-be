@@ -122,15 +122,10 @@ class ChartAccountController extends Controller
         ]);
     }
 
-    public function companies(){
-
-        $request = app()->make('request');
-        $companies = Company::where('name', 'like', '%'.$request->filter . '%')
-                                ->orderBy('created_at', 'asc')
-                                ->get();
+    public function companies(Request $request){
 
         return response()->json([
-            'companies' => $this->chartAccount->paginate($companies)
+            'companies' => $this->chartAccount->companiesNamePaginate($request)
         ]);
     }
 
@@ -147,5 +142,6 @@ class ChartAccountController extends Controller
             ]);
     }
 
+   
     
 }

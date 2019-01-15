@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Model\Item;
 use App\Repo\BaseRepository;
+use App\Model\ChartAccount;
 
 class ModelableController extends Controller
 {
@@ -50,5 +51,25 @@ class ModelableController extends Controller
                  })
             )
         ]);
+    }
+
+    public function chartAccount(Request $request){
+
+        $chartAccounts = ChartAccount::
+        /***
+         * No chart_account access_rights relationship yet.
+         */
+        // whereHas('accessRights.roles.users', function($q){
+        //     $q->where('users.id', Auth::User()->id);
+        // })
+            where('company_id', $request->companyId)
+        ->where('parent_id', 0)
+        ->relTable()
+        ->get();
+
+        return response()->json([
+            'chartAccounts' => $chartAccounts
+        ]);
+
     }
 }

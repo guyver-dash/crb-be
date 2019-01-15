@@ -34,7 +34,7 @@ class VendorableController extends Controller
                             return $item != null;
                         })
                         ->flatten(1)
-                ) 
+                    )
 
         ]);
 

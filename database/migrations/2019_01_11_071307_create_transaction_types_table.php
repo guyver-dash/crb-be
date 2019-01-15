@@ -23,7 +23,6 @@ class CreateTransactionTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('desc');
-            $table->string('trans_code');
             $table->timestamps();
         });
     }
