@@ -12,14 +12,14 @@ class TransactionTypesTableSeeder extends Seeder
      */
     public function run()
     {
+        $transactionTypes = ['Disbursement Journal', 'Receipt Journal', 'General Journal'];
         $faker = Faker\Factory::create();
-        for ($x=1; $x < 99; $x++) { 
-            for ($i=1; $i < 99; $i++) { 
+        for ($i=1; $i < 99; $i++) { 
+            foreach($transactionTypes as $transType){
                 TransactionType::create([
-                    'name' =>  $faker->sentence($nbWords = 3, $variableNbWords = true),
-                    'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                     'company_id' => $i,
-                    'chart_account_id' => rand(1, 630)
+                    'name' => $transType,
+                    'desc' => $faker->sentence($nbWords = 4, $variableNbWords = true)
                 ]);
             }
         }

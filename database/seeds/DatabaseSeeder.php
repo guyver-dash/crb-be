@@ -98,5 +98,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TaccountsTableSeeder::class);
         $this->call(ChartAccountsTableSeeder::class);
         $this->call(TransactionTypesTableSeeder::class);
+        $this->call(TransactionsTableSeeder::class);
     }
 }

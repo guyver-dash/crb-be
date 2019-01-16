@@ -74,6 +74,10 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('transaction-type-companies', 'API\TransactionType\TransactionTypeController@companies');
 	Route::resource('transaction_types', 'API\TransactionType\TransactionTypeController');
 
+	Route::get('transactions-branches', 'API\Transaction\TransactionController@branches');
+	Route::get('transactions-companies', 'API\Transaction\TransactionController@companies');
+	Route::resource('transactions', 'API\Transaction\TransactionController');
+
 	Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');
 	Route::get('modelable-user-models', 'API\Modelable\ModelableController@userModels');
 	Route::get('modelable-selected-item', 'API\Modelable\ModelableController@selectedItem');
