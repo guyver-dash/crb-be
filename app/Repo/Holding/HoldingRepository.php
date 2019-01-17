@@ -18,15 +18,16 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
 
         $this->modelName = new Holding();
         // temporary validation
-        $this->rules =  [
-            'name' => 'required|unique:holdings|max:255',
+        $this->rules = [
+            'name' => 'required|max:255|unique:holdings',
             'desc' => 'required',
         ];
     }
 
     public function create($data)
     {
-        $validator = Validator::make($data, $this->rules);
+        // $validator = Validator::make($data, $this->rules);
+        $validator = $this->validate($data, $this->rules);
         if ($validator->fails()) {
             return $validator->errors();
         }
@@ -46,14 +47,65 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
         return true;
     }
 
-    public function asyncValidate($data)
+    public function update($data)
     {
-        $rule = [ key($data) => $this->rules[key($data)] ];
-        $validator = Validator::make($data, $rule);
+        // $validator = Validator::make($data, $this->getUpdateRules());
+        $validator = $this->validate($data, $this->getUpdateRules());
         if ($validator->fails()) {
             return $validator->errors();
         }
+        
+        $holding = $this->where('id', $data['id'])->first();
+        if(!$holding) {
+            return $holding;
+        }
+
+        DB::beginTransaction();
+        try {
+            $holding->update($data);
+            $holding->address()->update($this->addressFillable($data));
+            $holding->businessInfo()->update($this->businessInfoFillable($data));
+            DB::commit();
+        } catch(Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
+        
         return true;
+    }
+
+    public function createValidationByField($data)
+    {
+        // $rule = [key($data) => $this->rules[key($data)]];
+        $validator = $this->validate($data, [key($data) => $this->rules[key($data)]]);
+        return $validator->fails() ? $validator->errors() : true;
+    }
+
+    public function updateValidationByField($data, $id)
+    {
+        // $update_rule = $this->rules;
+        // $update_rule['name'] = $this->rules['name'].',id,'.$id;
+
+        // $rule = [key($data) => $update_rule[key($data)]];
+        // $rule = [key($data) => $this->getUpdateRules()[key($data)]];
+        $validator = $this->validate($data, [key($data) => $this->getUpdateRules()[key($data)]]);
+        return $validator->fails() ? $validator->errors() : true;
+    }
+
+    public function getUpdateRules()
+    {
+        $update_rule = $this->rules;
+        $update_rule['name'] = $this->rules['name'].',id,'.$data['id'];
+        return $update_rule;
+    }
+
+    public function validate($data, $rule)
+    {
+        return $validator = Validator::make($data, $rule);
+        // if ($validator->fails()) {
+        //     return $validator->errors();
+        // }
+        // return true;
     }
 
 }

@@ -16,7 +16,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	Route::get('user-holdings', 'API\Holding\HoldingController@userHoldings');
 	Route::resource('holdings', 'API\Holding\HoldingController');
-	Route::get('async-holding-validation/{fieldname}/{val}', 'API\Holding\HoldingController@asyncValidation');
+	Route::get('async-holding-validation-create/{fieldname}/{val}', 'API\Holding\HoldingController@createAsyncValidation');
+	Route::get('async-holding-validation-update/{fieldname}/{val}/{id}', 'API\Holding\HoldingController@updateAsyncValidation');
 	// get random holdings for dropdown
 	Route::get('get-random-holdings', 'API\Holding\HoldingController@getRandomHoldings');
 	Route::get('get-holdings-by-name', 'API\Holding\HoldingController@getHoldingsByName');

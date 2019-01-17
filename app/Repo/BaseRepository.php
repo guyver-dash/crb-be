@@ -73,18 +73,18 @@ class BaseRepository implements BaseInterface
 
     public function addressFillable($array)
     {
-
+        $address = new Address;
         return collect($array)->filter(function ($value, $key) use ($address) {
-            return in_array($key, Address::getFillable());
+            return in_array($key, $address->getFillable());
         })->toArray();
 
     }
 
     public function businessInfoFillable($array)
     {
-
+        $businessInfo = new BusinessInfo;
         return collect($array)->filter(function ($value, $key) use ($businessInfo) {
-            return in_array($key, BusinessInfo::getFillable());
+            return in_array($key, $businessInfo->getFillable());
         })->toArray();
 
     }
