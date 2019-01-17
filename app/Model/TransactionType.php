@@ -21,6 +21,10 @@ class TransactionType extends Model
         return $this->belongsTo('App\Model\Company');
     }
 
+    public function transaction(){
+        return $this->hasOne('App\Model\Transaction', 'id', 'transaction_type_id');
+    }
+
     public function scopeRelTable($query){
 
         return $query->with(['company']);

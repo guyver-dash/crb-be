@@ -20,6 +20,9 @@ class CreateTransactionsTable extends Migration
             $table->integer('transaction_type_id')->unsigned()->nullable();
             $table->foreign('transaction_type_id')->references('id')
                 ->on('transaction_types');
+            $table->integer('chart_account_id')->unsigned()->nullable();
+            $table->foreign('chart_account_id')->references('id')
+                ->on('chart_accounts');
             $table->float('total_amount', 10, 2);
             $table->string('remarks');
             $table->boolean('status');

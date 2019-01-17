@@ -25,11 +25,13 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         
         return response()->json([
-            'transactions' => $this->transaction->findBranch($request->branchId)
+            'transactions' => $this->transaction->paginate(
+                $this->transaction->entity($request)->relTable()->first()->transactions
+            )
         ]);
     }
 
@@ -110,6 +112,20 @@ class TransactionController extends Controller
 
         return response()->json([
             'branches' => $this->transaction->branchesNamePaginate($request)
+        ]);
+    }
+
+    public function transactionTypes(Request $request){
+
+        return response()->json([
+            'transactionTypes' => $this->transaction->transactionTypes($request->companyId)
+        ]);
+    }
+
+    public function chartAccounts(Request $request){
+
+        return response()->json([
+            'chartAccounts' => $this->transaction->chartAccounts($request->companyId)
         ]);
     }
 }
