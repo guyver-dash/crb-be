@@ -14,7 +14,6 @@ class TransactionType extends Model
             'name',
             'desc',
             'company_id',
-            'chart_account_id',
             'trans_code'
     ];
 
@@ -22,13 +21,12 @@ class TransactionType extends Model
         return $this->belongsTo('App\Model\Company');
     }
 
-    public function chartAccount(){
-
-        return $this->hasOne('App\Model\ChartAccount', 'id', 'chart_account_id');
+    public function transaction(){
+        return $this->hasOne('App\Model\Transaction', 'id', 'transaction_type_id');
     }
 
     public function scopeRelTable($query){
 
-        return $query->with(['company', 'chartAccount']);
+        return $query->with(['company']);
     }
 }

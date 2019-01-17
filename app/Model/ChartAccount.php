@@ -48,6 +48,9 @@ class ChartAccount extends Model
         return $this->hasOne('App\Model\TAccount', 'id', 'taccount_id');
     }
 
+    public function transactions(){
+        return $this->hasMany('App\Model\Transaction', 'id', 'chart_account_id');
+    }
     public function scopeRelTable($query){
 
         return $query->with(['allChildren', 'parent', 'company', 'tAccount']);

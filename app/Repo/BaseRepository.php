@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repo;
-
+use App\Model\Branch;
 use App\Model\Company;
 use App\Model\Address;
 use App\Model\BusinessInfo;
@@ -91,11 +91,31 @@ class BaseRepository implements BaseInterface
 
 
     public function companiesNamePaginate($request){
+
         return $this->paginate( 
-                            Company::where('name', 'like', '%'.$request->filter . '%')
+                    /**
+                     * whereHas('accessRights.roles.users, function($q){
+                     *  $q->where('users.id', Auth::User()->id)
+                     * })
+                     */
+                    Company::where('name', 'like', '%'.$request->filter . '%')
                                 ->orderBy('created_at', 'asc')
                                 ->get() 
-                            );
+            );
+    }
+
+    public function branchesNamePaginate($request){
+        return $this->paginate(
+                    /**
+                     * whereHas('accessRights.roles.users, function($q){
+                     *  $q->where('users.id', Auth::User()->id)
+                     * })
+                     */
+                Branch::where('name', 'like', '%'.$request->filter . '%')
+                        ->where('company_id', $request->companyId)
+                        ->orderBy('created_at', 'asc')
+                        ->get() 
+            );
     }
 
 }

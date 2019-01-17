@@ -71,7 +71,7 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(ChartAccount $chartAccount, Request $request)
     {
         return response()->json([
             'chartAccount' => $this->chartAccount->where('id', $request->id)
@@ -85,7 +85,7 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ChartAccount $chartAccount, Request $request)
     {
         //
     }
@@ -97,7 +97,7 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ChartAccount $chartAccount, Request $request)
     {
         $this->chartAccount->find($request->id)
             ->update($request->all());
@@ -113,7 +113,7 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(ChartAccount $chartAccount, Request $request)
     {
         $this->chartAccount->find($request->id)->delete();
 

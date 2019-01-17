@@ -15,7 +15,13 @@ class Branch extends Model
         'name', 'desc', 'company_id'
     ];
 
+    protected $appends = ['entity'];
     
+    public function transactions(){
+
+    	return $this->morphMany('App\Model\Transaction', 'transactable');
+    }
+
 
     public function address(){
 
@@ -43,7 +49,7 @@ class Branch extends Model
     
     public function scopeRelTable($query){
 
-        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items']);
+        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items', 'transactions.chartAccount', 'transactions.transactionType']);
     }
 
     public function accessRights()
@@ -51,5 +57,10 @@ class Branch extends Model
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
 
+
+    public function getEntityAttribute(){
+
+        return 'App\Model\Branch';
+    }
     
 }
