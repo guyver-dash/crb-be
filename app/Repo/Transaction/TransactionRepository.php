@@ -17,22 +17,30 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
     
     }
 
-    public function entity($request){
-      
-        return $request->entity::where('id', $request->id);
+    public function transactable($modelType, $id){
+
+       return $modelType::where('id', $id)
+            ->whereHas('accessRights.roles.users', function($q){
+                // $q->where('users.id', Auth::User()->id);
+            })
+            ->relTable()
+            ->first()
+            ->transactions;
+
+    }
+    public function userEntities($modelType){
+
+       return  $modelType::whereHas('accessRights.roles.users', function($q){
+            // $q->where('users.id', Auth::User()->id);
+        })
+        ->get();
         
     }
 
-    public function transactionTypes($companyId){
-
-        return TransactionType::where('company_id', $companyId)->get();
+    public function entity($modelType, $id){
+      
+        return $modelType::where('id', $id);
+        
     }
 
-    public function chartAccounts($companyId){
-
-        return ChartAccount::where('company_id', $companyId)
-            ->where('parent_id', 0)
-            ->relTable()
-            ->get();
-    }
 }

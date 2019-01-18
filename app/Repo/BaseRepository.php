@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repo;
+use App\Model\TransactionType;
 use App\Model\Branch;
 use App\Model\Company;
 use App\Model\Address;
@@ -65,10 +66,13 @@ class BaseRepository implements BaseInterface
 
     public function paginate($collection)
     {
-        $request = app()->make('request');
-        $perPage = $request->perPage === '0' ? $collection->count() : $request->perPage;
+        if($collection !== null){
+            $request = app()->make('request');
+            $perPage = $request->perPage === '0' ? $collection->count() : $request->perPage;
 
-        return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
+            return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
+        }
+        
     }
 
     public function addressFillable($array)
@@ -116,6 +120,21 @@ class BaseRepository implements BaseInterface
                         ->orderBy('created_at', 'asc')
                         ->get() 
             );
+    }
+
+
+    public function transactionTypes($modelType, $modelId){
+
+        return $modelType::where('id', $modelId)->first()->company->transactionTypes;
+    }
+
+    public function chartAccounts($modelType, $modelId){
+        return $modelType::where('id', $modelId)->with(['company.chartAccounts.allChildren'])
+            ->first()->company->chartAccounts->where('parent_id', 0);
+    }
+
+    public function payee($transactionId){
+        return $this->modelName->where('id', $transactionId)->first()->payee->payable;
     }
 
 }

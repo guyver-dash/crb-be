@@ -20,6 +20,11 @@ class Transaction extends Model
         'status'
     ];
 
+    public function branch()
+    {
+        return $this->morphedByMany('App\Model\Branch', 'payable');
+    }
+
     public function transactable(){
 
         return $this->morphTo();
@@ -35,8 +40,18 @@ class Transaction extends Model
         return $this->belongsTo('App\Model\TransactionType');
     }
 
+    public function createdBy(){
+
+        return $this->hasOne('App\Model\User', 'id', 'created_by');
+    }
+
+    public function payee(){
+
+        return $this->hasOne('App\Model\Payee', 'transaction_id', 'id');
+    }
+
     public function scopeRelTable($query){
-        return $this->with(['chartAccounts', 'transactionType']);
+        return $this->with(['chartAccount', 'transactionType', 'createdBy']);
     }
 
     

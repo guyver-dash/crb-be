@@ -62,9 +62,13 @@ class Company extends Model
     	return $this->morphOne('App\Model\Address', 'addressable');
     }
 
+    public function transactionTypes(){
+
+        return $this->hasMany('App\Model\TransactionType', 'company_id', 'id');
+    }
     public function scopeRelTable($q){
 
-        return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'chartAccounts']);
+        return $q->with(['businessInfo', 'branches', 'holding', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'chartAccounts', 'transactionTypes']);
     }
 
     
