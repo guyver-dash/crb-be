@@ -50,8 +50,13 @@ class Transaction extends Model
         return $this->hasOne('App\Model\Payee', 'transaction_id', 'id');
     }
 
+    public function generalLedgers(){
+
+        return $this->hasMany('App\Model\GeneralLedger', 'transaction_id', 'id');
+    }
+
     public function scopeRelTable($query){
-        return $this->with(['chartAccount', 'transactionType', 'createdBy']);
+        return $this->with(['chartAccount', 'transactionType', 'createdBy',  'generalLedgers']);
     }
 
     
