@@ -112,8 +112,8 @@ class HoldingController extends Controller
         // $holding = $this->holdingRepo->where('id', $request->id)->first();
         // return $request->all();
         //if($holding){
-            $result = $this->holdingRepo->update($request->all());
-            return $result;
+            // $result = $this->holdingRepo->update($request->all());
+            // return $result;
         //}
 
         // $holding = $this->holdingRepo->where('id', $request->id)->first();
@@ -129,6 +129,19 @@ class HoldingController extends Controller
         // return response()->json([
         //     'holding' => $this->holdingRepo->where('id', $request->id)->first(),
         // ]);
+
+        $result = $this->holdingRepo->update($request->all());
+        if ($result === TRUE) {
+            return [
+                'success' => 1,
+                'message' => 'Successfully update holding '.$request['name'].'.',
+            ];
+        } else {
+            return response([
+                'success' => 0,
+                'message' => $result,
+            ], 500);
+        }
     }
 
     /**

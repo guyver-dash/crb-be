@@ -12,6 +12,7 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
 {
 
     private $rules;
+    private $update_id;
 
     public function __construct()
     {
@@ -88,6 +89,7 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
 
         // $rule = [key($data) => $update_rule[key($data)]];
         // $rule = [key($data) => $this->getUpdateRules()[key($data)]];
+        $this->update_id = $id;
         $validator = $this->validate($data, [key($data) => $this->getUpdateRules()[key($data)]]);
         return $validator->fails() ? $validator->errors() : true;
     }
@@ -95,7 +97,7 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
     public function getUpdateRules()
     {
         $update_rule = $this->rules;
-        $update_rule['name'] = $this->rules['name'].',id,'.$data['id'];
+        $update_rule['name'] = $this->rules['name'].',id,'.$this->update_id;
         return $update_rule;
     }
 
