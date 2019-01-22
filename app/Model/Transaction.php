@@ -56,7 +56,7 @@ class Transaction extends Model
     }
 
     public function scopeRelTable($query){
-        return $this->with(['chartAccount', 'transactionType', 'createdBy',  'generalLedgers']);
+        return $query->with(['chartAccount', 'transactionType', 'createdBy',  'generalLedgers']);
     }
 
     

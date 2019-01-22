@@ -27,7 +27,7 @@ class CreateGeneralLedgersTable extends Migration
             $table->decimal('debit_amount')->default(0);
             $table->decimal('credit_amount')->default(0);
             $table->decimal('tax')->default(0);
-            $table->boolean('is_posted');
+            $table->boolean('is_posted')->nullable();
             $table->timestamps();
         });
     }

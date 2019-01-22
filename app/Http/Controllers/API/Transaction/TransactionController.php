@@ -94,7 +94,13 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->transaction->find($request->id)->update( $request->transaction );
+        $this->transaction->updateGeneralLedgers($request);
+
+        return response()->json([
+            'generalLedgers' => $request->generalLedgers
+        ]);
+      
     }
 
     /**
@@ -123,6 +129,13 @@ class TransactionController extends Controller
 
         return response()->json([
             'userEntities' => $this->transaction->userEntities($request->modelType)
+        ]);
+    }
+
+    public function transactionType(Request $request){
+
+        return response()->json([
+            'transactionType' => $this->transaction->transactionType($request->id)
         ]);
     }
    

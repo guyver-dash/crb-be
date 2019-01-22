@@ -123,10 +123,7 @@ class BaseRepository implements BaseInterface
     }
 
 
-    public function transactionTypes($modelType, $modelId){
-
-        return $modelType::where('id', $modelId)->first()->company->transactionTypes;
-    }
+   
 
     public function chartAccounts($modelType, $modelId){
         return $modelType::where('id', $modelId)->with(['company.chartAccounts.allChildren'])

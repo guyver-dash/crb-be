@@ -15,7 +15,9 @@ class GeneralLedger extends Model
         'particulars',
         'chart_account_id',
         'taccount_id',
-        'amount'
+        'debit_amount',
+        'credit_amount',
+        'tax'
     ];
 
 
