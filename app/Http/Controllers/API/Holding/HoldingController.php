@@ -109,20 +109,39 @@ class HoldingController extends Controller
      */
     public function update(Holding $holding, Request $request)
     {
+        // $holding = $this->holdingRepo->where('id', $request->id)->first();
+        // return $request->all();
+        //if($holding){
+            // $result = $this->holdingRepo->update($request->all());
+            // return $result;
+        //}
 
-        $holding = $this->holdingRepo->where('id', $request->id)->first();
+        // $holding = $this->holdingRepo->where('id', $request->id)->first();
 
-        $holding->update($request->all());
-        $holding->address()->update(
-            $this->holdingRepo->addressFillable($request->all())
-        );
-        $holding->businessInfo()->update(
-            $this->holdingRepo->businessInfoFillable($request->all())
-        );
+        // $holding->update($request->all());
+        // $holding->address()->update(
+        //     $this->holdingRepo->addressFillable($request->all())
+        // );
+        // $holding->businessInfo()->update(
+        //     $this->holdingRepo->businessInfoFillable($request->all())
+        // );
 
-        return response()->json([
-            'holding' => $this->holdingRepo->where('id', $request->id)->first(),
-        ]);
+        // return response()->json([
+        //     'holding' => $this->holdingRepo->where('id', $request->id)->first(),
+        // ]);
+
+        $result = $this->holdingRepo->update($request->all());
+        if ($result === TRUE) {
+            return [
+                'success' => 1,
+                'message' => 'Successfully update holding '.$request['name'].'.',
+            ];
+        } else {
+            return response([
+                'success' => 0,
+                'message' => $result,
+            ], 500);
+        }
     }
 
     /**
@@ -223,9 +242,25 @@ class HoldingController extends Controller
         ]);
     }
 
-    public function asyncValidation($fieldName, $val)
+    public function createAsyncValidation($fieldName, $val)
     {
-        $result = $this->holdingRepo->asyncValidate([ $fieldName => $val ]);
+        $result = $this->holdingRepo->createValidationByField([ $fieldName => $val ]);
+        if ($result === TRUE) {
+            return [
+                'success' => 1
+            ];
+        } else {
+            return response([
+                'success' => 0,
+                'message' => $result,
+            ], 500);
+        }
+        
+    }
+
+    public function updateAsyncValidation($fieldName, $val, $id)
+    {
+        $result = $this->holdingRepo->updateValidationByField([ $fieldName => $val ], $id);
         if ($result === TRUE) {
             return [
                 'success' => 1
