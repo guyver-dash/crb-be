@@ -37,3 +37,7 @@ Route::get('user-menu', function(){
     
     return $menu;
 });
+
+Route::get('/', function(){
+    return 'asdf';
+});

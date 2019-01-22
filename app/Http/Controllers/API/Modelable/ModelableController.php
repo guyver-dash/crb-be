@@ -26,6 +26,8 @@ class ModelableController extends Controller
 
     }
 
+    
+
     public function addressBusinessInfo(Request $request){
         $model = $request->modelType::where('id', $request->id)->relTable()->first();
         return response()->json([

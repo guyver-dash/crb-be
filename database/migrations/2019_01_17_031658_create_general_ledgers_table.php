@@ -15,6 +15,19 @@ class CreateGeneralLedgersTable extends Migration
     {
         Schema::create('general_ledgers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('ledgerable_id');
+            $table->string('ledgerable_type');
+            $table->integer('transaction_id')->unsigned()->nullable();
+            $table->foreign('transaction_id')->references('id')
+                ->on('transactions');
+            $table->longText('particulars');
+            $table->integer('chart_account_id')->unsigned()->nullable();
+            $table->foreign('chart_account_id')->references('id')
+                ->on('chart_accounts');
+            $table->decimal('debit_amount')->default(0);
+            $table->decimal('credit_amount')->default(0);
+            $table->decimal('tax')->default(0);
+            $table->boolean('is_posted');
             $table->timestamps();
         });
     }

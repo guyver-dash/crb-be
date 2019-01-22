@@ -73,9 +73,16 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Transaction $transaction, Request $request)
     {
-        //
+        $transaction = $this->transaction->where('id', $request->id)->relTable()->first();
+        
+        return response()->json([
+            'transaction' => $transaction,
+            'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId),
+            'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
+            'payee' => $this->transaction->payee($transaction->id)
+        ]);
     }
 
     /**
@@ -101,31 +108,22 @@ class TransactionController extends Controller
         //
     }
 
-    public function companies(Request $request){
+
+    public function transactable(Request $request){
 
         return response()->json([
-            'companies' => $this->transaction->companiesNamePaginate($request)
+            'transactions' => $this->transaction->paginate(
+                                    $this->transaction->transactable($request->modelType, $request->id)
+                            ),
+            'entity' => $this->transaction->entity($request->modelType, $request->id)->first()            
         ]);
     }
 
-    public function branches(Request $request){
+    public function entities(Request $request){
 
         return response()->json([
-            'branches' => $this->transaction->branchesNamePaginate($request)
+            'userEntities' => $this->transaction->userEntities($request->modelType)
         ]);
     }
-
-    public function transactionTypes(Request $request){
-
-        return response()->json([
-            'transactionTypes' => $this->transaction->transactionTypes($request->companyId)
-        ]);
-    }
-
-    public function chartAccounts(Request $request){
-
-        return response()->json([
-            'chartAccounts' => $this->transaction->chartAccounts($request->companyId)
-        ]);
-    }
+   
 }

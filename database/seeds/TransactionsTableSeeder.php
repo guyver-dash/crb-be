@@ -22,10 +22,19 @@ class TransactionsTableSeeder extends Seeder
                     $trans->transactable_type = 'App\Model\Branch';
                     $trans->transaction_type_id = rand(1, 294);
                     $trans->chart_account_id = $chartAccount->id;
+                    $trans->refnum =  microtime();
                     $trans->total_amount = rand(200, 50000);
                     $trans->remarks = 'remarks ' . $a;
                     $trans->status = rand(0, 1);
+                    $trans->created_by = rand(1, 99);
                     $trans->save();
+
+                    $trans = Transaction::find($trans->id);
+                    $trans->payee()->create([
+                        'transaction_id' => $trans->id,
+                        'payable_id' => $a,
+                        'payable_type' => 'App\Model\Branch'
+                    ]);
                 }
                 
             }
@@ -38,10 +47,19 @@ class TransactionsTableSeeder extends Seeder
                     $trans->transactable_type = 'App\Model\Logistic';
                     $trans->transaction_type_id = rand(1, 294);
                     $trans->chart_account_id = $chartAccount->id;
+                    $trans->refnum =  microtime();
                     $trans->total_amount = rand(200, 50000);
                     $trans->remarks = 'remarks ' . $a;
                     $trans->status = rand(0, 1);
+                    $trans->created_by = rand(1, 99);
                     $trans->save();
+
+                    $trans = Transaction::find($trans->id);
+                    $trans->payee()->create([
+                        'transaction_id' => $trans->id,
+                        'payable_id' => $a,
+                        'payable_type' => 'App\Model\Logistic'
+                    ]);
                 }
                 
             }
@@ -54,11 +72,20 @@ class TransactionsTableSeeder extends Seeder
                     $trans->transactable_type = 'App\Model\Commissary';
                     $trans->transaction_type_id = rand(1, 294);
                     $trans->chart_account_id = $chartAccount->id;
+                    $trans->refnum = microtime();
                     $trans->total_amount = rand(200, 50000);
                     $trans->remarks = 'remarks ' . $a;
                     $trans->status = rand(0, 1);
+                    $trans->created_by = rand(1, 99);
                     $trans->save();
                 }
+
+                $trans = Transaction::find($trans->id);
+                    $trans->payee()->create([
+                        'transaction_id' => $trans->id,
+                        'payable_id' => $a,
+                        'payable_type' => 'App\Model\Commissary'
+                    ]);
                 
             }
     }
