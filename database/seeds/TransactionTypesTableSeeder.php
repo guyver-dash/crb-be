@@ -18,9 +18,9 @@ class TransactionTypesTableSeeder extends Seeder
             foreach($transactionTypes as $transType){
                 $taccount_id = 1;
                 if($transType == 'Disbursement Journal'){
-                    $taccount_id =  1;
-                }else if($transType ==  'Receipt Journal'){
                     $taccount_id =  2;
+                }else if($transType ==  'Receipt Journal'){
+                    $taccount_id =  1;
                 }else{
                     $taccount_id = 3;
                 }

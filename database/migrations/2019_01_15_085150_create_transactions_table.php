@@ -25,8 +25,9 @@ class CreateTransactionsTable extends Migration
                 ->on('chart_accounts');
             $table->string('refnum');
             $table->float('total_amount', 10, 2);
-            $table->string('remarks');
-            $table->boolean('status');
+            $table->string('checknumber')->nullable();
+            $table->string('remarks')->nullable();
+            $table->boolean('status')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')
                 ->on('users');

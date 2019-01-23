@@ -15,8 +15,11 @@ class Transaction extends Model
         'transactable_id', 
         'transactable_type', 
         'transaction_type_id',
+        'chart_account_id',
         'total_amount',
         'remarks',
+        'checknumber',
+        'refnum',
         'status'
     ];
 

@@ -131,7 +131,12 @@ class BaseRepository implements BaseInterface
     }
 
     public function payee($transactionId){
-        return $this->modelName->where('id', $transactionId)->first()->payee->payable;
+        $trans = $this->modelName->where('id', $transactionId)->first();
+        if($trans->payee !== null){
+            return $trans->payee->payable;
+        }
+        
+        return null;
     }
 
 }

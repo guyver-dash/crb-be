@@ -20,7 +20,14 @@ class CreateGeneralLedgersTable extends Migration
             $table->integer('transaction_id')->unsigned()->nullable();
             $table->foreign('transaction_id')->references('id')
                 ->on('transactions');
-            $table->longText('particulars');
+            /***
+             * Products not created YET!
+             */
+            // $table->integer('product_id')->unsigned()->nullable();
+            // $table->foreign('product_id')->references('id')
+            //     ->on('products');
+            // $table->integer('qty')->nullable();
+            $table->longText('particulars')->nullable();
             $table->integer('chart_account_id')->unsigned()->nullable();
             $table->foreign('chart_account_id')->references('id')
                 ->on('chart_accounts');

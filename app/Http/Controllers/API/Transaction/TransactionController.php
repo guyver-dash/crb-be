@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repo\Transaction\TransactionInterface;
 use App\Model\Transaction;
+use Auth;
 
 class TransactionController extends Controller
 {
@@ -40,9 +41,14 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
+        return response()->json([
+            'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
+            'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId),
+            'createdBy' => Auth::User()
+        ]);
     }
 
     /**
@@ -53,7 +59,16 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reqTrans = $request->transaction;
+        $reqTrans['refnum'] = microtime();
+        $reqTrans['created_by'] = Auth::User()->id;
+        $transaction = $this->transaction->create($reqTrans);
+        foreach($request->generalLedgers as $gl){
+            $this->transaction->find($transaction->id)->generalLedgers()->create($gl);
+        }
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
