@@ -12,15 +12,14 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
 {
 
     private $rules;
-    private $update_id;
 
     public function __construct()
     {
 
         $this->modelName = new Holding();
-        // temporary validation
+        // TODO: temporary validation
         $this->rules = [
-            'name' => 'required|max:255|unique:holdings',
+            'name' => 'required|max:255|unique:holdings,name',
             'desc' => 'required',
         ];
     }
@@ -50,16 +49,15 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
 
     public function update($data)
     {
-        // $validator = Validator::make($data, $this->getUpdateRules());
-        $validator = $this->validate($data, $this->getUpdateRules());
+        $validator = $this->validate($data, $this->getUpdateRules($data['id']));
         if ($validator->fails()) {
             return $validator->errors();
         }
-        
+
         $holding = $this->where('id', $data['id'])->first();
-        if(!$holding) {
+        if (!$holding) {
             return $holding;
-        }
+        }       
 
         DB::beginTransaction();
         try {
@@ -67,47 +65,53 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
             $holding->address()->update($this->addressFillable($data));
             $holding->businessInfo()->update($this->businessInfoFillable($data));
             DB::commit();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $e->getMessage();
         }
-        
+
         return true;
     }
 
     public function createValidationByField($data)
     {
-        // $rule = [key($data) => $this->rules[key($data)]];
         $validator = $this->validate($data, [key($data) => $this->rules[key($data)]]);
         return $validator->fails() ? $validator->errors() : true;
     }
 
     public function updateValidationByField($data, $id)
     {
-        // $update_rule = $this->rules;
-        // $update_rule['name'] = $this->rules['name'].',id,'.$id;
-
-        // $rule = [key($data) => $update_rule[key($data)]];
-        // $rule = [key($data) => $this->getUpdateRules()[key($data)]];
-        $this->update_id = $id;
-        $validator = $this->validate($data, [key($data) => $this->getUpdateRules()[key($data)]]);
+        $validator = $this->validate($data, [key($data) => $this->getUpdateRules($id)[key($data)]]);
         return $validator->fails() ? $validator->errors() : true;
     }
 
-    public function getUpdateRules()
+    public function getUpdateRules($id)
     {
         $update_rule = $this->rules;
-        $update_rule['name'] = $this->rules['name'].',id,'.$this->update_id;
+        $update_rule['name'] = $this->rules['name'] . ',' . $id;
         return $update_rule;
     }
 
     public function validate($data, $rule)
     {
         return $validator = Validator::make($data, $rule);
-        // if ($validator->fails()) {
-        //     return $validator->errors();
-        // }
-        // return true;
+    }
+
+    public function asyncValidate($data)
+    {
+        // make the rule array to be pluck from the rule set
+        $queryRule = [$data['field'] => $data['value']];
+        // type checks
+        $actionType = [
+            'create' => function () use ($queryRule) {
+                return $this->createValidationByField($queryRule);
+            },
+            'update' => function () use ($queryRule, $data) {
+                return $this->updateValidationByField($queryRule, $data['id']);
+            },
+        ];
+        // execute the validation action
+        return $actionType[$data['type']]();
     }
 
 }
