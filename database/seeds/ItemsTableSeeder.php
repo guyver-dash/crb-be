@@ -22,6 +22,7 @@ class ItemsTableSeeder extends Seeder
 
         for ($i=1; $i < 99 ; $i++) { 
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => $i,
                 'itemable_type' => 'App\Model\Branch',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -36,6 +37,7 @@ class ItemsTableSeeder extends Seeder
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Branch',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -50,6 +52,7 @@ class ItemsTableSeeder extends Seeder
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Branch',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -65,6 +68,7 @@ class ItemsTableSeeder extends Seeder
             ]);
 
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => $i,
                 'itemable_type' => 'App\Model\Logistic',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -79,6 +83,7 @@ class ItemsTableSeeder extends Seeder
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Logistic',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -93,6 +98,7 @@ class ItemsTableSeeder extends Seeder
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Logistic',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -107,6 +113,7 @@ class ItemsTableSeeder extends Seeder
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => $i,
                 'itemable_type' => 'App\Model\Commissary',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -121,6 +128,7 @@ class ItemsTableSeeder extends Seeder
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
+                'chart_account_id' => rand(3, 635),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Commissary',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),

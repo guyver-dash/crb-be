@@ -21,7 +21,8 @@ class PurchasesTableSeeder extends Seeder
                 'purchasable_id' => $i,
                 'purchasable_type' => 'App\Model\Logistic',
                 'purchase_no' => rand(6000, 8000),
-                'purchase_status_id' => 1, 
+                'purchase_status_id' => 1,
+                'invoice_no' => str_replace('0.', '', microtime() . uniqid(true)),
                 'prepared_by' => $i,
                 'order_date' => Carbon::now(),
             ]);
@@ -65,6 +66,7 @@ class PurchasesTableSeeder extends Seeder
                 'purchasable_type' => 'App\Model\Branch',
                 'purchase_no' => rand(6000, 8000),
                 'purchase_status_id' => 1, 
+                'invoice_no' => str_replace('0.', '', microtime() . uniqid(true)),
                 'prepared_by' => $i,
                 'order_date' => Carbon::now(),
             ]);
@@ -108,6 +110,7 @@ class PurchasesTableSeeder extends Seeder
                 'purchasable_type' => 'App\Model\Commissary',
                 'purchase_no' => rand(6000, 8000),
                 'purchase_status_id' => 1, 
+                'invoice_no' => str_replace('0.', '', microtime() . uniqid(true)),
                 'prepared_by' => $i,
                 'order_date' => Carbon::now(),
             ]);

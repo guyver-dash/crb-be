@@ -22,6 +22,10 @@ class Branch extends Model
     	return $this->morphMany('App\Model\Transaction', 'transactable');
     }
 
+    public function purchases(){
+
+    	return $this->morphMany('App\Model\Purchase', 'purchasable');
+    }
 
     public function address(){
 
@@ -49,7 +53,7 @@ class Branch extends Model
     
     public function scopeRelTable($query){
 
-        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items', 'transactions.chartAccount', 'transactions.transactionType']);
+        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items', 'transactions.chartAccount', 'transactions.transactionType', 'purchases.items.chartAccount']);
     }
 
     public function accessRights()

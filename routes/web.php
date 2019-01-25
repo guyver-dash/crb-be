@@ -8,6 +8,8 @@ Route::get('bank_accounts', function(){
 
 Route::get('classes', function(){
 
+    dd(str_replace('0.', '', microtime() . uniqid(true)));
+
     $menus = App\Model\Branch::find(1)->classs()->with('allChildren')->get();
 
     dd($menus);

@@ -20,7 +20,8 @@ class Transaction extends Model
         'remarks',
         'checknumber',
         'refnum',
-        'status'
+        'status',
+        'created_by'
     ];
 
     public function branch()

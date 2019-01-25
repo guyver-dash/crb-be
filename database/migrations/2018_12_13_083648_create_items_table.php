@@ -15,6 +15,9 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('chart_account_id')->unsigned()->nullable();
+            $table->foreign('chart_account_id')->references('id')
+                ->on('chart_accounts');
             $table->string('sku');
             $table->bigInteger('barcode');
             $table->string('name');

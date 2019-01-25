@@ -27,7 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->float('total_amount', 10, 2);
             $table->string('checknumber')->nullable();
             $table->string('remarks')->nullable();
-            $table->boolean('status')->nullable();
+            $table->boolean('status')->nullable()->default(1);
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')
                 ->on('users');

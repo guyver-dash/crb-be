@@ -154,4 +154,12 @@ class TransactionController extends Controller
         ]);
     }
    
+
+    public function purchases(Request $request){
+
+        return response()->json([
+            'purchases' => $this->transaction->purchases($request->modelType, $request->modelId),
+            'entityItems' => $this->transaction->items($request->modelType, $request->modelId)
+        ]);
+    }
 }

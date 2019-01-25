@@ -14,8 +14,11 @@ class Item extends Model
     ];
    
 
-    protected $appends = ['pivot_date_approved', 'pivot_date_delivery']; 
+    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price']; 
 
+    public function chartAccount(){
+        return $this->hasOne('App\Model\ChartAccount', 'id', 'chart_account_id');
+    }
     public function itemable(){
 
     	return $this->morphTo();
@@ -67,7 +70,7 @@ class Item extends Model
 
     public function scopeRelTable($query){
 
-        return $query->with(['package', 'logistics', 'otherVendors', 'branches', 'commissaries', 'purchases']);
+        return $query->with(['package', 'logistics', 'otherVendors', 'branches', 'commissaries', 'purchases', 'chartAccount']);
     }
 
     public function getPivotDateApprovedAttribute(){
@@ -76,6 +79,18 @@ class Item extends Model
 
             if($purchase->pivot->date_approved != null){
                 return Carbon::parse($purchase->pivot->date_approved)->toDayDateTimeString();
+            }
+                
+        })->first();
+        
+    }
+
+    public function getPivotPriceAttribute(){
+
+        return $this->purchases->map(function($purchase){
+
+            if($purchase->pivot->price != null){
+                return (float)$purchase->pivot->price;
             }
                 
         })->first();

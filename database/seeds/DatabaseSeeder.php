@@ -90,15 +90,15 @@ class DatabaseSeeder extends Seeder
         // $this->call(LogisticsTableSeeder::class);
         // $this->call(CommissariesTableSeeder::class);
         // $this->call(OtherVendorsTableSeeder::class);
+        // $this->call(TaccountsTableSeeder::class);
+        //  $this->call(AccountingStandardsTableSeeder::class);
+        // $this->call(ChartAccountsTableSeeder::class);
         // $this->call(ItemsTableSeeder::class);
         // $this->call(PurchaseStatusTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
         // $this->call(IngredientsTableSeeder::class);
-        // $this->call(AccountingStandardsTableSeeder::class);
-        // $this->call(TaccountsTableSeeder::class);
-        // $this->call(ChartAccountsTableSeeder::class);
-        $this->call(TransactionTypesTableSeeder::class);
-        $this->call(TransactionsTableSeeder::class);
+        // $this->call(TransactionTypesTableSeeder::class);
+        // $this->call(TransactionsTableSeeder::class);
         $this->call(GeneralLedgersTableSeeder::class);
         $this->call(PayeesTableSeeder::class);
     }
