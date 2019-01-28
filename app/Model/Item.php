@@ -10,11 +10,11 @@ class Item extends Model
 
     protected $table = 'items';
     protected $fillable = [
-      'itemable_id', 'itemable_type', 'sku', 'barcode', 'name', 'desc', 'price', 'qty', 'package_id', 'minimum', 'maximum', 'reorder_level'
+      'itemable_id', 'itemable_type', 'sku', 'barcode', 'name', 'desc', 'price', 'qty', 'tax', 'package_id', 'minimum', 'maximum', 'reorder_level'
     ];
    
 
-    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price']; 
+    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price', 'total_amount']; 
 
     public function chartAccount(){
         return $this->hasOne('App\Model\ChartAccount', 'id', 'chart_account_id');
@@ -87,25 +87,19 @@ class Item extends Model
 
     public function getPivotPriceAttribute(){
 
-        return $this->purchases->map(function($purchase){
+        return (float)$this->pivot['price'];
+        
+    }
 
-            if($purchase->pivot->price != null){
-                return (float)$purchase->pivot->price;
-            }
-                
-        })->first();
+    public function getTotalAmountAttribute(){
+
+        return (float)$this->pivot['price'] * (float)$this->pivot['qty'];
         
     }
 
     public function getPivotDateDeliveryAttribute(){
 
-        return $this->purchases->map(function($purchase){
-
-            if($purchase->pivot->date_delivery != null){
-                return Carbon::parse($purchase->pivot->date_delivery)->toDayDateTimeString();
-            }
-                
-        })->first();
+        return Carbon::parse($this->pivot['date_delivery'])->toDayDateTimeString();
         
     }
     

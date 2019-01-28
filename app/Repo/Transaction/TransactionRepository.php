@@ -101,4 +101,14 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
         }
     }
 
+    public function payee($transactionId){
+        
+        $trans = $this->modelName->where('id', $transactionId)->first();
+        if($trans->payee !== null){
+            return $trans->payee->payable;
+        }
+        
+        return null;
+    }
+
 }

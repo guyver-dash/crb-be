@@ -22,8 +22,9 @@ class CreateItemsTable extends Migration
             $table->bigInteger('barcode');
             $table->string('name');
             $table->longText('desc');
-            $table->integer('price');
+            $table->decimal('price', 12, 2);
             $table->integer('qty');
+            $table->decimal('tax', 12, 2)->nullable();
             $table->integer('package_id')->unsigned()->nullable();
             $table->foreign('package_id')->references('id')
                 ->on('packages');

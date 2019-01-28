@@ -28,8 +28,8 @@ class CreateGeneralLedgersTable extends Migration
             $table->integer('chart_account_id')->unsigned()->nullable();
             $table->foreign('chart_account_id')->references('id')
                 ->on('chart_accounts');
-            $table->decimal('debit_amount')->default(0);
-            $table->decimal('credit_amount')->default(0);
+            $table->decimal('debit_amount', 12, 2)->default(0);
+            $table->decimal('credit_amount', 12, 2)->default(0);
             $table->decimal('tax')->default(0);
             $table->boolean('is_posted')->nullable();
             $table->timestamps();

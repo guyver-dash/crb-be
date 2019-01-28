@@ -60,9 +60,15 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $reqTrans = $request->transaction;
-        $reqTrans['refnum'] = microtime();
+        $reqTrans['refnum'] = str_replace('0.', '', microtime() . uniqid(true));
         $reqTrans['created_by'] = Auth::User()->id;
         $transaction = $this->transaction->create($reqTrans);
+
+        $this->transaction->find($transaction->id)->payee()->create([
+            'transaction_id' => $transaction->id,
+            'payable_id' => $request->payee['vendorableName'],
+            'payable_type' => $request->payee['vendorableType']
+        ]);
         foreach($request->generalLedgers as $gl){
             $this->transaction->find($transaction->id)->generalLedgers()->create($gl);
         }

@@ -20,7 +20,7 @@ class Purchase extends Model
         'invoice_no', 'received_date', 'received_by', 'received_by'
     ];
 
-    // protected $appends = ['pivot_approved_by']; 
+
 
     public function items(){
         return $this->belongsToMany('App\Model\Item', 'item_purchase', 'purchase_id', 'item_id')
@@ -73,6 +73,7 @@ class Purchase extends Model
         }
         
     }
+
 
     // public function getPivotApprovedByAttribute(){
 
