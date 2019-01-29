@@ -139,4 +139,45 @@ class BaseRepository implements BaseInterface
         return null;
     }
 
+    public function successApiResponse($message, $data = null) 
+    {
+        $resp['success'] = 1;
+        $resp['message'] = $message;
+        if ($data) {
+            $resp['data'] = $data;
+        }
+        return $resp;
+    }
+
+    public function errorApiResponse($message, $data = null, $code = null) 
+    {
+        // common response success: '', message: '', data: ''
+        $resp['success'] = 0;
+        $resp['message'] = $message;
+        if ($data) {
+            $resp['data'] = $data;
+        }
+        if ($code) {
+            return response($resp, $code);
+        }
+
+        return response($resp, 500);
+    }
+
+    public function apiResponse($result)
+    {
+        if ($result === true) {
+            return [
+                'success' => 1,
+                'message' => 'Successfully created holding ' . $request['name'] . '.',
+            ];
+        } else {
+            return response([
+                'success' => 0,
+                'message' => $result,
+            ], 500);
+        }
+    }
+
+
 }
