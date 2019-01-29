@@ -130,14 +130,7 @@ class BaseRepository implements BaseInterface
             ->first()->company->chartAccounts->where('parent_id', 0);
     }
 
-    public function payee($transactionId){
-        $trans = $this->modelName->where('id', $transactionId)->first();
-        if($trans->payee !== null){
-            return $trans->payee->payable;
-        }
-        
-        return null;
-    }
+   
 
     public function successApiResponse($message, $data = null) 
     {

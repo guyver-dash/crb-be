@@ -30,7 +30,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => $i,
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -40,7 +40,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => rand(1, 98),
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -50,7 +50,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => rand(1, 98),
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -74,7 +74,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => $i,
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -84,7 +84,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => rand(1, 98),
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -94,7 +94,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => rand(1, 98),
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -118,7 +118,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => $i,
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -128,7 +128,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => rand(1, 98),
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,
@@ -138,7 +138,7 @@ class PurchasesTableSeeder extends Seeder
             $purchase->items()->attach($purchase->id,[
                 'item_id' => rand(1, 98),
                 'purchase_id' => $purchase->id,
-                'qty' => rand(3, 2000),
+                'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
                 'approved_by' =>  $rand === 1 ? null : $faker->firstName('male'|'female') . ' ' . $faker->firstNameFemale . ' ' . $faker->lastName ,

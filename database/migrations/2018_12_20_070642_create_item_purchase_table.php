@@ -22,8 +22,9 @@ class CreateItemPurchaseTable extends Migration
             $table->foreign('purchase_id')->references('id')
                 ->on('purchases');
             $table->integer('qty');
-            $table->decimal('price');
-            $table->decimal('freight')->nullable();
+            $table->decimal('price', 12, 2);
+            $table->decimal('freight', 12, 2)->nullable();
+            $table->decimal('tax', 12, 2)->nullable();
             $table->string('approved_by')->nullable();
             $table->datetime('date_approved')->nullable();
             $table->datetime('date_delivery')->nullable();
