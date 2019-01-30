@@ -11,8 +11,6 @@ use Validator;
 class HoldingRepository extends BaseRepository implements HoldingInterface
 {
 
-    private $rules;
-
     public function __construct()
     {
 
@@ -71,47 +69,5 @@ class HoldingRepository extends BaseRepository implements HoldingInterface
         }
 
         return true;
-    }
-
-    public function createValidationByField($data)
-    {
-        $validator = $this->validate($data, [key($data) => $this->rules[key($data)]]);
-        return $validator->fails() ? $validator->errors() : true;
-    }
-
-    public function updateValidationByField($data, $id)
-    {
-        $validator = $this->validate($data, [key($data) => $this->getUpdateRules($id)[key($data)]]);
-        return $validator->fails() ? $validator->errors() : true;
-    }
-
-    public function getUpdateRules($id)
-    {
-        $update_rule = $this->rules;
-        $update_rule['name'] = $this->rules['name'] . ',' . $id;
-        return $update_rule;
-    }
-
-    public function validate($data, $rule)
-    {
-        return $validator = Validator::make($data, $rule);
-    }
-
-    public function asyncValidate($data)
-    {
-        // make the rule array to be pluck from the rule set
-        $queryRule = [$data['field'] => $data['value']];
-        // type checks
-        $actionType = [
-            'create' => function () use ($queryRule) {
-                return $this->createValidationByField($queryRule);
-            },
-            'update' => function () use ($queryRule, $data) {
-                return $this->updateValidationByField($queryRule, $data['id']);
-            },
-        ];
-        // execute the validation action
-        return $actionType[$data['type']]();
-    }
-
+    }    
 }

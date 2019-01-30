@@ -19,10 +19,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('async-holding-form-validation', 'API\Holding\HoldingController@asyncValidation');
 	// get random holdings for dropdown
 	Route::get('get-random-holdings', 'API\Holding\HoldingController@getRandomHoldings');
-	Route::get('get-holdings-by-name', 'API\Holding\HoldingController@getHoldingsByName');
+	Route::get('get-holdings-by-name/{holding}/{limit}', 'API\Holding\HoldingController@getHoldingsByName');
 
 	Route::get('user-companies', 'API\Company\CompanyController@userCompanies');
 	Route::get('company-holdings', 'API\Company\CompanyController@companyHoldings');
+	Route::get('async-company-form-validation', 'API\Holding\CompanyController@asyncValidation');
 	Route::resource('companies', 'API\Company\CompanyController');
 
 	Route::resource('logistics', 'API\Logistic\LogisticController');

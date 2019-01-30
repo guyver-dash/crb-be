@@ -28,7 +28,6 @@ class HoldingController extends Controller
                     ->get()
             ),
         ];
-
     }
 
     public function store(Request $request)
@@ -89,11 +88,11 @@ class HoldingController extends Controller
         }
     }
 
-    public function getHoldingsByName($holding)
+    public function getHoldingsByName($holding, $limit)
     {
         $holdings = Holding::where('name', 'LIKE', "%$holding%")
             ->orWhere('desc', 'LIKE', "%$holding%")
-            ->take($limit)
+            ->take($limit ? $limit : 5)
             ->get();
         if ($holdings) {
             return $holdings;
@@ -107,17 +106,9 @@ class HoldingController extends Controller
     {
         // push the process to repo
         $result = $this->holdingRepo->asyncValidate($request->query());
-        if ($result === true) {
-            return [
-                'success' => 1,
-            ];
-        } else {
-            return response([
-                'success' => 0,
-                'message' => $result,
-            ], 500);
-        }
-
+        return ($result === true)
+        ? $this->holdingRepo->successApiResponse()
+        : $this->holdingRepo->errorApiResponse($result);
     }
 
 }
