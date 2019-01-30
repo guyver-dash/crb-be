@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Model\Tax;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Image;
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Tax::truncate();
         // CivilStatus::truncate();
         // Gender::truncate();
         // BusinessType::truncate();
@@ -68,6 +70,11 @@ class DatabaseSeeder extends Seeder
         // TAccount::truncate();
         // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
+        // $this->call(TaxesTableSeeder::class);
+        //  $this->call(TaxTypesTableSeeder::class);
+        // $this->call(AccountingMethodsTableSeeder::class);
+        // $this->call(TaccountsTableSeeder::class);
+        // $this->call(TransactionTypesTableSeeder::class);
         // $this->call(CivilStatusTableSeeder::class);
         // $this->call(GendersTableSeeder::class);
         // $this->call(VatTypesTableSeeder::class);
@@ -90,16 +97,17 @@ class DatabaseSeeder extends Seeder
         // $this->call(LogisticsTableSeeder::class);
         // $this->call(CommissariesTableSeeder::class);
         // $this->call(OtherVendorsTableSeeder::class);
-        // $this->call(TaccountsTableSeeder::class);
-        //  $this->call(AccountingStandardsTableSeeder::class);
+        // $this->call(AccountingStandardsTableSeeder::class);
         // $this->call(ChartAccountsTableSeeder::class);
         // $this->call(ItemsTableSeeder::class);
         // $this->call(PurchaseStatusTableSeeder::class);
-        $this->call(PurchasesTableSeeder::class);
-        $this->call(PurchasesTableSeeder::class);
-        $this->call(PurchasesTableSeeder::class);
+        // $this->call(PurchasesTableSeeder::class);
+        // $this->call(PurchasesTableSeeder::class);
+        // $this->call(PurchasesTableSeeder::class);
+        // $this->call(PurchasesTableSeeder::class);
+        // $this->call(PurchasesTableSeeder::class);
+        // $this->call(PurchasesTableSeeder::class);
         // $this->call(IngredientsTableSeeder::class);
-        // $this->call(TransactionTypesTableSeeder::class);
         // $this->call(TransactionsTableSeeder::class);
         // $this->call(GeneralLedgersTableSeeder::class);
         // $this->call(PayeesTableSeeder::class);

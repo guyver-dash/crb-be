@@ -20,7 +20,7 @@ class TransactionsTableSeeder extends Seeder
                     $trans = new Transaction();
                     $trans->transactable_id = $a;
                     $trans->transactable_type = 'App\Model\Branch';
-                    $trans->transaction_type_id = rand(1, 294);
+                    $trans->transaction_type_id = rand(1, 5);
                     $trans->chart_account_id = $chartAccount->id;
                     $trans->refnum =  str_replace('0.', '', microtime() . uniqid(true));
                     $trans->total_amount = rand(200, 50000);
@@ -45,7 +45,7 @@ class TransactionsTableSeeder extends Seeder
                     $trans = new Transaction();
                     $trans->transactable_id = $a;
                     $trans->transactable_type = 'App\Model\Logistic';
-                    $trans->transaction_type_id = rand(1, 294);
+                    $trans->transaction_type_id = rand(1, 5);
                     $trans->chart_account_id = $chartAccount->id;
                     $trans->refnum =  str_replace('0.', '', microtime() . uniqid(true));
                     $trans->total_amount = rand(200, 50000);
@@ -70,7 +70,7 @@ class TransactionsTableSeeder extends Seeder
                     $trans = new Transaction();
                     $trans->transactable_id = $a;
                     $trans->transactable_type = 'App\Model\Commissary';
-                    $trans->transaction_type_id = rand(1, 294);
+                    $trans->transaction_type_id = rand(1, 5);
                     $trans->chart_account_id = $chartAccount->id;
                     $trans->refnum = str_replace('0.', '', microtime() . uniqid(true));
                     $trans->total_amount = rand(200, 50000);

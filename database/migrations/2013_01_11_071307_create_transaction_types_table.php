@@ -16,14 +16,10 @@ class CreateTransactionTypesTable extends Migration
         Schema::create('transaction_types', function (Blueprint $table) {
            
             $table->increments('id');
-            $table->integer('company_id')->unsigned()->nullable();
-            $table->foreign('company_id')->references('id')
-                ->on('companies');
             $table->integer('taccount_id')->unsigned()->nullable();
             $table->foreign('taccount_id')->references('id')
                     ->on('taccounts');
             $table->string('name');
-            $table->string('desc');
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@ class ItemsTableSeeder extends Seeder
 
         for ($i=1; $i < 99 ; $i++) { 
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => $i,
                 'itemable_type' => 'App\Model\Branch',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -31,14 +31,14 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Branch',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -47,14 +47,14 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Branch',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -63,7 +63,7 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
@@ -71,7 +71,7 @@ class ItemsTableSeeder extends Seeder
             ]);
 
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => $i,
                 'itemable_type' => 'App\Model\Logistic',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -80,14 +80,14 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Logistic',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -96,14 +96,14 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Logistic',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -112,14 +112,14 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => $i,
                 'itemable_type' => 'App\Model\Commissary',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -128,14 +128,14 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
                 'reorder_level' => rand(1, 100)
             ]);
             Item::create([
-                'chart_account_id' => rand(3, 635),
+                'chart_account_id' => rand(1, 633),
                 'itemable_id' => rand(1, 99),
                 'itemable_type' => 'App\Model\Commissary',
                 'sku' => strtoupper(substr(md5(mt_rand()), 0, 8)),
@@ -144,7 +144,7 @@ class ItemsTableSeeder extends Seeder
                 'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'price' => rand(1, 1000),
                 'qty' => rand(1, 50),
-                'tax' => rand(1, 20),
+                'tax_type_id' => rand(1, 3),
                 'package_id' => rand(1, 15), 
                 'minimum' =>  rand(20, 200),
                 'maximum' =>  rand(300, 5000),
@@ -164,7 +164,6 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
-                'tax' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -184,7 +183,6 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
-                'tax' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -204,7 +202,6 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
-                'tax' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -224,7 +221,6 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
-                'tax' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)

@@ -23,6 +23,9 @@ class CreateBusinessInfosTable extends Migration
             $table->integer('vat_type_id')->unsigned()->nullable();
             $table->foreign('vat_type_id')->references('id')
                 ->on('vat_types');
+            $table->integer('accounting_method_id')->unsigned()->nullable();
+            $table->foreign('accounting_method_id')->references('id')
+                ->on('accounting_methods');
             $table->string('telephone')->nullable();
             $table->string('email')->nullable();
             $table->string('tin')->nullable();

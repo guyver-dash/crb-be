@@ -26,7 +26,7 @@ class MenusTableSeeder extends Seeder
          ];
         
          $sub_menu4 =[
-            'Accounting Standards', 'Chart of Accounts', 'Transaction Types', 'Transactions', 'General Ledgers'
+            'Accounting Standards', 'Chart of Accounts', 'Transactions', 'General Ledgers'
          ];
         foreach ($menus as $value) {
         	

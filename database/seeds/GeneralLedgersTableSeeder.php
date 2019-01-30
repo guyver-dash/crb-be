@@ -22,7 +22,7 @@ class GeneralLedgersTableSeeder extends Seeder
                     'ledgerable_type' => 'App\Model\Branch',
                     'transaction_id' => $a,
                     'particulars' => 'particulars ' . $a,
-                    'chart_account_id' => rand(3, 635),
+                    'chart_account_id' => rand(1, 633),
                     'debit_amount' => rand(500, 40000),
                     'credit_amount' => rand(1, 90000),
                     'tax' => rand(1, 100),

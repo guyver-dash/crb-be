@@ -12,13 +12,9 @@ class TransactionType extends Model
     protected $table = 'transaction_types';
     protected $fillable = [
             'name',
-            'desc',
-            'company_id',
-            'trans_code'
     ];
-
-    public function company(){
-        return $this->belongsTo('App\Model\Company');
+    public function accountingMethod(){
+        return $this->belongsToMany('App\Model\AccountingMethod', 'accounting_method_transaction_type', 'transaction_type_id', 'accounting_method_id');
     }
 
     public function transaction(){
@@ -31,6 +27,6 @@ class TransactionType extends Model
 
     public function scopeRelTable($query){
 
-        return $query->with(['company', 'tAccount', 'transaction']);
+        return $query->with(['tAccount', 'transaction']);
     }
 }

@@ -4,17 +4,17 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-
+use App\Model\Tax;
 class Item extends Model
 {
 
     protected $table = 'items';
     protected $fillable = [
-      'itemable_id', 'itemable_type', 'sku', 'barcode', 'name', 'desc', 'price', 'qty', 'tax', 'package_id', 'minimum', 'maximum', 'reorder_level'
+      'itemable_id', 'itemable_type', 'sku', 'barcode', 'name', 'desc', 'price', 'qty', 'vat_type_id', 'package_id', 'minimum', 'maximum', 'reorder_level'
     ];
    
 
-    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price', 'total_amount']; 
+    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price', 'total_amount', 'purchase_tax']; 
 
     public function chartAccount(){
         return $this->hasOne('App\Model\ChartAccount', 'id', 'chart_account_id');
@@ -50,6 +50,10 @@ class Item extends Model
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
 
+    public function taxType(){
+
+        return $this->hasOne('App\Model\TaxType', 'id', 'tax_type_id');
+    }
     public function package(){
 
         return $this->hasOne('App\Model\Package', 'id', 'package_id');
@@ -70,18 +74,18 @@ class Item extends Model
 
     public function scopeRelTable($query){
 
-        return $query->with(['package', 'logistics', 'otherVendors', 'branches', 'commissaries', 'purchases', 'chartAccount']);
+        return $query->with(['package', 'logistics', 'otherVendors', 'branches', 'commissaries', 'purchases', 'chartAccount', 'taxType']);
     }
 
     public function getPivotDateApprovedAttribute(){
 
-        return $this->purchases->map(function($purchase){
+        return Carbon::parse($this->pivot['date_approved'])->toDayDateTimeString();
+        
+    }
 
-            if($purchase->pivot->date_approved != null){
-                return Carbon::parse($purchase->pivot->date_approved)->toDayDateTimeString();
-            }
-                
-        })->first();
+    public function getPriceAttribute($val){
+
+        return (float)$val;
         
     }
 
@@ -100,6 +104,20 @@ class Item extends Model
     public function getPivotDateDeliveryAttribute(){
 
         return Carbon::parse($this->pivot['date_delivery'])->toDayDateTimeString();
+        
+    }
+
+    public function getPurchaseTaxAttribute(){
+
+        $tax = Tax::where('default', 1)->first()->percent;
+        if($this->tax_type_id === 1){
+            return (float)$this->getTotalAmountAttribute() * (float)$tax/100;
+        }else if($this->tax_type_id === 2){
+            return 0;
+        }else {
+            return 0;
+        }
+        
         
     }
     

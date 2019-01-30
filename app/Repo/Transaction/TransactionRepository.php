@@ -70,7 +70,7 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
 
     public function transactionTypes($modelType, $modelId){
 
-        return $modelType::where('id', $modelId)->first()->company->transactionTypes;
+        return $modelType::where('id', $modelId)->first()->businessInfo->accountingMethod->transactionTypes;
     }
 
     public function updateGeneralLedgers($request){

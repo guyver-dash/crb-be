@@ -19,6 +19,11 @@ class BusinessInfo extends Model
     	 return $this->morphTo();
     }
 
+    public function accountingMethod(){
+
+        return $this->hasOne('App\Model\AccountingMethod', 'id', 'accounting_method_id');
+    }
+
     public function businessType(){
         return $this->hasOne('App\Model\BusinessType', 'id', 'business_type_id');
     }
