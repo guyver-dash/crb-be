@@ -22,39 +22,20 @@ class HoldingController extends Controller
     public function index()
     {
         return [
-            /***
-             * entityNameAddress() location App/Repo/BaseRepository
-             */
             'holdings' => $this->holdingRepo->paginate($this->holdingRepo->entityNameAddress(app()->make('request'))
                     ->relTable()
                     ->orderBy('created_at', 'desc')
                     ->get()
             ),
-
         ];
-
-    }
-
-    public function create()
-    {
-
     }
 
     public function store(Request $request)
     {
         $result = $this->holdingRepo->create($request->all());
-        if ($result === true) {
-            return [
-                'success' => 1,
-                'message' => 'Successfully created holding ' . $request['name'] . '.',
-            ];
-        } else {
-            return response([
-                'success' => 0,
-                'message' => $result,
-            ], 500);
-        }
-
+        return ($result === true)
+        ? $this->holdingRepo->successApiResponse('Successfully created holding ' . $request['name'] . '.')
+        : $this->holdingRepo->errorApiResponse($result);
     }
 
     public function show(Holding $holding, Request $request)
@@ -74,17 +55,9 @@ class HoldingController extends Controller
     public function update(Holding $holding, Request $request)
     {
         $result = $this->holdingRepo->update($request->all());
-        if ($result === true) {
-            return [
-                'success' => 1,
-                'message' => 'Successfully update holding ' . $request['name'] . '.',
-            ];
-        } else {
-            return response([
-                'success' => 0,
-                'message' => $result,
-            ], 500);
-        }
+        return ($result === true)
+        ? $this->holdingRepo->successApiResponse('Successfully update holding ' . $request['name'] . '.')
+        : $this->holdingRepo->errorApiResponse($result);
     }
 
     public function destroy(Holding $holding, Request $request)
@@ -115,11 +88,11 @@ class HoldingController extends Controller
         }
     }
 
-    public function getHoldingsByName($holding)
+    public function getHoldingsByName($holding, $limit)
     {
         $holdings = Holding::where('name', 'LIKE', "%$holding%")
             ->orWhere('desc', 'LIKE', "%$holding%")
-            ->take($limit)
+            ->take($limit ? $limit : 5)
             ->get();
         if ($holdings) {
             return $holdings;
@@ -133,17 +106,9 @@ class HoldingController extends Controller
     {
         // push the process to repo
         $result = $this->holdingRepo->asyncValidate($request->query());
-        if ($result === true) {
-            return [
-                'success' => 1,
-            ];
-        } else {
-            return response([
-                'success' => 0,
-                'message' => $result,
-            ], 500);
-        }
-
+        return ($result === true)
+        ? $this->holdingRepo->successApiResponse()
+        : $this->holdingRepo->errorApiResponse($result);
     }
 
 }

@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repo\Holding\HoldingInterface;
-use App\Repo\Holding\HoldingRepository;
-use App\Http\Controllers\API\Holding\HoldingController;
+use App\Repo\Company\CompanyInterface;
+use App\Repo\Company\CompanyRepository;
+use App\Http\Controllers\API\Company\CompanyController;
 class CompanyServiceProvider extends ServiceProvider
 {
     /**
