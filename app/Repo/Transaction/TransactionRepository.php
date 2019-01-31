@@ -59,7 +59,7 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
 
     public function entity($modelType, $id){
       
-        return $modelType::where('id', $id);
+        return $modelType::where('id', $id)->with(['address.brgy', 'address.city', 'address.province', 'address.country'])->first();
         
     }
 

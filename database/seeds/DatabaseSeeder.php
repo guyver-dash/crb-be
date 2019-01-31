@@ -99,7 +99,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(OtherVendorsTableSeeder::class);
         // $this->call(AccountingStandardsTableSeeder::class);
         // $this->call(ChartAccountsTableSeeder::class);
-        // $this->call(ItemsTableSeeder::class);
+        $this->call(ItemsTableSeeder::class);
+        $this->call(ItemsTableSeeder::class);
         // $this->call(PurchaseStatusTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);

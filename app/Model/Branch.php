@@ -72,4 +72,5 @@ class Branch extends Model
         return 'App\Model\Branch';
     }
     
+    
 }
