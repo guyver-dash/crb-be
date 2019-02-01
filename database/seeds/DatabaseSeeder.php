@@ -29,6 +29,7 @@ use App\Model\Ingredient;
 use App\Model\AccountingStandard;
 use App\Model\Taccount;
 use App\Model\ChartAccount;
+use App\Model\PurchaseRecieved;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,7 +40,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-<<<<<<< HEAD
         // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         // Tax::truncate();
         // CivilStatus::truncate();
@@ -65,42 +65,12 @@ class DatabaseSeeder extends Seeder
         // Item::truncate();
         // Purchase::truncate();
         // PurchaseStatus::truncate();
+        // PurchaseRecived::truncate();
         // Ingredient::truncate();
         // AccountingStandard::truncate();
         // ChartAccount::truncate();
         // TAccount::truncate();
         // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-=======
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        CivilStatus::truncate();
-        Gender::truncate();
-        BusinessType::truncate();
-        VatType::truncate();
-        Address::truncate();
-        User::truncate();
-        Role::truncate();
-        Image::truncate();
-        Menu::truncate();
-        Holding::truncate();
-        Branch::truncate();
-        Image::truncate();
-        BusinessInfo::truncate();
-        AccessRight::truncate();
-        Company::truncate();
-        BankAccount::truncate();
-        Category::truncate();
-        Package::truncate();
-        Trademark::truncate();
-        OtherVendor::truncate();
-        Item::truncate();
-        Purchase::truncate();
-        PurchaseStatus::truncate();
-        Ingredient::truncate();
-        AccountingStandard::truncate();
-        ChartAccount::truncate();
-        TAccount::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
->>>>>>> d730d13b1e31f82bf311722bc800d43e0e6531a1
         
         // $this->call(TaxesTableSeeder::class);
         //  $this->call(TaxTypesTableSeeder::class);
@@ -131,18 +101,18 @@ class DatabaseSeeder extends Seeder
         // $this->call(OtherVendorsTableSeeder::class);
         // $this->call(AccountingStandardsTableSeeder::class);
         // $this->call(ChartAccountsTableSeeder::class);
-        $this->call(ItemsTableSeeder::class);
-        $this->call(ItemsTableSeeder::class);
+        // $this->call(ItemsTableSeeder::class);
+        // $this->call(ItemsTableSeeder::class);
         // $this->call(PurchaseStatusTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
-        // $this->call(PurchasesTableSeeder::class);
-        // $this->call(PurchasesTableSeeder::class);
-        // $this->call(PurchasesTableSeeder::class);
-        // $this->call(IngredientsTableSeeder::class);
-        // $this->call(TransactionsTableSeeder::class);
-        // $this->call(GeneralLedgersTableSeeder::class);
-        // $this->call(PayeesTableSeeder::class);
+        $this->call(PurchasedRecievedTableSeeder::class);
+        $this->call(PurchasedRecievedTableSeeder::class);
+        $this->call(PurchasedRecievedTableSeeder::class);
+        $this->call(IngredientsTableSeeder::class);
+        $this->call(TransactionsTableSeeder::class);
+        $this->call(GeneralLedgersTableSeeder::class);
+        $this->call(PayeesTableSeeder::class);
     }
 }

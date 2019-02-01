@@ -7,6 +7,8 @@ use App\Repo\BaseInterface;
 use App\Model\Transaction;
 use App\Model\TransactionType;
 use App\Model\ChartAccount;
+use App\Model\Purchase;
+
 class TransactionRepository extends BaseRepository implements TransactionInterface{
 
 
@@ -38,15 +40,24 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
                 ->items;
     }
 
-    public function purchases($modelType, $id){
+    public function purchase($id){
 
+        return Purchase::where('id', $id)
+                // ->whereHas('accessRights.roles.users', function($q){
+                //     $q->where('users.id', Auth::User()->id);
+                // })
+                ->relTable()
+                ->first();
+               
+    }
+
+    public function purchaseReceived($modelType, $id){
         return $modelType::where('id', $id)
                 ->whereHas('accessRights.roles.users', function($q){
                     // $q->where('users.id', Auth::User()->id);
                 })
-                ->relTable()
-                ->first()
-                ->purchases;
+                ->with(['purchaseReceived.purchase.items.branches','purchaseReceived.purchase.items.logistics','purchaseReceived.purchase.items.commissaries' ,'purchaseReceived.purchase.items.otherVendors'])
+                ->first();
     }
     public function userEntities($modelType){
 

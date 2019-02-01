@@ -161,11 +161,11 @@ class TransactionController extends Controller
     }
    
 
-    public function purchasesTobeDeleted(Request $request){
+    public function purchaseReceived(Request $request){
 
         return response()->json([
-            'purchases' => $this->transaction->purchases($request->modelType, $request->modelId),
-            'entityItems' => $this->transaction->items($request->modelType, $request->modelId),
+            'purchaseReceived' => $this->transaction->purchaseReceived($request->modelType, $request->modelId),
+            // 'entityItems' => $this->transaction->items($request->modelType, $request->modelId),
             'entity' => $this->transaction->entity($request->modelType, $request->modelId)
         ]);
     }

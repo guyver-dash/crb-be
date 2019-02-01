@@ -28,6 +28,11 @@ class CreateTransactionsTable extends Migration
             $table->string('checknumber')->nullable();
             $table->string('remarks')->nullable();
             $table->boolean('status')->nullable()->default(1);
+            $table->date('date_due')->nullable();
+            $table->decimal('vatable_sales', 12, 2)->nullable();
+            $table->decimal('vatexempt_sales', 12, 2)->nullable();
+            $table->decimal('zerorated_sales', 12, 2)->nullable();
+            $table->decimal('vat_amount', 12, 2)->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')
                 ->on('users');

@@ -27,6 +27,11 @@ class Branch extends Model
     	return $this->morphMany('App\Model\Purchase', 'purchasable');
     }
 
+    public function purchaseReceived(){
+
+    	return $this->morphMany('App\Model\PurchaseRecieved', 'purchasable');
+    }
+
     public function items(){
 
     	return $this->morphMany('App\Model\Item', 'itemable');
@@ -58,7 +63,7 @@ class Branch extends Model
     
     public function scopeRelTable($query){
 
-        return $query->with(['address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items.taxType', 'transactions.chartAccount', 'transactions.transactionType', 'purchases.items.chartAccount', 'purchases.items.taxType']);
+        return $query->with(['purchaseReceived.items', 'address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items.taxType', 'transactions.chartAccount', 'transactions.transactionType', 'purchases.items.chartAccount', 'purchases.items.taxType']);
     }
 
     public function accessRights()

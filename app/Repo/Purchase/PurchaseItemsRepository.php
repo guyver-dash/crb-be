@@ -12,8 +12,8 @@ class PurchaseItemsRepository extends PurchaseRepository implements PurchaseInte
     {
 
         $items = Item::whereHas('purchases', function ($q) use ($request) {
-            $q->where('purchase_id', $request->id);
-        })
+                $q->where('purchase_id', $request->id);
+            })
 
             ->with([
                 'logistics.items.package',
