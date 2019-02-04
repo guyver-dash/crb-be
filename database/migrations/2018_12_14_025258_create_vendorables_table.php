@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVendorablesTable extends Migration
 {
@@ -25,14 +25,14 @@ class CreateVendorablesTable extends Migration
             $table->decimal('price');
             $table->integer('volume');
             $table->decimal('freight');
-            $table->integer('terms');
+            $table->integer('terms')->unsigned()->nullable();
             $table->longText('remarks');
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')
                 ->on('users');
-                $table->integer('approved_by')->unsigned()->nullable();
-                $table->foreign('approved_by')->references('id')
-                    ->on('users');
+            $table->integer('approved_by')->unsigned()->nullable();
+            $table->foreign('approved_by')->references('id')
+                ->on('users');
             $table->timestamps();
         });
     }

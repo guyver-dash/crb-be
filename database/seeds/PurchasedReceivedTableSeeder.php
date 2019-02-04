@@ -1,8 +1,12 @@
 <?php
 
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
 use Illuminate\Database\Seeder;
+=======
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
 use App\Model\PurchaseReceived;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class PurchasedReceivedTableSeeder extends Seeder
 {
@@ -14,7 +18,11 @@ class PurchasedReceivedTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
         for ($i=1; $i < 99 ; $i++) { 
+=======
+        for ($i = 1; $i < 99; $i++) {
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
             $purchaseReceived = PurchaseReceived::create([
                 'purchasable_id' => $i,
                 'purchasable_type' => 'App\Model\Logistic',
@@ -27,37 +35,56 @@ class PurchasedReceivedTableSeeder extends Seeder
                 'grand_total' => rand(5, 2000),
                 'received_date' => Carbon::now(),
                 'received_by' => rand(1, 102),
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
                 'date_due' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'token' => $i . str_random(60) 
             ]);
             
             $purchaseReceived->items()->attach($purchaseReceived->id,[
-                'item_id' => rand(1, 1568),
-                'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
-                'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+=======
+                'token' => $i . str_random(60),
             ]);
-            $purchaseReceived->items()->attach($purchaseReceived->id,[
+
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
                 'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+                'sub_total' => rand(100, 2000),
             ]);
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
             $purchaseReceived->items()->attach($purchaseReceived->id,[
+=======
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
                 'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+                'sub_total' => rand(100, 2000),
+            ]);
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
+            $purchaseReceived->items()->attach($purchaseReceived->id,[
+=======
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
+                'item_id' => rand(1, 1568),
+                'purchase_received_id' => $purchaseReceived->id,
+                'qty' => rand(1, 50),
+                'price' => rand(5, 5000),
+                'freight' => rand(100, 2000),
+                'sub_total' => rand(100, 2000),
             ]);
         }
 
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
         for ($i=1; $i < 99 ; $i++) { 
+=======
+        for ($i = 1; $i < 99; $i++) {
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
             $purchaseReceived = PurchaseReceived::create([
                 'purchasable_id' => $i,
                 'purchasable_type' => 'App\Model\Branch',
@@ -70,37 +97,56 @@ class PurchasedReceivedTableSeeder extends Seeder
                 'grand_total' => rand(5, 2000),
                 'received_date' => Carbon::now(),
                 'received_by' => rand(1, 102),
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
                 'date_due' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'token' => $i . str_random(60) 
             ]);
             
             $purchaseReceived->items()->attach($purchaseReceived->id,[
-                'item_id' => rand(1, 1568),
-                'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
-                'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+=======
+                'token' => $i . str_random(60),
             ]);
-            $purchaseReceived->items()->attach($purchaseReceived->id,[
+
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
                 'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+                'sub_total' => rand(100, 2000),
             ]);
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
             $purchaseReceived->items()->attach($purchaseReceived->id,[
+=======
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
                 'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+                'sub_total' => rand(100, 2000),
+            ]);
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
+            $purchaseReceived->items()->attach($purchaseReceived->id,[
+=======
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
+                'item_id' => rand(1, 1568),
+                'purchase_received_id' => $purchaseReceived->id,
+                'qty' => rand(1, 50),
+                'price' => rand(5, 5000),
+                'freight' => rand(100, 2000),
+                'sub_total' => rand(100, 2000),
             ]);
         }
 
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
         for ($i=1; $i < 99 ; $i++) { 
+=======
+        for ($i = 1; $i < 99; $i++) {
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
             $purchaseReceived = PurchaseReceived::create([
                 'purchasable_id' => $i,
                 'purchasable_type' => 'App\Model\Commissary',
@@ -113,33 +159,48 @@ class PurchasedReceivedTableSeeder extends Seeder
                 'grand_total' => rand(5, 2000),
                 'received_date' => Carbon::now(),
                 'received_by' => rand(1, 102),
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
                 'date_due' => $faker->date($format = 'Y-m-d', $max = 'now'),
                 'token' => $i . str_random(60) 
             ]);
             
             $purchaseReceived->items()->attach($purchaseReceived->id,[
-                'item_id' => rand(1, 1568),
-                'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
-                'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+=======
+                'token' => $i . str_random(60),
             ]);
-            $purchaseReceived->items()->attach($purchaseReceived->id,[
+
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
                 'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+                'sub_total' => rand(100, 2000),
             ]);
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
             $purchaseReceived->items()->attach($purchaseReceived->id,[
+=======
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
                 'qty' => rand(1, 50),
                 'price' => rand(5, 5000),
                 'freight' => rand(100, 2000),
-                'sub_total' => rand(100, 2000)
+                'sub_total' => rand(100, 2000),
+            ]);
+<<<<<<< HEAD:database/seeds/PurchasedReceivedTableSeeder.php
+            $purchaseReceived->items()->attach($purchaseReceived->id,[
+=======
+            $purchaseReceived->items()->attach($purchaseReceived->id, [
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c:database/seeds/PurchasedReceivedTableSeeder.php
+                'item_id' => rand(1, 1568),
+                'purchase_received_id' => $purchaseReceived->id,
+                'qty' => rand(1, 50),
+                'price' => rand(5, 5000),
+                'freight' => rand(100, 2000),
+                'sub_total' => rand(100, 2000),
             ]);
         }
     }

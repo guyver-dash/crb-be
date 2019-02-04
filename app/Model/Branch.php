@@ -2,68 +2,82 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\Model\Globals;
+use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
     use Globals;
-    
+
     protected $table = 'branches';
 
     protected $fillable = [
-        'name', 'desc', 'company_id'
+        'name', 'desc', 'company_id',
     ];
 
     protected $appends = ['entity'];
-    
-    public function transactions(){
 
-    	return $this->morphMany('App\Model\Transaction', 'transactable');
+    public function transactions()
+    {
+
+        return $this->morphMany('App\Model\Transaction', 'transactable');
     }
 
-    public function purchases(){
+    public function purchases()
+    {
 
-    	return $this->morphMany('App\Model\Purchase', 'purchasable');
+        return $this->morphMany('App\Model\Purchase', 'purchasable');
     }
 
-    public function purchaseReceived(){
+    public function purchaseReceived()
+    {
 
+<<<<<<< HEAD
     	return $this->morphMany('App\Model\PurchaseReceived', 'purchasable');
+=======
+        return $this->morphMany('App\Model\PurchaseReceived', 'purchasable');
+>>>>>>> 9c9e82789c8429b36cd293e9d2c5d423280aee5c
     }
 
-    public function items(){
+    public function items()
+    {
 
-    	return $this->morphMany('App\Model\Item', 'itemable');
+        return $this->morphMany('App\Model\Item', 'itemable');
     }
 
-    public function address(){
+    public function address()
+    {
 
-    	return $this->morphOne('App\Model\Address', 'addressable');
+        return $this->morphOne('App\Model\Address', 'addressable');
     }
 
-    public function franchisee(){
+    public function franchisee()
+    {
 
-    	return $this->morphOne('App\Model\Franchisee', 'franchisable');
+        return $this->morphOne('App\Model\Franchisee', 'franchisable');
     }
 
-    public function category(){
+    public function category()
+    {
 
-    	return $this->morphOne('App\Model\Category', 'categorable');
+        return $this->morphOne('App\Model\Category', 'categorable');
     }
 
-    public function company(){
+    public function company()
+    {
         return $this->belongsTo('App\Model\Company');
     }
 
-    public function businessInfo(){
+    public function businessInfo()
+    {
 
         return $this->morphOne('App\Model\BusinessInfo', 'businessable');
     }
-    
-    public function scopeRelTable($query){
 
-        return $query->with(['purchaseReceived.items', 'address.region','address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items.taxType', 'transactions.chartAccount', 'transactions.transactionType', 'purchases.items.chartAccount', 'purchases.items.taxType']);
+    public function scopeRelTable($query)
+    {
+
+        return $query->with(['purchaseReceived.items', 'address.region', 'address.province', 'address.city', 'address.brgy', 'company', 'businessInfo', 'items.taxType', 'transactions.chartAccount', 'transactions.transactionType', 'purchases.items.chartAccount', 'purchases.items.taxType']);
     }
 
     public function accessRights()
@@ -71,11 +85,10 @@ class Branch extends Model
         return $this->morphToMany('App\Model\AccessRight', 'accessable');
     }
 
-
-    public function getEntityAttribute(){
+    public function getEntityAttribute()
+    {
 
         return 'App\Model\Branch';
     }
-    
-    
+
 }

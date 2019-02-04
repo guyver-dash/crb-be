@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateItemPurchaseRecievedTable extends Migration
+class CreateItemPurchaseReceivedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateItemPurchaseRecievedTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_purchase_recieved', function (Blueprint $table) {
+        Schema::create('item_purchase_received', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('item_id')->unsigned()->nullable();
             $table->foreign('item_id')->references('id')
@@ -36,6 +36,6 @@ class CreateItemPurchaseRecievedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_purchase_recieved');
+        Schema::dropIfExists('item_purchase_received');
     }
 }
