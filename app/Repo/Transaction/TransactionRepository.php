@@ -56,8 +56,9 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
                 ->whereHas('accessRights.roles.users', function($q){
                     // $q->where('users.id', Auth::User()->id);
                 })
-                ->with(['purchaseReceived.purchase.items.branches','purchaseReceived.purchase.items.logistics','purchaseReceived.purchase.items.commissaries' ,'purchaseReceived.purchase.items.otherVendors'])
-                ->first();
+                ->with(['purchaseReceived.items.branches','purchaseReceived.items.logistics','purchaseReceived.items.commissaries' ,'purchaseReceived.items.otherVendors'])
+                ->first()
+                ->purchaseReceived;
     }
     public function userEntities($modelType){
 

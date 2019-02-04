@@ -29,7 +29,7 @@ use App\Model\Ingredient;
 use App\Model\AccountingStandard;
 use App\Model\Taccount;
 use App\Model\ChartAccount;
-use App\Model\PurchaseRecieved;
+use App\Model\PurchaseReceived;
 
 class DatabaseSeeder extends Seeder
 {
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         // Item::truncate();
         // Purchase::truncate();
         // PurchaseStatus::truncate();
-        // PurchaseRecived::truncate();
+        // PurchaseReceived::truncate();
         // Ingredient::truncate();
         // AccountingStandard::truncate();
         // ChartAccount::truncate();
@@ -107,9 +107,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(PurchasesTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
         // $this->call(PurchasesTableSeeder::class);
-        $this->call(PurchasedRecievedTableSeeder::class);
-        $this->call(PurchasedRecievedTableSeeder::class);
-        $this->call(PurchasedRecievedTableSeeder::class);
+        $this->call(PurchasedReceivedTableSeeder::class);
+        $this->call(PurchasedReceivedTableSeeder::class);
+        $this->call(PurchasedReceivedTableSeeder::class);
         $this->call(IngredientsTableSeeder::class);
         $this->call(TransactionsTableSeeder::class);
         $this->call(GeneralLedgersTableSeeder::class);

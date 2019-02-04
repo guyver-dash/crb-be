@@ -29,7 +29,7 @@ class Branch extends Model
 
     public function purchaseReceived(){
 
-    	return $this->morphMany('App\Model\PurchaseRecieved', 'purchasable');
+    	return $this->morphMany('App\Model\PurchaseReceived', 'purchasable');
     }
 
     public function items(){

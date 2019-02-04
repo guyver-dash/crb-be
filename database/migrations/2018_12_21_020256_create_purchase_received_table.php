@@ -22,7 +22,10 @@ class CreatePurchaseReceivedTable extends Migration
                 ->on('purchases');
             $table->integer('purchase_status_id')->unsigned()->nullable();
             $table->foreign('purchase_status_id')->references('id')
-                    ->on('purchase_status');
+                ->on('purchase_status');
+            $table->integer('chart_account_id')->unsigned()->nullable();
+            $table->foreign('chart_account_id')->references('id')
+                ->on('chart_accounts');
             $table->date('received_date')->nullable();
             $table->decimal('freight')->nullable();
             $table->decimal('discount')->nullable();
@@ -33,6 +36,7 @@ class CreatePurchaseReceivedTable extends Migration
             $table->foreign('received_by')->references('id')
                 ->on('users');
             $table->string('token')->nullable();
+            $table->date('date_due');
             $table->timestamps();
         });
     }

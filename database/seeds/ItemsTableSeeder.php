@@ -164,6 +164,7 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
+                'terms' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -183,6 +184,7 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
+                'terms' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -202,6 +204,7 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
+                'terms' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
@@ -221,6 +224,7 @@ class ItemsTableSeeder extends Seeder
                 'volume' => rand(200, 3000),
                 'price' => rand(1, 1000),
                 'freight' => rand(1, 1000),
+                'terms' => rand(1, 30),
                 'remarks' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'created_by' => rand(1, 98),
                 'approved_by'   => rand(1, 98)
