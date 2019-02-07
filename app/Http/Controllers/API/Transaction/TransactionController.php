@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API\Transaction;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repo\Transaction\TransactionInterface;
 use App\Model\Transaction;
+use App\Repo\Transaction\TransactionInterface;
 use Auth;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -18,7 +18,7 @@ class TransactionController extends Controller
 
         // $this->authorizeResource(ChartAccount::class);
         $this->transaction = $transaction;
-        
+
     }
 
     /**
@@ -28,11 +28,12 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         return response()->json([
             'transactions' => $this->transaction->paginate(
-                $this->transaction->entity($request)->relTable()->first()->transactions
-            )
+                $this->transaction->transactable($request->modelType, $request->id)
+            ),
+            'entity' => $this->transaction->entity($request->modelType, $request->id)->first(),
         ]);
     }
 
@@ -43,11 +44,11 @@ class TransactionController extends Controller
      */
     public function create(Request $request)
     {
-        
+
         return response()->json([
             'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
             'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId),
-            'createdBy' => Auth::User()
+            'createdBy' => Auth::User(),
         ]);
     }
 
@@ -66,14 +67,20 @@ class TransactionController extends Controller
 
         $this->transaction->find($transaction->id)->payee()->create([
             'transaction_id' => $transaction->id,
-            'payable_id' => $request->payee['vendorableName'],
-            'payable_type' => $request->payee['vendorableType']
+            'payable_id' => $request->payee['payable_id'],
+            'payable_type' => $request->payee['payable_type'],
         ]);
-        foreach($request->generalLedgers as $gl){
-            $this->transaction->find($transaction->id)->generalLedgers()->create($gl);
+        foreach ($request->invoices as $invoice) {
+            unset($invoice['id']);
+            $this->transaction->find($transaction->id)->purchaseReceived()->attach($transaction->id, $invoice);
+        }
+        foreach ($request->additionalItems as $item){
+            unset($item['id']);
+            
+            $this->transaction->find($transaction->id)->items()->attach($transaction->id, $item);
         }
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 
@@ -97,12 +104,10 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction, Request $request)
     {
         $transaction = $this->transaction->where('id', $request->id)->relTable()->first();
-        
+
         return response()->json([
-            'transaction' => $transaction,
-            'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId),
-            'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
-            'payee' => $this->transaction->payee($transaction->id)
+            'transaction' => $transaction
+            // 'payee' => $this->transaction->payee($transaction->id),
         ]);
     }
 
@@ -115,13 +120,13 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->transaction->find($request->id)->update( $request->transaction );
+        $this->transaction->find($request->id)->update($request->transaction);
         $this->transaction->updateGeneralLedgers($request);
 
         return response()->json([
-            'generalLedgers' => $request->generalLedgers
+            'generalLedgers' => $request->generalLedgers,
         ]);
-      
+
     }
 
     /**
@@ -135,45 +140,37 @@ class TransactionController extends Controller
         //
     }
 
-
-    public function transactable(Request $request){
+    public function entities(Request $request)
+    {
 
         return response()->json([
-            'transactions' => $this->transaction->paginate(
-                                    $this->transaction->transactable($request->modelType, $request->id)
-                            ),
-            'entity' => $this->transaction->entity($request->modelType, $request->id)->first()            
+            'userEntities' => $this->transaction->userEntities($request->modelType),
         ]);
     }
 
-    public function entities(Request $request){
+    public function chartAccounts(Request $request)
+    {
 
         return response()->json([
-            'userEntities' => $this->transaction->userEntities($request->modelType)
+            'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
         ]);
     }
 
-    public function transactionType(Request $request){
-
-        return response()->json([
-            'transactionType' => $this->transaction->transactionType($request->id)
-        ]);
-    }
-   
-
-    public function purchaseReceived(Request $request){
+    public function purchaseReceived(Request $request)
+    {
 
         return response()->json([
             'purchaseReceived' => $this->transaction->purchaseReceived($request->modelType, $request->modelId),
-            // 'entityItems' => $this->transaction->items($request->modelType, $request->modelId),
-            'entity' => $this->transaction->entity($request->modelType, $request->modelId)
+            'entityItems' => $this->transaction->items($request->modelType, $request->modelId),
+            'entity' => $this->transaction->entity($request->modelType, $request->modelId),
         ]);
     }
 
-    public function purchase(Request $request){
+    public function purchase(Request $request)
+    {
 
         return response()->json([
-            'purchase' => $this->transaction->purchase($request->purchaseId)
+            'purchase' => $this->transaction->purchase($request->purchaseId),
         ]);
     }
 }

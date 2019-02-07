@@ -75,9 +75,9 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
         
     }
 
-    public function transactionType($id){
+    public function chartAccounts($modelType, $id){
 
-        return TransactionType::where('id', $id)->relTable()->first();
+        return $modelType::where('id', $id)->with('company.chartAccounts')->first()->company->chartAccounts;
     }
 
     public function transactionTypes($modelType, $modelId){

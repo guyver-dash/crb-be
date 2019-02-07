@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use App\Model\Transaction;
 use App\Model\Company;
-
 class TransactionsTableSeeder extends Seeder
 {
     /**
@@ -15,7 +13,6 @@ class TransactionsTableSeeder extends Seeder
     {
          
             for($a=1; $a < 99; $a++) {
-
                 foreach(Company::find($a)->chartAccounts as $chartAccount){
                     $trans = new Transaction();
                     $trans->transactable_id = $a;
@@ -28,7 +25,6 @@ class TransactionsTableSeeder extends Seeder
                     $trans->status = rand(0, 1);
                     $trans->created_by = rand(1, 99);
                     $trans->save();
-
                     $trans = Transaction::find($trans->id);
                     $trans->payee()->create([
                         'transaction_id' => $trans->id,
@@ -38,9 +34,7 @@ class TransactionsTableSeeder extends Seeder
                 }
                 
             }
-
             for($a=1; $a < 99; $a++) {
-
                 foreach(Company::find($a)->chartAccounts as $chartAccount){
                     $trans = new Transaction();
                     $trans->transactable_id = $a;
@@ -53,7 +47,6 @@ class TransactionsTableSeeder extends Seeder
                     $trans->status = rand(0, 1);
                     $trans->created_by = rand(1, 99);
                     $trans->save();
-
                     $trans = Transaction::find($trans->id);
                     $trans->payee()->create([
                         'transaction_id' => $trans->id,
@@ -63,9 +56,7 @@ class TransactionsTableSeeder extends Seeder
                 }
                 
             }
-
             for($a=1; $a < 99; $a++) {
-
                 foreach(Company::find($a)->chartAccounts as $chartAccount){
                     $trans = new Transaction();
                     $trans->transactable_id = $a;
@@ -79,7 +70,6 @@ class TransactionsTableSeeder extends Seeder
                     $trans->created_by = rand(1, 99);
                     $trans->save();
                 }
-
                 $trans = Transaction::find($trans->id);
                     $trans->payee()->create([
                         'transaction_id' => $trans->id,
