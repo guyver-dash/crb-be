@@ -24,7 +24,8 @@ class CreateTransactionsTable extends Migration
             $table->foreign('chart_account_id')->references('id')
                 ->on('chart_accounts');
             $table->string('refnum');
-            $table->float('total_amount', 10, 2);
+            $table->decimal('total_amount', 12, 2);
+            $table->decimal('total_discount', 12, 2);
             $table->string('checknumber')->nullable();
             $table->string('remarks')->nullable();
             $table->boolean('status')->nullable()->default(1);

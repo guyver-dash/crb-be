@@ -5,8 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repo\Transaction\TransactionInterface;
 use App\Repo\Transaction\TransactionRepository;
+use App\Repo\Transaction\DisbursementTransactionRepository;
 use App\Http\Controllers\API\Transaction\TransactionController;
-
+use App\Http\Controllers\API\Transaction\DisbursementTransactionController;
 class TransactionServiceProvider extends ServiceProvider
 {
     /**
@@ -29,5 +30,9 @@ class TransactionServiceProvider extends ServiceProvider
         $this->app->when(TransactionController::class)
           ->needs(TransactionInterface::class)
           ->give(TransactionRepository::class);
+        
+        $this->app->when(DisbursementTransactionController::class)
+          ->needs(TransactionInterface::class)
+          ->give(DisbursementTransactionRepository::class);
     }
 }

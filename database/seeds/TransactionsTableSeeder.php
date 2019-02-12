@@ -20,7 +20,8 @@ class TransactionsTableSeeder extends Seeder
                     $trans->transaction_type_id = rand(1, 5);
                     $trans->chart_account_id = $chartAccount->id;
                     $trans->refnum =  str_replace('0.', '', microtime() . uniqid(true));
-                    $trans->total_amount = rand(200, 50000);
+                    $trans->total_amount = rand(200, 5000);
+                    $trans->total_discount = rand(200, 500);
                     $trans->remarks = 'remarks ' . $a;
                     $trans->status = rand(0, 1);
                     $trans->created_by = rand(1, 99);
@@ -42,7 +43,8 @@ class TransactionsTableSeeder extends Seeder
                     $trans->transaction_type_id = rand(1, 5);
                     $trans->chart_account_id = $chartAccount->id;
                     $trans->refnum =  str_replace('0.', '', microtime() . uniqid(true));
-                    $trans->total_amount = rand(200, 50000);
+                    $trans->total_amount = rand(200, 5000);
+                    $trans->total_discount = rand(200, 500);
                     $trans->remarks = 'remarks ' . $a;
                     $trans->status = rand(0, 1);
                     $trans->created_by = rand(1, 99);
@@ -64,7 +66,8 @@ class TransactionsTableSeeder extends Seeder
                     $trans->transaction_type_id = rand(1, 5);
                     $trans->chart_account_id = $chartAccount->id;
                     $trans->refnum = str_replace('0.', '', microtime() . uniqid(true));
-                    $trans->total_amount = rand(200, 50000);
+                    $trans->total_amount = rand(200, 5000);
+                    $trans->total_discount = rand(200, 500);
                     $trans->remarks = 'remarks ' . $a;
                     $trans->status = rand(0, 1);
                     $trans->created_by = rand(1, 99);

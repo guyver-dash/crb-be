@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Transaction;
 use App\Http\Controllers\Controller;
 use App\Model\Transaction;
 use App\Repo\Transaction\TransactionInterface;
-use Auth;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -47,8 +46,7 @@ class TransactionController extends Controller
 
         return response()->json([
             'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
-            'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId),
-            'createdBy' => Auth::User(),
+            'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId)
         ]);
     }
 
@@ -60,28 +58,11 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $reqTrans = $request->transaction;
-        $reqTrans['refnum'] = str_replace('0.', '', microtime() . uniqid(true));
-        $reqTrans['created_by'] = Auth::User()->id;
-        $transaction = $this->transaction->create($reqTrans);
-
-        $this->transaction->find($transaction->id)->payee()->create([
-            'transaction_id' => $transaction->id,
-            'payable_id' => $request->payee['payable_id'],
-            'payable_type' => $request->payee['payable_type'],
-        ]);
-        foreach ($request->invoices as $invoice) {
-            unset($invoice['id']);
-            $this->transaction->find($transaction->id)->purchaseReceived()->attach($transaction->id, $invoice);
-        }
-        foreach ($request->additionalItems as $item){
-            unset($item['id']);
-            
-            $this->transaction->find($transaction->id)->items()->attach($transaction->id, $item);
-        }
+        $this->transaction->create( $request );
         return response()->json([
-            'success' => true,
+            'success' => true
         ]);
+
     }
 
     /**
@@ -104,10 +85,12 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction, Request $request)
     {
         $transaction = $this->transaction->where('id', $request->id)->relTable()->first();
-
+        $payee = $this->transaction->payee($transaction->id);
         return response()->json([
-            'transaction' => $transaction
-            // 'payee' => $this->transaction->payee($transaction->id),
+            'transaction' => $transaction,
+            'userEntities' => $this->transaction->userEntities($request->modelType),
+            'payee' => $payee,
+            'entityItems' => $this->transaction->items($payee->entity, $payee->id),
         ]);
     }
 
@@ -118,14 +101,14 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Transaction $transaction, Request $request)
     {
-        $this->transaction->find($request->id)->update($request->transaction);
-        $this->transaction->updateGeneralLedgers($request);
+        // $this->transaction->find($request->id)->update($request->transaction);
+        // $this->transaction->updateGeneralLedgers($request);
 
-        return response()->json([
-            'generalLedgers' => $request->generalLedgers,
-        ]);
+        // return response()->json([
+        //     'generalLedgers' => $request->generalLedgers,
+        // ]);
 
     }
 
@@ -171,6 +154,13 @@ class TransactionController extends Controller
 
         return response()->json([
             'purchase' => $this->transaction->purchase($request->purchaseId),
+        ]);
+    }
+
+    public function editPurchaseReceived(Request $request){
+
+        return response()->json([
+            'purchaseReceived' => $this->transaction->editPurchaseReceived($request->id)
         ]);
     }
 }

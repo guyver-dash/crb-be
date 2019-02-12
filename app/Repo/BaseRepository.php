@@ -67,6 +67,12 @@ class BaseRepository implements BaseInterface
             });
     }
 
+    public function fillable($array){
+        return collect($array)->filter(function ($value, $key) {
+            return in_array($key, $this->modelName->getFillable());
+        })->toArray();
+    }
+
     public function paginate($collection)
     {
         if ($collection !== null) {

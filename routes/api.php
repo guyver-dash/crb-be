@@ -74,6 +74,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('transaction-type-companies', 'API\TransactionType\TransactionTypeController@companies');
     Route::resource('transaction_types', 'API\TransactionType\TransactionTypeController');
 
+
+    Route::resource('disbursement_transaction', 'API\Transaction\DisbursementTransactionController');
+    Route::get('transactions-get-edit-purchase-received', 'API\Transaction\TransactionController@editPurchaseReceived');
     Route::get('transactions-get-purchase', 'API\Transaction\TransactionController@purchase');
     Route::get('transactions-get-purchase-received', 'API\Transaction\TransactionController@purchaseReceived');
     Route::get('transactions-get-chart-accounts', 'API\Transaction\TransactionController@chartAccounts');
