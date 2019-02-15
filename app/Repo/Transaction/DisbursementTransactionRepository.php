@@ -11,7 +11,7 @@ class DisbursementTransactionRepository extends TransactionRepository implements
     public function update($request){
         $transaction = $this->where('id', $request->id)->first();
         $transaction->update($this->fillable($request->transaction));
-        $transaction->items()->detach();
+        $transaction->itemTransaction()->delete();
         $transaction->purchaseReceived()->detach();
 
         foreach ($request->invoices as $invoice) {
@@ -20,7 +20,7 @@ class DisbursementTransactionRepository extends TransactionRepository implements
         }
         foreach ($request->additionalItems as $item){
             unset($item['id']);
-            $this->find($transaction->id)->items()->attach($transaction->id, $item);
+            $this->find($transaction->id)->itemTransaction()->create($item);
         }
     }
 

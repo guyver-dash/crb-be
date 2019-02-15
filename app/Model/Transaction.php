@@ -36,10 +36,9 @@ class Transaction extends Model
     public static function boot() {
         parent::boot();
         static::deleting(function($transaction) {
-            $transaction->items()->detach();
-            $transaction->purchaseReceived()->delete();
+            $transaction->itemTransaction()->delete();
+            $transaction->purchaseReceived()->detach();
             $transaction->payee()->delete();
-            $transaction->items()->delete();
         });
     }
 
@@ -78,11 +77,6 @@ class Transaction extends Model
         return $this->hasOne('App\Model\Payee', 'transaction_id', 'id');
     }
 
-    public function generalLedgers()
-    {
-
-        return $this->hasMany('App\Model\GeneralLedger', 'transaction_id', 'id');
-    }
 
     public function purchaseReceived()
     {
@@ -91,16 +85,13 @@ class Transaction extends Model
             ->withTimestamps();
     }
 
-    public function items()
+    public function itemTransaction()
     {
-        return $this->belongsToMany('App\Model\Item', 'item_transaction', 'transaction_id', 'item_id')
-            ->withPivot('id', 'discount', 'qty', 'price', 'amount', 'chart_account_id', 'tax_type',
-                        'tax_type_id')
-            ->withTimestamps();
+        return $this->hasMany('App\Model\ItemTransaction', 'transaction_id', 'id');
     }
     public function scopeRelTable($query)
     {
-        return $query->with(['chartAccount', 'transactionType', 'generalLedgers', 'purchaseReceived', 'items', 'payee', 'createdUser']);
+        return $query->with(['chartAccount', 'transactionType', 'purchaseReceived', 'payee', 'createdUser', 'itemTransaction']);
     }
 
     public function getItemIdsAttribute(){

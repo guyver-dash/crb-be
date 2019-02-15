@@ -32,24 +32,24 @@ class PurchasedReceivedTableSeeder extends Seeder
             $purchaseReceived->items()->attach($purchaseReceived->id,[
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
+                'qty' => rand(1, 10),
+                'price' => rand(5, 1000),
                 'freight' => rand(100, 2000),
                 'sub_total' => rand(100, 2000)
             ]);
             $purchaseReceived->items()->attach($purchaseReceived->id,[
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
+                'qty' => rand(1, 10),
+                'price' => rand(5, 1000),
                 'freight' => rand(100, 2000),
                 'sub_total' => rand(100, 2000)
             ]);
             $purchaseReceived->items()->attach($purchaseReceived->id,[
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
+                'qty' => rand(1, 10),
+                'price' => rand(5, 1000),
                 'freight' => rand(100, 2000),
                 'sub_total' => rand(100, 2000)
             ]);
@@ -116,24 +116,24 @@ class PurchasedReceivedTableSeeder extends Seeder
             $purchaseReceived->items()->attach($purchaseReceived->id,[
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
+                'qty' => rand(1, 10),
+                'price' => rand(5, 1000),
                 'freight' => rand(100, 2000),
                 'sub_total' => rand(100, 2000)
             ]);
             $purchaseReceived->items()->attach($purchaseReceived->id,[
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
+                'qty' => rand(1, 10),
+                'price' => rand(5, 1000),
                 'freight' => rand(100, 2000),
                 'sub_total' => rand(100, 2000)
             ]);
             $purchaseReceived->items()->attach($purchaseReceived->id,[
                 'item_id' => rand(1, 1568),
                 'purchase_received_id' => $purchaseReceived->id,
-                'qty' => rand(1, 50),
-                'price' => rand(5, 5000),
+                'qty' => rand(1, 10),
+                'price' => rand(5, 1000),
                 'freight' => rand(100, 2000),
                 'sub_total' => rand(100, 2000)
             ]);

@@ -46,7 +46,7 @@ class TransactionController extends Controller
 
         return response()->json([
             'chartAccounts' => $this->transaction->chartAccounts($request->modelType, $request->modelId),
-            'transactionTypes' => $this->transaction->transactionTypes($request->modelType, $request->modelId)
+            'taxTypes' => $this->transaction->taxTypes()
         ]);
     }
 
@@ -91,6 +91,7 @@ class TransactionController extends Controller
             'userEntities' => $this->transaction->userEntities($request->modelType),
             'payee' => $payee,
             'entityItems' => $this->transaction->items($payee->entity, $payee->id),
+            'taxTypes' => $this->transaction->taxTypes()
         ]);
     }
 

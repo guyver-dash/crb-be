@@ -7,6 +7,7 @@ use App\Model\PurchaseReceived;
 use App\Model\Transaction;
 use App\Repo\BaseRepository;
 use App\Model\Payee;
+use App\Model\TaxType;
 use Auth;
 
 class TransactionRepository extends BaseRepository implements TransactionInterface
@@ -38,12 +39,15 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
         $this->find($transaction->id)->payee()->create($this->payeeFillable( $request->payee) );
 
         foreach ($request->invoices as $invoice) {
-            unset($invoice['id']);
-            $this->find($transaction->id)->purchaseReceived()->attach($transaction->id, $invoice);
+            if($invoice['purchase_received_id'] != ''){
+                unset($invoice['id']);
+                $this->find($transaction->id)->purchaseReceived()->attach($transaction->id, $invoice);
+            }
+            
         }
         foreach ($request->additionalItems as $item){
             unset($item['id']);
-            $this->find($transaction->id)->items()->attach($transaction->id, $item);
+            $this->find($transaction->id)->itemTransaction()->create($item);
         }
     }
 
@@ -116,40 +120,7 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
         return $modelType::where('id', $id)->with('company.chartAccounts')->first()->company->chartAccounts;
     }
 
-    public function transactionTypes($modelType, $modelId)
-    {
 
-        return $modelType::where('id', $modelId)->first()->businessInfo->accountingMethod->transactionTypes;
-    }
-
-    public function updateGeneralLedgers($request)
-    {
-
-        $transaction = $this->find($request->id);
-        foreach ($request->generalLedgers as $gl) {
-
-            if (is_null($gl['id'])) {
-                $transaction->generalLedgers()->create([
-                    'ledgerable_id' => $request->transaction['transactable_id'],
-                    'ledgerable_type' => $request->transaction['transactable_type'],
-                    'particulars' => $gl['particulars'],
-                    'chart_account_id' => $gl['chart_account_id'],
-                    'credit_amount' => $gl['credit_amount'],
-                    'debit_amount' => $gl['debit_amount'],
-                    'tax' => $gl['tax'],
-                ]);
-            } else {
-                $transaction->generalLedgers()->where('id', $gl['id'])->update([
-                    'particulars' => $gl['particulars'],
-                    'chart_account_id' => $gl['chart_account_id'],
-                    'credit_amount' => $gl['credit_amount'],
-                    'debit_amount' => $gl['debit_amount'],
-                    'tax' => $gl['tax'],
-                ]);
-            }
-
-        }
-    }
 
     public function payee($transactionId)
     {
@@ -166,6 +137,11 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
     {
 
         return PurchaseReceived::where('id', $purchaseId)->with('items')->first();
+    }
+
+    public function taxTypes(){
+
+        return TaxType::all();
     }
 
 }

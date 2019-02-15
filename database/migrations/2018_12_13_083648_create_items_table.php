@@ -27,6 +27,7 @@ class CreateItemsTable extends Migration
             $table->longText('desc');
             $table->decimal('price', 12, 2);
             $table->integer('qty');
+            $table->integer('discount')->default(0);
             $table->integer('package_id')->unsigned()->nullable();
             $table->foreign('package_id')->references('id')
                 ->on('packages');

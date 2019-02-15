@@ -14,7 +14,7 @@ class Item extends Model
         'itemable_id', 'itemable_type', 'sku', 'barcode', 'name', 'desc', 'price', 'qty', 'vat_type_id', 'package_id', 'minimum', 'maximum', 'reorder_level',
     ];
 
-    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price', 'pivot_qty', 'total_amount', 'purchase_tax', 'pivot_tax_type'];
+    protected $appends = ['pivot_date_approved', 'pivot_date_delivery', 'pivot_price', 'pivot_qty', 'total_amount', 'purchase_tax', 'pivot_tax_type', 'discount_amt'];
 
     public function chartAccount()
     {
@@ -82,6 +82,10 @@ class Item extends Model
     {
 
         return $query->with(['package', 'logistics', 'otherVendors', 'branches', 'commissaries', 'purchases', 'chartAccount', 'taxType']);
+    }
+
+    public function getDiscountAmtAttribute(){
+        return (float)$this->price * ($this->discount/100);
     }
 
     public function getPivotDateApprovedAttribute()

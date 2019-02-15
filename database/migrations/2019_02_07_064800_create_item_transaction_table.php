@@ -24,14 +24,13 @@ class CreateItemTransactionTable extends Migration
             $table->integer('item_id')->unsigned()->nullable();
             $table->foreign('item_id')->references('id')
                 ->on('items');
-            $table->longText('desc');
-            $table->integer('discount')->nullable();
+            $table->longText('desc')->nullable();
+            $table->decimal('discount_amt')->nullable();
             $table->integer('qty');
             $table->decimal('price');
             $table->decimal('amount');
-            $table->integer('chart_account_id');
-            $table->string('tax_type');
-            $table->integer('tax_type_id');
+            $table->integer('chart_account_id')->nullable();
+            $table->integer('tax_type_id')->nullable();
             $table->timestamps();
         });
     }
