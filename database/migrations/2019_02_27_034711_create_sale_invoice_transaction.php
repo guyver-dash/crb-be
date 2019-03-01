@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreatePurchaseReceivedTransaction extends Migration
+class CreateSaleInvoiceTransaction extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePurchaseReceivedTransaction extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_received_transaction', function (Blueprint $table) {
+        Schema::create('sale_invoice_transaction', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('pay', 12, 2);
-            $table->integer('purchase_received_id')->unsigned()->nullable();
-            $table->foreign('purchase_received_id')->references('id')
-                ->on('purchase_received');
+            $table->integer('sale_invoice_id')->unsigned()->nullable();
+            $table->foreign('sale_invoice_id')->references('id')
+                ->on('sale_invoices');
             $table->integer('transaction_id')->unsigned()->nullable();
             $table->foreign('transaction_id')->references('id')
                 ->on('transactions');
@@ -45,6 +45,6 @@ class CreatePurchaseReceivedTransaction extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_received_transaction');
+        Schema::dropIfExists('sale_invoice_transaction');
     }
 }

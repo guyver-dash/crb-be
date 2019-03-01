@@ -8,6 +8,7 @@ use App\Model\Transaction;
 use App\Repo\BaseRepository;
 use App\Model\Payee;
 use App\Model\TaxType;
+use App\Model\Payor;
 use Auth;
 
 class TransactionRepository extends BaseRepository implements TransactionInterface
@@ -20,11 +21,23 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
 
     }
 
+    public function jobs($modelType, $modelId){
+        return $modelType::where('id', $modelId)->first()->jobs;
+    }
+
     public function payeeFillable($array)
     {
         $payee = new Payee();
         return collect($array)->filter(function ($value, $key) use ($payee) {
             return in_array($key, $payee->getFillable());
+        })->toArray();
+    }
+
+    public function payorFillable($array)
+    {
+        $payor = new Payor();
+        return collect($array)->filter(function ($value, $key) use ($payor) {
+            return in_array($key, $payor->getFillable());
         })->toArray();
     }
 
@@ -142,6 +155,12 @@ class TransactionRepository extends BaseRepository implements TransactionInterfa
     public function taxTypes(){
 
         return TaxType::all();
+    }
+
+    public function saleInvoices($modelType, $id){
+
+        return $modelType::where('id', $id)
+                    ->with(['saleInvoices.products'])->first();
     }
 
 }

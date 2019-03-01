@@ -11,7 +11,7 @@ class PurchaseReceived extends Model
     protected $fillable = [
         'purchase_recieved_id', 'qty', 'price', 'freight', 'tax', 'token', 'sub_total', 'grand_total', 'date_due'
     ];
-    protected $appends = ['vatable_sales', 'vat_exempt_sales', 'zero_rated_sales', 'vat_amount', 'amount_due', 'pivot_amount_due', 'pivot_amount_paid', 'pivot_discount', 'pivot_vat_amount', 'pivot_vat_exempt_sales', 'pivot_vatable_sales', 'pivot_zero_rated_sales', 'pivot_pay'];
+    protected $appends = ['vatable_sales', 'vat_exempt_sales', 'zero_rated_sales', 'vat_amount', 'amount_due', 'pivot_amount_due', 'pivot_amount_paid', 'pivot_discount', 'pivot_vat_amount', 'pivot_vat_exempt_sales', 'pivot_vatable_sales', 'pivot_zero_rated_sales', 'pivot_pay', 'pivot_job_id'];
     public function items(){
         return $this->belongsToMany('App\Model\Item', 'item_purchase_received', 'purchase_received_id', 'item_id')
                     ->withPivot('id', 'qty', 'price', 'freight', 'sub_total')
@@ -106,6 +106,11 @@ class PurchaseReceived extends Model
     public function getPivotPayAttribute(){
 
         return (boolean)$this->pivot['pay'];
+    }
+
+    public function getPivotJobIdAttribute(){
+
+        return $this->pivot['job_id'];
     }
 
     

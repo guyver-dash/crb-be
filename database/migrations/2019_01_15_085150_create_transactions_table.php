@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTransactionsTable extends Migration
 {
@@ -23,6 +23,9 @@ class CreateTransactionsTable extends Migration
             $table->integer('chart_account_id')->unsigned()->nullable();
             $table->foreign('chart_account_id')->references('id')
                 ->on('chart_accounts');
+            $table->integer('payment_method_id')->unsigned()->nullable();
+            $table->foreign('payment_method_id')->references('id')
+                ->on('payment_methods');
             $table->string('refnum');
             $table->decimal('total_amount', 12, 2);
             $table->decimal('total_discount', 12, 2);

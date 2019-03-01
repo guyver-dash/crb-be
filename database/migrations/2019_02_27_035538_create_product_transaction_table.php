@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateItemTransactionTable extends Migration
+class CreateProductTransactionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateItemTransactionTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_transaction', function (Blueprint $table) {
-
+        Schema::create('product_transaction', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('transaction_id')->unsigned()->nullable();
             $table->foreign('transaction_id')->references('id')
                 ->on('transactions');
-            $table->integer('item_id')->unsigned()->nullable();
-            $table->foreign('item_id')->references('id')
-                ->on('items');
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->foreign('product_id')->references('id')
+                ->on('products');
             $table->integer('job_id')->unsigned()->nullable();
             $table->foreign('job_id')->references('id')
                 ->on('jobs');
@@ -43,6 +42,6 @@ class CreateItemTransactionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_transaction');
+        Schema::dropIfExists('product_transaction');
     }
 }

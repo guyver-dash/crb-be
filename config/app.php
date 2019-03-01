@@ -170,6 +170,7 @@ return [
         App\Providers\ChartAccountServiceProvider::class,
         App\Providers\TransactionTypeServiceProvider::class,
         App\Providers\TransactionServiceProvider::class,
+        App\Providers\ProductServiceProvider::class,
     ],
 
     /*

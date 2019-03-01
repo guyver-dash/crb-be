@@ -4,13 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ItemTransaction extends Model
+class ProductTransaction extends Model
 {
-
-    protected $table = 'item_transaction';
+    protected $table = 'product_transaction';
     protected $fillable = [
         'transaction_id',
-        'item_id', 'desc', 'discount_amt',
+        'product_id', 'desc', 'discount_amt',
         'qty', 'price', 'amount', 'chart_account_id',
         'tax_type_id', 'job_id'
 

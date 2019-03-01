@@ -13,6 +13,7 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [
+        'payment_method_id',
         'transactable_id',
         'transactable_type',
         'transaction_type_id',
@@ -77,17 +78,35 @@ class Transaction extends Model
         return $this->hasOne('App\Model\Payee', 'transaction_id', 'id');
     }
 
+    public function payor()
+    {
+
+        return $this->hasOne('App\Model\Payor', 'transaction_id', 'id');
+    }
+
 
     public function purchaseReceived()
     {
         return $this->belongsToMany('App\Model\PurchaseReceived', 'purchase_received_transaction', 'transaction_id', 'purchase_received_id')
-            ->withPivot('id', 'discount', 'amount_due', 'amount_paid', 'date_due', 'description', 'vat_amount', 'vat_exempt_sales', 'vatable_sales', 'zero_rated_sales', 'pay')
+            ->withPivot('id', 'discount', 'amount_due', 'amount_paid', 'date_due', 'description', 'vat_amount', 'vat_exempt_sales', 'vatable_sales', 'zero_rated_sales', 'pay', 'job_id')
+            ->withTimestamps();
+    }
+
+    public function saleInvoices()
+    {
+        return $this->belongsToMany('App\Model\SaleInvoice', 'sale_invoice_transaction', 'transaction_id', 'sale_invoice_id')
+            ->withPivot('id', 'discount', 'amount_due', 'amount_paid', 'date_due', 'description', 'vat_amount', 'vat_exempt_sales', 'vatable_sales', 'zero_rated_sales', 'pay', 'job_id')
             ->withTimestamps();
     }
 
     public function itemTransaction()
     {
         return $this->hasMany('App\Model\ItemTransaction', 'transaction_id', 'id');
+    }
+
+    public function productTransaction()
+    {
+        return $this->hasMany('App\Model\ProductTransaction', 'transaction_id', 'id');
     }
     public function scopeRelTable($query)
     {

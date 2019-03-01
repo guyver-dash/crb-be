@@ -15,7 +15,12 @@ class Branch extends Model
         'name', 'desc', 'company_id',
     ];
 
-    protected $appends = ['entity'];
+    protected $appends = ['entity', 'complete_address'];
+
+    public function jobs()
+    {
+        return $this->morphmany('App\Model\Job', 'jobable');
+    }
 
     public function transactions()
     {
@@ -33,6 +38,12 @@ class Branch extends Model
     {
 
     	return $this->morphMany('App\Model\PurchaseReceived', 'purchasable');
+    }
+
+    public function saleInvoices()
+    {
+
+    	return $this->morphMany('App\Model\SaleInvoice', 'salable');
     }
 
     public function items()
@@ -85,6 +96,10 @@ class Branch extends Model
     {
 
         return 'App\Model\Branch';
+    }
+
+    public function getCompleteAddressAttribute(){
+        return $this->address->street_lot_blk . ', '. $this->address->brgy->description . ', '. $this->address->city->description . ', '. $this->address->province->description;
     }
 
 }

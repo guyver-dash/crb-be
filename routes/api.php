@@ -75,15 +75,19 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('transaction_types', 'API\TransactionType\TransactionTypeController');
 
 
-    Route::resource('disbursement_transaction', 'API\Transaction\DisbursementTransactionController');
+    Route::get('transactions-get-sale-invoices', 'API\Transaction\TransactionController@saleInvoices');
     Route::get('transactions-get-edit-purchase-received', 'API\Transaction\TransactionController@editPurchaseReceived');
     Route::get('transactions-get-purchase', 'API\Transaction\TransactionController@purchase');
     Route::get('transactions-get-purchase-received', 'API\Transaction\TransactionController@purchaseReceived');
     Route::get('transactions-get-chart-accounts', 'API\Transaction\TransactionController@chartAccounts');
     Route::get('transactions-transactable', 'API\Transaction\TransactionController@transactable');
     Route::get('transactions-entities', 'API\Transaction\TransactionController@entities');
+    Route::resource('disbursement_transaction', 'API\Transaction\DisbursementTransactionController');
     Route::resource('transactions', 'API\Transaction\TransactionController');
     Route::resource('general_ledgers', 'API\GeneralLedger\GeneralLedgerController');
+    Route::resource('products', 'API\Product\ProductController');
+    Route::resource('sale_invoice_transaction', 'API\Transaction\SaleInvoiceTransactionController');
+
 
     Route::get('modelable-address-business-info', 'API\Modelable\ModelableController@addressBusinessInfo');
     Route::get('modelable-user-models', 'API\Modelable\ModelableController@userModels');
@@ -102,6 +106,9 @@ Route::resource('business_types', 'API\BusinessType\BusinessTypeController');
 Route::resource('vat_types', 'API\VatType\VatTypeController');
 Route::resource('civil_status', 'API\CivilStatus\CivilStatusController');
 Route::resource('genders', 'API\Gender\GenderController');
+Route::resource('payment_methods', 'API\PaymentMethod\PaymentMethodController' );
+
+
 
 Route::get('barangays', 'Api\Location\LocationController@getSampleBarangays');
 Route::get('barangays/{barangay}/{limit}', 'Api\Location\LocationController@getBarangayByName');

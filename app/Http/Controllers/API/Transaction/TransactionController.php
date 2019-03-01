@@ -91,7 +91,8 @@ class TransactionController extends Controller
             'userEntities' => $this->transaction->userEntities($request->modelType),
             'payee' => $payee,
             'entityItems' => $this->transaction->items($payee->entity, $payee->id),
-            'taxTypes' => $this->transaction->taxTypes()
+            'taxTypes' => $this->transaction->taxTypes(),
+            'jobs' => $this->transaction->jobs($request->modelType, $request->modelId)
         ]);
     }
 
@@ -147,6 +148,7 @@ class TransactionController extends Controller
             'purchaseReceived' => $this->transaction->purchaseReceived($request->modelType, $request->modelId),
             'entityItems' => $this->transaction->items($request->modelType, $request->modelId),
             'entity' => $this->transaction->entity($request->modelType, $request->modelId),
+            'jobs' => $this->transaction->jobs($request->modelType, $request->modelId)
         ]);
     }
 
@@ -162,6 +164,16 @@ class TransactionController extends Controller
 
         return response()->json([
             'purchaseReceived' => $this->transaction->editPurchaseReceived($request->id)
+        ]);
+    }
+
+    public function saleInvoices(Request $request){
+
+        $entity =  $this->transaction->saleInvoices($request->modelType, $request->modelId);
+        return response()->json([
+            'saleInvoices' => $entity->saleInvoices,
+            'entity' => $entity,
+            'jobs' => $this->transaction->jobs($request->modelType, $request->modelId)
         ]);
     }
 }
