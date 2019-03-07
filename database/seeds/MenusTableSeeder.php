@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Model\Menu;
-use App\Model\User;
+
 class MenusTableSeeder extends Seeder
 {
     /**
@@ -12,10 +12,9 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
-
-        $menus = ['System Settings', 'Inventories', 'Productions', 'Chart Of Accounts', 'Breeds', 'Purchases Modules', 'Sales',  'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
+        $menus = ['System Settings', 'Inventories', 'Productions', 'Accounting', 'Breeds', 'Purchases Modules', 'Sales',  'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
         $sub_menu1 = [
-            'Users', 'Roles', 'Access Right', 'Menus', 'Holdings', 'Companies', 'Branches', 'Trademarks', 'Franchisees', 'Logistics', 'Commissaries',  'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
+            'Users', 'Roles', 'Access Rights', 'Menus', 'Holdings', 'Companies', 'Branches', 'Trademarks', 'Franchisees', 'Logistics', 'Commissaries',  'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
         
         $sub_menu2 =[
            'Other Vendors', 'Packages', 'Categories', 'Items', 'Purchase Request'
@@ -28,11 +27,16 @@ class MenusTableSeeder extends Seeder
          $sub_menu4 =[
             'Accounting Standards', 'Chart of Accounts', 'Transactions', 'General Ledgers'
          ];
+
+         $sub_menu5 =[
+            'Disbursement Journal', 'Vendors Credit Memo', 'Sales Journal', 'Sales Credit Memo', 'General Ledgers'
+         ];
+
         foreach ($menus as $value) {
         	
         	     Menu::create([
                     'parent_id' => 0,
-        			'description' => $value,
+        			'path' => str_slug($value, '-'),
         			'name' => $value
         		]);
 
@@ -41,7 +45,7 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu1 as $submenu){
             Menu::create([
                 'parent_id' => 1,
-                'description' => $submenu,
+                'path' => str_slug($submenu, '-'),
                 'name' => $submenu
             ]);
         }
@@ -49,7 +53,7 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu2 as $submenu){
             Menu::create([
                 'parent_id' => 2,
-                'description' => $submenu,
+                'path' => str_slug($submenu, '-'),
                 'name' => $submenu
             ]);
         }
@@ -57,7 +61,7 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu3 as $submenu){
             Menu::create([
                 'parent_id' => 3,
-                'description' => $submenu,
+                'path' => str_slug($submenu, '-'),
                 'name' => $submenu
             ]);
         }
@@ -65,7 +69,15 @@ class MenusTableSeeder extends Seeder
         foreach($sub_menu4 as $submenu){
             Menu::create([
                 'parent_id' => 4,
-                'description' => $submenu,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu
+            ]);
+        }
+
+        foreach($sub_menu5 as $submenu){
+            Menu::create([
+                'parent_id' => 53,
+                'path' => 'transactions/'.str_slug($submenu, '-'),
                 'name' => $submenu
             ]);
         }

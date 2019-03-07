@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\API\User;
 
-use App\Notifications\UserRegisteredSuccessfully;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\User; 
-use Auth;
-use Hash;
+use App\Model\User;
+use App\Repo\User\UserInterface;
 
 class UserController extends Controller
 {
-   
-    public function __construct(){
 
-        $this->authorizeResource(User::class);
+    protected $user;
+
+    public function __construct(UserInterface $user){
+
+        $this->user = $user;
     }
     /**
      * Display a listing of the resource.
@@ -25,19 +24,14 @@ class UserController extends Controller
     public function index()
     {
         $request = app()->make('request');
-        
-        $users = User::orWhere('firstname', 'like', '%' . $request->filter . '%')
-            ->orWhere('middlename', 'like', '%' . $request->filter . '%')
-            ->orWhere('lastname', 'like', '%' . $request->filter . '%')
-            ->subordinates(Auth::User())
-            ->relTable()
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-
         return response()->json([
-
-            'users' => $this->paginate($users)
+            'users' => $this->user->paginate( 
+                $this->user->whereLike('firstname', 'like', '%' . $request->filter . '%')
+                    ->orWhere('lastname', 'like', '%' . $request->filter . '%')
+                    ->orderBy('created_at', 'desc')
+                    ->with(['roles', 'address'])
+                    ->get() 
+            )
         ]);
     }
 
@@ -57,26 +51,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, Request $request)
+    public function store(Request $request)
     {
-        
-        $user  = User::create($request->all());
-        $user = User::find($user->id);
-        $user->activation_code = str_random(30).time();
-        $user->password = Hash::make($request->password);
-        $user->update();
-        $user->roles()->sync($request->roles);
-        $user->address()->update($request->address);
-        $user->information()->update($request->informations);
-        
-        // $user->notify(new UserRegisteredSuccessfully($user));
-
-        return response()->json([
-                'success' => true,
-                'user' => User::where('id', $request->id)
-                ->relTable()
-                ->first()
-            ]);
+        //
     }
 
     /**
@@ -85,13 +62,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, Request $request)
+    public function show($id)
     {
-        return response()->json([
-            'user' => User::where('id', $request->id)
-                ->relTable()
-                ->first()
-        ]);
+        //
     }
 
     /**
@@ -100,14 +73,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user, Request $request)
+    public function edit(Request $request)
     {
-        
         return response()->json([
-                'user' => User::where('id', $request->id)
-                    ->relTable()
-                    ->first()
-            ]);
+            'user' => $this->user->where('id', $request->id)->with(['address', 'roles'])->first()
+        ]);
     }
 
     /**
@@ -117,36 +87,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user, Request $request)
+    public function update(Request $request, $id)
     {
-        $user = User::find($request->id);
-        $user->roles()->detach();
-        $newroles = [];
-        foreach($request->roles as $role){
-            $newroles[] = ['role_id' => $role ];
-        }
-        $user->roles()->sync($newroles);
-        $user->address()->update([
-            'country_id' => $request->address['country_id'],
-            'region_id' => $request->address['region_id'],
-            'province_id' => $request->address['province_id'],
-            'city_id' => $request->address['city_id'],
-            'brgy_id' => $request->address['brgy_id'],
-            'street_lot_blk' => $request->address['street_lot_blk']
-        ]);
-        $user->information()->update([
-            'employee_id' => $request->informations['employee_id'],
-            'gender_id' => $request->informations['gender_id'],
-            'birthdate' => $request->informations['birthdate'],
-            'mobile' => $request->informations['mobile'],
-            'nationality' => $request->informations['nationality'],
-            'civil_status_id' => $request->informations['civil_status_id']
-        ]);
-        $user->update($request->all());
+
         return response()->json([
-               'success' => true,
-               'user' => User::find($request->id)
-            ]);
+            'success' => $this->user->update($request)
+        ]);
     }
 
     /**
@@ -155,21 +101,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user, Request $request)
+    public function destroy(Request $request)
     {
-        $user = User::find($request->id);
-        $user->delete();
+        $this->user->find($request->id)->delete();
         return response()->json([
-                'success' => true
-            ]);
+            'success' => true
+        ]);
     }
-
-
-    public function paginate($collection){
-
-        $request =  app()->make('request');
-
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
-    }
-
 }

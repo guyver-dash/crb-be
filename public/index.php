@@ -9,8 +9,6 @@
 
 define('LARAVEL_START', microtime(true));
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -23,10 +21,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-
 require __DIR__.'/../vendor/autoload.php';
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +37,6 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Run The Application
@@ -55,6 +48,7 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
+
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
@@ -64,5 +58,3 @@ $response = $kernel->handle(
 $response->send();
 
 $kernel->terminate($request, $response);
-
-

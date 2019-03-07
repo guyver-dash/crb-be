@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\API\Category;
+namespace App\Http\Controllers\Api\Category;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Category;
+use App\Repo\Category\CategoryInterface;
 
 class CategoryController extends Controller
 {
 
-    public function __construct(){
-        $this->authorizeResource(Category::class);
+    protected $category;
+    public function __construct(CategoryInterface $category){
+
+        $this->category = $category;
     }
     /**
      * Display a listing of the resource.
@@ -20,16 +22,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $request = app()->make('request');
-
-        $categories = Category::where('name', 'like', '%'.$request->filter . '%')
-            ->where('parent_id', '=', 0)
-            ->relTable()
-            ->orderBy('created_at', 'desc')
-            ->get();
-
+        
         return response()->json([
-            'categories' => $categories
+            'categories' => Category::where('parent_id', 0)
+                                ->with('allChildren')
+                                ->get()
         ]);
     }
 
@@ -51,18 +48,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
-        Category::create([
-            'category_id' => rand(1, 2),
-            'category_type' => 'App\Model\Branch',
-            'parent_id' => $request->parent_id,
-            'name' => $request->name,
-            'desc' => $request->desc
-        ]);
-
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     /**
@@ -71,12 +57,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category, Request $request)
+    public function show($id)
     {
-        $category = Category::where('id', $request->id)->relTable()->first();
-       return response()->json([
-           'category' => $category
-       ]);
+        //
     }
 
     /**
@@ -85,12 +68,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category, Request $request)
+    public function edit($id)
     {
-       $category = Category::where('id', $request->id)->relTable()->first();
-       return response()->json([
-           'category' => $category
-       ]);
+        //
     }
 
     /**
@@ -100,14 +80,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Category $category, Request $request)
+    public function update(Request $request, $id)
     {
-        $category = Category::find($request->id);
-        $category->update($request->all());
-
-        return response()->json([
-            'success' => true
-        ]);
+        //
     }
 
     /**
@@ -116,20 +91,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, Request $request)
+    public function destroy($id)
     {
-        $category = Category::find($request->id);
-        $category->delete();
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function paginate($collection){
-
-        $request =  app()->make('request');
-
-        return new LengthAwarePaginator($collection->forPage($request->page, $request->perPage), $collection->count(), $request->perPage, $request->page);
+        //
     }
 }

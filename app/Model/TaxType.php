@@ -8,5 +8,7 @@ class TaxType extends Model
 {
     
     protected $table = 'tax_types';
-    protected $fillable = ['name', 'desc'];
+    protected $fillable = [
+        'name', 'desc'
+    ];
 }

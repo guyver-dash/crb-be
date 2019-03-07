@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Model\User;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use Hash;
+
 class RegisterController extends Controller
 {
     /*
@@ -50,9 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -70,27 +69,4 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-
-    public function activateUser(string $activationCode)
-    {
-        try {
-            $user = app(User::class)->where('activation_code', $activationCode)->first();
-            if (!$user) {
-                return "The code does not exist for any user in our system.";
-            }
-            $user->status          = 1;
-            $user->activation_code = null;
-            $user->save();
-        } catch (\Exception $exception) {
-            return response()->json([
-                'success' => false,
-                'msg' =>  "Whoops! something went wrong."
-            ]);
-        }
-        
-        return response()->json([
-            'success' => true
-        ]);
-    }
-  
 }

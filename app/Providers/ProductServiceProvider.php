@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Http\Controllers\Api\Product\ProductController;
+use App\Http\Controllers\Api\Product\CategoryProductController;
 use App\Repo\Product\ProductInterface;
 use App\Repo\Product\ProductRepository;
-use App\Http\Controllers\API\Product\ProductController;
+use App\Repo\Product\CategoryProductRepository;
+use Illuminate\Support\ServiceProvider;
+
 class ProductServiceProvider extends ServiceProvider
 {
     /**
@@ -26,7 +29,11 @@ class ProductServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->when(ProductController::class)
-          ->needs(ProductInterface::class)
-          ->give(ProductRepository::class);
+            ->needs(ProductInterface::class)
+            ->give(ProductRepository::class);
+
+        $this->app->when(CategoryProductController::class)
+            ->needs(ProductInterface::class)
+            ->give(CategoryProductRepository::class);
     }
 }

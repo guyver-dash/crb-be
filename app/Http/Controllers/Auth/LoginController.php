@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Auth;
 use App\Model\User;
-use App\Model\Menu;
+use Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -28,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/home';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -40,7 +41,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-   
     public function login(Request $request)
     {
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
@@ -49,7 +49,6 @@ class LoginController extends Controller
             return response()->json([
                     'success' => $success,
                     'user' => Auth::User()->relTable()->first(),
-                    'menus' => $this->userMenus(),
                     'userLogin' => true
                 ]); 
  
@@ -59,7 +58,6 @@ class LoginController extends Controller
             return response()->json([
                     'success' => $success,
                     'user' => Auth::User()->relTable()->first(),
-                    'menus' => $this->userMenus(),
                     'userLogin' => true
                 ]); 
         }
@@ -78,25 +76,4 @@ class LoginController extends Controller
              'success' => true
          ]);
     }
-
-    public function userMenus(){
-
-        // $user = User::where('id', Auth::User()->id)
-        // ->whereHas('roles', function($q){
-        //     $q->where('parent_id', 0);
-        // })->relTable()->first();
-    
-        // $menu = [];
-        // if($user != null){
-        //     $menu = \App\Model\Menu::with('allChildren')->get();
-        //     $menu = $menu->filter(function($item){
-        //         return $item->parent_id === 0;
-        //     });
-        // }
-
-        $menu = Menu::where('parent_id', '=', 0)->with('allChildren')->get();
-        return $menu;
-    }
-
-    
 }

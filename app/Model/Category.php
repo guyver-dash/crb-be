@@ -3,31 +3,23 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
+use App\Traits\Obfuscate\Optimuss;
 
 class Category extends Model
 {
-
-    public static function boot() {
-        parent::boot();
-
-        static::deleting(function($category) {
-            $category->children()->delete();
-        });
-    }
-
+    
+    use Optimuss;
     
     protected $table = 'categories';
-    protected $fillable = ['category_id', 'category_type', 'name', 'desc', 'parent_id'];
-
-    public function categorable(){
-
-        return $this->morphTo();
-   }
-   public function parent(){
+    protected $fillable = [
+        'parent_id',
+        'name'
+    ];
+    protected $appends = ['slug_name', 'optimus_id'];
+    public function parent(){
         return $this->hasOne('App\Model\Category', 'id', 'parent_id');
     }
-    public function children() {
+	public function children() {
 
         return $this->hasMany('App\Model\Category', 'parent_id', 'id');
     }
@@ -37,13 +29,17 @@ class Category extends Model
         return $this->children()->with('allChildren');
     } 
 
-    public function scopeRelTable($query){
-
-        return $query->with(['allChildren', 'parent']);
+    public function getSlugNameAttribute(){
+        return str_slug($this->name);
     }
 
-    public function getCreatedAtAttribute($val){
-
-        return Carbon::parse($val)->toDayDateTimeString();
+    public function products(){
+        return $this->hasMany('App\Model\Product', 'category_id', 'id');
     }
+
+    public function scopeRelTable($q){
+        return $q->with(['products.images']);
+    }
+
+    
 }

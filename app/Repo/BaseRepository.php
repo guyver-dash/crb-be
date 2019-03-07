@@ -2,23 +2,28 @@
 
 namespace App\Repo;
 
-use App\Model\Address;
-use App\Model\Branch;
-use App\Model\BusinessInfo;
-use App\Model\Company;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Validator;
+use App\Traits\Obfuscate\Optimuss;
+use App\Model\Address;
 
 class BaseRepository implements BaseInterface
 {
 
+    use Optimuss;
+
     protected $modelName;
-    // TODO: temporary
-    protected $rules;
+
 
     public function all()
     {
         return $this->modelName->all();
+    }
+
+    public function orderBy($field, $value){
+        return $this->modelName->orderBy($field, $value);
+    }
+    public function relTable(){
+        return $this->modelName->relTable()->get();
     }
 
     public function create($array)
@@ -29,17 +34,33 @@ class BaseRepository implements BaseInterface
     public function where($name, $operator, $value = null)
     {
         if ($value === null) {
+            return $this->modelName->where($name, $this->optimus()->encode($operator));
+        }
+        return $this->modelName->where($name, $operator, $this->optimus()->encode($value));
+    }
+
+    public function whereNoObfuscate($name, $operator, $value = null){
+        if ($value === null) {
             return $this->modelName->where($name, $operator);
         }
         return $this->modelName->where($name, $operator, $value);
     }
 
-    public function update($array)
+    public function whereLike($name, $operator, $value = null)
     {
+        return $this->modelName->where($name, $operator, $value);
+    }
+
+    public function update($array)
+    {   
         return $this->modelName->update($array);
     }
 
     public function find($id)
+    {
+        return $this->modelName->find($this->optimus()->encode($id));
+    }
+    public function findNoObfuscate($id)
     {
         return $this->modelName->find($id);
     }
@@ -67,12 +88,6 @@ class BaseRepository implements BaseInterface
             });
     }
 
-    public function fillable($array){
-        return collect($array)->filter(function ($value, $key) {
-            return in_array($key, $this->modelName->getFillable());
-        })->toArray();
-    }
-
     public function paginate($collection)
     {
         if ($collection !== null) {
@@ -81,6 +96,14 @@ class BaseRepository implements BaseInterface
 
             return new LengthAwarePaginator($collection->forPage($request->page, $perPage), $collection->count(), $perPage, $request->page);
         }
+    }
+
+    public function fillable($array){
+
+        $modelName = $this->modelName;
+        return collect($array)->filter(function ($value, $key) use ($modelName) {
+            return in_array($key, $modelName->getFillable());
+        })->toArray();
     }
 
     public function addressFillable($array)

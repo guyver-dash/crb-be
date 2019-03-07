@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\Product;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Product;
 use App\Repo\Product\ProductInterface;
-
 class ProductController extends Controller
 {
     protected $product;
@@ -20,9 +20,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+    
         return response()->json([
-            'products' => $this->product->all()
+            'products' => $this->product->paginate(
+                $this->product->relTable()
+            )
         ]);
     }
 
@@ -53,9 +55,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product, Request $request)
     {
-        //
+        
+        return response()->json([
+            'product' => $this->product->where('id', $request->id)->relTable()->first()
+        ]);
     }
 
     /**

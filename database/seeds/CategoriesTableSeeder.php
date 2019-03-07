@@ -12,30 +12,41 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Stock Item', 'Non-Stock', 'Description Only', 'Services', 'Labor', 'Assembly', 'Activity', 'Charge'];
+        $categories = [
+            'computer' => 'Consumer Electronics',
+            'perm_data_setting' => 'Machinery', 
+            'extension' => 'Apparel', 
+            'directions_car' => 'Automobiles & Motorcyles', 
+            'local_florist' => 'Home & Garden', 
+            'child_care' => 'Beauty & Personal Care', 
+            'local_hospital' => 'Health & Medical', 
+            'pool' => 'Sports & Entertainment'
+        ];
 
-        $types = ['INGREDIENTS', 'PRODUCT', 'NON-BREAD', 'SUPPLY', 'EQUIPMENT'];
-        foreach($categories as $category){
-
-            Category::create([
-                    'category_type' => 'App\Model\Branch',
-                    'category_id' => rand(1, 2),
-                    'name' => $category,
-                    'desc' => $category,
-                    'parent_id' => 0
-                ]);
-        }
-
-        foreach($types as $type){
-
-            Category::create([
-                'category_type' => 'App\Model\Branch',
-                'category_id' => rand(1, 2),
-                'name' => $type,
-                'desc' => $type,
-                'parent_id' => 1
-            ]);
-        }
+        $computerElectronics = [
+            'Camera & Accessories',
+            'Mobile Phone & Parts',
+            'Computer HardWare &Software',
+            'Smart Electronics',
+            'Video Games'
+        ];
         
+        foreach ($categories as $key => $value) {
+        	Category::create([
+                    'parent_id' => 0,
+                    'name' => $value,
+                    'icon' => $key,
+                    'url' => str_slug($value, '-') 
+        		]);
+        }
+
+        foreach ($computerElectronics as $key => $value) {
+        	Category::create([
+                    'parent_id' => 1,
+                    'name' => $value,
+                    'url' => str_slug($value, '-') 
+        		]);
+        }
+
     }
 }

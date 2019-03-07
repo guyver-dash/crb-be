@@ -9,27 +9,5 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-    use DispatchesJobs, ValidatesRequests;
-
-    //Original
-    // use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-
-    //AuthorizesRequests for $this->authorizeResource in Policies for index..
-    use AuthorizesRequests {
-        resourceAbilityMap as protected resourceAbilityMapTrait;
-    }
-
-    /**
-     * Get the map of resource methods to ability names.
-     *
-     * @return array
-     */
-    protected function resourceAbilityMap()
-    {
-        // Map the "index" ability to the "index" function in our policies
-        return array_merge($this->resourceAbilityMapTrait(), ['index' => 'index', 'edit' => 'view']);
-    }
-
-    //AuthorizesRequests for $this->authorizeResource in Policies for index..
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

@@ -18,4 +18,5 @@ class Province extends Model
     {
         return $this->hasMany('App\Model\City');
     }
+
 }
