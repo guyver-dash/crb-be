@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\User;
 use App\Repo\User\UserInterface;
+use App\Http\Requests\UserFormRequest;
 
 class UserController extends Controller
 {
@@ -51,7 +52,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserFormRequest $request)
     {
         //
     }
@@ -87,7 +88,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserFormRequest $request, $id)
     {
 
         return response()->json([

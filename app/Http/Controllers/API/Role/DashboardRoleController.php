@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repo\Role\RoleInterface;
+use App\Http\Requests\RoleFormRequest;
+use Auth;
 class DashboardRoleController extends Controller
 {
 
@@ -25,6 +27,7 @@ class DashboardRoleController extends Controller
             'roles' => $this->role->paginate( 
                 $this->role->whereLike('name', 'like', '%' . $request->filter . '%')
                     ->orWhere('description', 'like', '%' . $request->filter . '%')
+                    ->where('parent_id')
                     ->with('allChildren')
                     ->orderBy('created_at', 'desc')
                     ->get() 
@@ -41,7 +44,8 @@ class DashboardRoleController extends Controller
     {
         
         return response()->json([
-            'roles' => $this->role->all()
+            'roles' => $this->role->orWhereNoObfuscate('parent_id', Auth::User()->roles->min('parent_id'))
+                ->with('allChildren')->first()
         ]);
     }
 
@@ -51,7 +55,7 @@ class DashboardRoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleFormRequest $request)
     {
         $this->role->create($request->all());
         return response()->json([
@@ -90,7 +94,7 @@ class DashboardRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleFormRequest $request, $id)
     {
         return response()->json([
             'success' => $this->role->find($request->id)->update($request->all())

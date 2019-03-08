@@ -39,7 +39,21 @@ class BaseRepository implements BaseInterface
         return $this->modelName->where($name, $operator, $this->optimus()->encode($value));
     }
 
+    public function orWhere($name, $operator, $value = null)
+    {
+        if ($value === null) {
+            return $this->modelName->where($name, $this->optimus()->encode($operator));
+        }
+        return $this->modelName->where($name, $operator, $this->optimus()->encode($value));
+    }
+
     public function whereNoObfuscate($name, $operator, $value = null){
+        if ($value === null) {
+            return $this->modelName->where($name, $operator);
+        }
+        return $this->modelName->where($name, $operator, $value);
+    }
+    public function orWhereNoObfuscate($name, $operator, $value = null){
         if ($value === null) {
             return $this->modelName->where($name, $operator);
         }

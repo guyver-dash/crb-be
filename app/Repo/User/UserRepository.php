@@ -17,10 +17,10 @@ class UserRepository extends BaseRepository implements UserInterface{
 
     public function update($request){
 
-        $user = $this->find($request->id);
-        $user->update( $this->fillable($request->user) );
-        $user->address()->update( $this->addressFillable($request->user['address']) );
-        $user->roles()->sync($request->user['role_ids']);
+        $user = $this->find($request->optimus_id);
+        $user->update( $this->fillable($request->all()) );
+        $user->address()->update( $this->addressFillable($request->address) );
+        $user->roles()->sync($request->role_ids);
         return true;
 
     }

@@ -63,4 +63,8 @@ class User extends Authenticatable
         return $this->roles->pluck('id');
     }
 
+    public function setMobileAttribute($val){
+        return (Int)$val;
+    }
+
 }
