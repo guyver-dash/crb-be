@@ -20,6 +20,7 @@ class UserRepository extends BaseRepository implements UserInterface{
         $user = $this->find($request->optimus_id);
         $user->update( $this->fillable($request->all()) );
         $user->address()->update( $this->addressFillable($request->address) );
+        $user->information()->update( $this->informationFillable($request->information));
         $user->roles()->sync($request->role_ids);
         return true;
 

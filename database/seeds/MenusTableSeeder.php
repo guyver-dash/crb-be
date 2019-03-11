@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Model\Menu;
-
+use App\Model\User;
 class MenusTableSeeder extends Seeder
 {
     /**
@@ -12,9 +12,10 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
+
         $menus = ['System Settings', 'Inventories', 'Productions', 'Accounting', 'Breeds', 'Purchases Modules', 'Sales',  'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
         $sub_menu1 = [
-            'Users', 'Roles', 'Access Rights', 'Menus', 'Holdings', 'Companies', 'Branches', 'Trademarks', 'Franchisees', 'Logistics', 'Commissaries',  'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
+            'Users', 'Roles', 'Access Right', 'Menus', 'Holdings', 'Companies', 'Branches', 'Trademarks', 'Franchisees', 'Logistics', 'Commissaries',  'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
         
         $sub_menu2 =[
            'Other Vendors', 'Packages', 'Categories', 'Items', 'Purchase Request'

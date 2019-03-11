@@ -32,11 +32,7 @@ class UserFormRequest extends FormRequest
             'firstname' => 'alpha_spaces|required',
             'middlename' => 'alpha_spaces|required',
             'lastname' => 'alpha_spaces|required',
-            'email' => [
-                'required',
-                Rule::unique('users')->ignore($user),
-            ],
-            'mobile' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
         ];
     }
 }

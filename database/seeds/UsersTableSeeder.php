@@ -6,7 +6,7 @@ use App\Model\Address;
 
 class UsersTableSeeder extends Seeder
 {
-     /**
+    /**
      * Run the database seeds.
      *
      * @return void
@@ -19,73 +19,82 @@ class UsersTableSeeder extends Seeder
         		'lastname' => 'admin ',
                 'middlename' => 'middlename',
                 'username' => 'super-admin',
-                'mobile' => $faker->phoneNumber,
-        		'email' => 'superAdmin@a2r-online.com',
+        		'email' => 'superAdmin@pattys.com',
         		'password' => Hash::make('23456789')
+
         	]);
+
         $newUser = User::find($user->id);
+
         $user->roles()->attach($user->id, [
                 'user_id' => $user->id,
                 'role_id' => 1
             ]);
+
        $user = User::create([
                 'firstname' => 'store',
                 'lastname' => 'admin',
                 'middlename' => 'middlename',
                 'username' => 'store-admin',
-                'mobile' => $faker->phoneNumber,
-                'email' => 'storeAdmin@a2r-online.com',
+                'email' => 'storeAdmin@pattys.com',
                 'password' => Hash::make('23456789')
+
             ]);
+
         $newUser = User::find($user->id);
         $newUser->roles()->attach($user->id, [
                 'user_id' => $user->id,
                 'role_id' => 2
             ]);
+
         $user = User::create([
                 'firstname' => 'Super',
                 'lastname' => 'Super Manager',
                 'middlename' => 'middlename',
                 'username' => 'super-staff',
-                'mobile' => $faker->phoneNumber,
-                'email' => 'superStaff@a2r-online.com',
+                'email' => 'superStaff@pattys.com',
                 'password' => Hash::make('23456789')
+
             ]);
+
         $newUser = User::find($user->id);
         $newUser->roles()->attach($user->id, [
                 'user_id' => $user->id,
                 'role_id' => 3
             ]);
+
          $user = User::create([
                 'firstname' => 'Store',
                 'lastname' => 'Store CEO',
                 'middlename' => 'middlename',
                 'username' => 'store-staff',
-                'mobile' => $faker->phoneNumber,
-                'email' => 'storeStaff@a2r-online.com',
+                'email' => 'storeStaff@pattys.com',
                 'password' => Hash::make('23456789')
+
             ]);
         $newUser = User::find($user->id);
         $newUser->roles()->attach($user->id, [
                 'user_id' => $user->id,
                 'role_id' => 4
             ]);
+
             for ($i=1; $i < 99; $i++) { 
                 $user = User::create([
                     'firstname' => $faker->firstName('male'|'female'),
                     'lastname' => $faker->lastName,
                     'middlename' => $faker->firstNameFemale,
                     'username' => $faker->userName,
-                    'mobile' => $faker->phoneNumber,
                     'email' => $faker->safeEmail,
                     'password' => Hash::make('23456789')
                 ]);
+
                 $newUser = User::find($user->id);
                 $newUser->roles()->attach($user->id,[
                     'user_id'   => $user->id,
                     'role_id' => rand(1, 17)
                 ]);
             }
+
             for ($i=1; $i < 103; $i++) { 
             
                 $user = User::find($i);
@@ -102,5 +111,6 @@ class UsersTableSeeder extends Seeder
                 $user->address()->save($newAddress);
     
             }
+
     }
 }

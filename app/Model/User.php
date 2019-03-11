@@ -3,26 +3,21 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
-use App\Traits\Model\Globals;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Traits\Obfuscate\Optimuss;
-class User extends Authenticatable
+use Carbon\Carbon;
+
+// class User extends Model
+
+class User extends Authenticatable 
 {
-    use Notifiable, HasApiTokens, Globals, Optimuss;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'firstname', 'middlename', 'lastname', 'username',  'email', 'password', 'status', 'mobile'
+    use HasApiTokens, Notifiable, Optimuss;
+    
+     protected $fillable = [
+        'firstname', 'middlename', 'lastname', 'username',  'email', 'password', 'status'
     ];
-
-    protected $appends = ['fullname', 'optimus_id', 'role_ids'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -33,29 +28,52 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public static function boot() {
-        parent::boot();
-        static::deleting(function($user) {
-            $user->address()->delete();
-            $user->roles()->detach();
-        });
-    }
+    protected $appends = ['fullname', 'optimus_id', 'role_ids'];
+
     public function AauthAcessToken(){
         return $this->hasMany('App\Model\OauthAccessToken');
     }
+
     public function address(){
+
     	return $this->morphOne('App\Model\Address', 'addressable');
     }
+
     public function roles(){
         return $this->belongsToMany('App\Model\Role', 'role_user', 'user_id', 'role_id');
     }
 
-    public function scopeRelTable($q){
-        return $q->with(['roles', 'address']);
+    public function holdings(){
+        return $this->belongsToMany('App\Model\Holding', 'holding_user', 'user_id', 'holding_id');
+    }
+  
+    public function information(){
+
+        return $this->hasOne('App\Model\Information', 'user_id', 'id');
     }
 
-    public function getFullnameAttribute(){
-        return $this->firstname . ' ' . $this->lastname;
+
+    public function scopeSubordinates($query, User $user){
+
+        return $query->whereHas('roles', function($query) use ($user) {
+            //Get the roles where the parent_id is the (minimum) parent_id from the user roles
+            $query->where('parent_id', '>=', $user->roles()->orderBy('parent_id', 'ASC')->first()->parent_id);
+            //Get the roles where the parent_id is greater than or equal to the user id.
+            $query->where('parent_id', '>=', $user->roles()->orderBy('parent_id', 'ASC')->first()->id);
+            
+            return $query;
+        
+        });
+    }
+
+    public function scopeRelTable($query){
+
+        return $query->with(['roles.accessRights.menus', 'address.country', 'address.region','address.province', 'address.city', 'address.brgy', 'information']);
+    }
+
+    public function getCreatedAtAttribute($val){
+
+        return Carbon::parse($val)->toDayDateTimeString();
     }
 
     public function getRoleIdsAttribute(){
@@ -63,8 +81,9 @@ class User extends Authenticatable
         return $this->roles->pluck('id');
     }
 
-    public function setMobileAttribute($val){
-        return (Int)$val;
+    public function getFullnameAttribute(){
+        return $this->firstname . ' ' . $this->lastname;
     }
+
 
 }

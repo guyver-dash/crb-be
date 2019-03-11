@@ -30,7 +30,7 @@ class UserController extends Controller
                 $this->user->whereLike('firstname', 'like', '%' . $request->filter . '%')
                     ->orWhere('lastname', 'like', '%' . $request->filter . '%')
                     ->orderBy('created_at', 'desc')
-                    ->with(['roles', 'address'])
+                    ->with(['roles', 'address', 'information'])
                     ->get() 
             )
         ]);
@@ -69,15 +69,16 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     *  Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit(Request $request)
     {
         return response()->json([
-            'user' => $this->user->where('id', $request->id)->with(['address', 'roles'])->first()
+            'user' => $this->user->where('id', $request->id)->with(['roles', 'address', 'information'])->first()
         ]);
     }
 

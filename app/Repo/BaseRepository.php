@@ -5,6 +5,7 @@ namespace App\Repo;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Traits\Obfuscate\Optimuss;
 use App\Model\Address;
+use App\Model\Information;
 
 class BaseRepository implements BaseInterface
 {
@@ -125,6 +126,14 @@ class BaseRepository implements BaseInterface
         $address = new Address;
         return collect($array)->filter(function ($value, $key) use ($address) {
             return in_array($key, $address->getFillable());
+        })->toArray();
+    }
+
+    public function informationFillable($array)
+    {
+        $information = new Information;
+        return collect($array)->filter(function ($value, $key) use ($information) {
+            return in_array($key, $information->getFillable());
         })->toArray();
     }
 
