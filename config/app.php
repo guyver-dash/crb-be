@@ -180,6 +180,7 @@ return [
         App\Providers\RoleServiceProvider::class,
         App\Providers\CategoryServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
+        App\Providers\ChartAccountServiceProvider::class,
     ],
 
     /*

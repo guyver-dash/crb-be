@@ -6,6 +6,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Traits\Obfuscate\Optimuss;
 use App\Model\Address;
 use App\Model\Information;
+use App\Model\User;
+use App\Model\TAccount;
+use Auth;
 
 class BaseRepository implements BaseInterface
 {
@@ -279,5 +282,27 @@ class BaseRepository implements BaseInterface
         ];
         // execute the validation action
         return $actionType[$data['type']]();
+    }
+
+    public function userCompanies(){
+        
+        $user = User::where('id', Auth::User()->id)->with('roles.accessRights.companies')->first();
+        return $user->roles->map(function($role){
+            return $role->accessRights;
+        })->flatten(1)->map(function($accessRight){
+            return $accessRight->companies;
+        })->flatten(1);
+    }
+
+    public function when($condition, $function){
+        return $this->modelName->when($condition, $function);
+    }
+
+    public function request(){
+        return app()->make('request');
+    }
+
+    public function tAccounts(){
+        return TAccount::all();
     }
 }

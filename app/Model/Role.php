@@ -63,12 +63,6 @@ class Role extends Model
         return $query;
     }
 
-    // public function scopeParent($q){
-
-    //     $q->min('parent_id');
-    // }
-    
-
     public function scopeChildLess($q){
 
         $q->where('parent_id', '=', 0);

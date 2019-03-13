@@ -4,16 +4,19 @@ namespace App\Model;
 
 use App\Traits\Model\Globals;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Obfuscate\Optimuss;
 
 class Company extends Model
 {
 
-    use Globals;
+    use Globals, Optimuss;
 
     protected $table = 'companies';
     protected $fillable = [
         'name', 'desc', 'holding_id',
     ];
+
+    protected $appends = ['optimus_id'];
 
     public function vendors()
     {

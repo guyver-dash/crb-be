@@ -3,10 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Obfuscate\Optimuss;
 
 class ChartAccount extends Model
 {
-    
+    use Optimuss;
     protected $table = 'chart_accounts';
     protected $fillable = [
         'company_id',
@@ -18,6 +19,8 @@ class ChartAccount extends Model
         'accounting_standard_id',
         'remarks'
     ];
+
+    protected $appends = ['optimus_id'];
 
     public static function boot() {
         parent::boot();
