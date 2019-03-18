@@ -24,7 +24,11 @@ class ChartAccountFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_id' => 'int'
+            'company_id' => 'integer|required',
+            'account_code' => 'integer|required',
+            'account_display' => 'string:15|required',
+            'name' => 'required|alpha_spaces',
+            'taccount_id' => 'integer|required'
         ];
     }
 }

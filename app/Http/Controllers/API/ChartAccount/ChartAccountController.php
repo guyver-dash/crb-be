@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\ChartAccount;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChartAccountFormRequest;
 use App\Repo\ChartAccount\ChartAccountInterface;
 use App\Traits\Obfuscate\Optimuss;
 use Illuminate\Http\Request;
@@ -25,15 +26,15 @@ class ChartAccountController extends Controller
         $request = $this->chartAccount->request();
         return response()->json([
             'chartAccounts' => $this->chartAccount->paginate(
-                $this->chartAccount->when(request('companyId', false), function ($q) use ($request) {
+                $this->chartAccount->when(request('companyId') !== null, function ($q) use ($request) {
                     return $q->where('company_id', $this->optimus()->encode($request->companyId));
-                })
-                    ->when(request('filter', false), function ($q) use ($request) {
-                        return $q->where('name', 'LIKE', `%${$request->filter}%`);
                     })
-                    ->when(request('filter', false), function ($q) use ($request) {
-                        return $q->where('remarks', 'LIKE', `%${$request->filter}%`);
-                    })
+                    // ->when(request('filter') !== null, function ($q) use ($request) {
+                    //     return $q->where('name', 'LIKE', `%{$request->filter}%`);
+                    // })
+                    // ->when(request('filter') !== null, function ($q) use ($request) {
+                    //     return $q->where('remarks', 'LIKE', `%{$request->filter}%`);
+                    // })
                     ->where('parent_id', '=', 0)
                     ->with(['allChildren', 'tAccount'])
                     ->orderBy('created_at', 'desc')
@@ -48,10 +49,10 @@ class ChartAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+{
         return response()->json([
             'parentAccount' => $this->chartAccount->where('id', $this->chartAccount->request()->id)->first(),
-            'tAccounts' => $this->chartAccount->tAccounts()
+            'tAccounts' => $this->chartAccount->tAccounts(),
         ]);
     }
 
@@ -61,9 +62,13 @@ class ChartAccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ChartAccountFormRequest $request)
 {
-        //
+        $this->chartAccount->create($request->all());
+
+        return response()->json([
+            'success' => $request->all(),
+        ]);
     }
 
     /**
@@ -83,9 +88,12 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-{
-        //
+    public function edit(Request $request)
+    {
+        
+        return response()->json([
+            'chartAccount' => $this->chartAccount->find($request->id)
+        ]);
     }
 
     /**
@@ -95,9 +103,14 @@ class ChartAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-{
-        //
+    public function update(Request $request)
+    {
+        $this->chartAccount->find($request->id)
+            ->update($request->all());
+        
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Model\Menu;
-use App\Model\User;
+use Illuminate\Database\Seeder;
+
 class MenusTableSeeder extends Seeder
 {
     /**
@@ -13,73 +13,107 @@ class MenusTableSeeder extends Seeder
     public function run()
     {
 
-        $menus = ['System Settings', 'Inventories', 'Productions', 'Accounting', 'Breeds', 'Purchases Modules', 'Sales',  'General Ledgers', 'Payroll', 'CRM', 'HRIS', 'Reports'];
-        $sub_menu1 = [
-            'Users', 'Roles', 'Access Right', 'Menus', 'Holdings', 'Companies', 'Branches', 'Trademarks', 'Franchisees', 'Logistics', 'Commissaries',  'Company Statutory Table', 'Payroll Setup', 'Customers','Sales Representative', 'Tax Codes', 'Taxes Authoritie', 'Vendor', 'Inventory Items', 'Employees', 'Chart of Accounts', 'Item Prices', 'Employee Billing Rates', 'Sub-Contractor', 'Jobs', 'KYC', 'User Type'];
-        
-        $sub_menu2 =[
-           'Other Vendors', 'Packages', 'Categories', 'Items', 'Purchase Request'
-        ];
+        $menus = ['Home', 'CIS', 'Deposit', 'Loans', 'Interbranch', 'Miscellaneous', 'General Ledger', 'Reports', 'Setting'];
 
-        $sub_menu3 =[
-            'Ingredients', 'Production Boards', 'Scalers', 'Mixers and Molders', 'Proofing', 'Ovens'
-         ];
-        
-         $sub_menu4 =[
-            'Accounting Standards', 'Chart of Accounts', 'Transactions', 'General Ledgers'
-         ];
+        $deposits = ['Savings Deposit', 'Time Deposit', 'Share Capital', 'Current Account', 'Special Savings Deposit', 'Special Savings Coop'];
+        $savingsDeposit = ['New Account', 'Cash/Memo Transactions', 'Check Deposit', 'Account Ledger', 'Current Account', 'Savings Retagging', 'Post Deposit Payment'];
+        $timeDeposits = ['Placement', 'Redemption', 'Time Deposit Ledger'];
+        $shareCapital = ['Cbu Transactions'];
+        $currentAccount = ['New Account', 'Cash Transactions', 'Check Deposit', 'Account Ledger', 'Check Issuance/Withdrawal'];
+        $specialSavingsDeposit = ['New Account', 'Deposit', 'Terminate/Close', 'Account Ledger'];
+        $specialSavingsDepositCoop = ['New Account(Old)', 'New Account(New)', 'Cash Transaction'];
 
-         $sub_menu5 =[
-            'Disbursement Journal', 'Vendors Credit Memo', 'Sales Journal', 'Sales Credit Memo', 'General Ledgers'
-         ];
-
-        foreach ($menus as $value) {
-        	
-        	     Menu::create([
-                    'parent_id' => 0,
-        			'path' => str_slug($value, '-'),
-        			'name' => $value
-        		]);
-
-        }
-
-        foreach($sub_menu1 as $submenu){
+        foreach ($menus as $submenu) {
             Menu::create([
-                'parent_id' => 1,
+                'parent_id' => 0,
                 'path' => str_slug($submenu, '-'),
-                'name' => $submenu
+                'name' => $submenu,
             ]);
         }
 
-        foreach($sub_menu2 as $submenu){
-            Menu::create([
-                'parent_id' => 2,
-                'path' => str_slug($submenu, '-'),
-                'name' => $submenu
-            ]);
-        }
+        foreach ($deposits as $value) {
 
-        foreach($sub_menu3 as $submenu){
             Menu::create([
                 'parent_id' => 3,
+                'path' => str_slug($value, '-'),
+                'name' => $value,
+            ]);
+
+        }
+
+        foreach ($savingsDeposit as $value) {
+
+            Menu::create([
+                'parent_id' => 10,
+                'path' => str_slug($value, '-'),
+                'name' => $value,
+            ]);
+
+        }
+
+        foreach ($timeDeposits as $value) {
+
+            Menu::create([
+                'parent_id' => 11,
+                'path' => str_slug($value, '-'),
+                'name' => $value,
+            ]);
+
+        }
+
+        foreach ($shareCapital as $value) {
+
+            Menu::create([
+                'parent_id' => 12,
+                'path' => str_slug($value, '-'),
+                'name' => $value,
+            ]);
+
+        }
+
+        foreach ($currentAccount as $value) {
+
+            Menu::create([
+                'parent_id' => 13,
+                'path' => str_slug($value, '-'),
+                'name' => $value,
+            ]);
+
+        }
+
+        foreach ($specialSavingsDeposit as $submenu) {
+            Menu::create([
+                'parent_id' => 14,
                 'path' => str_slug($submenu, '-'),
-                'name' => $submenu
+                'name' => $submenu,
             ]);
         }
 
-        foreach($sub_menu4 as $submenu){
+        foreach ($specialSavingsDepositCoop as $submenu) {
+            Menu::create([
+                'parent_id' => 15,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $loans = ['Loan Application', 'Loan Processing', 'Loan Approval', 'Loan Release', 'Loan Payments', 'Delete Loans', 'Payable Accounts', 'Loan Regrouping', 'List Of Loan Process', 'Upload Loan Payment', 'Post Loan Payment', 'Collection Sheets'];
+
+        foreach ($loans as $submenu) {
             Menu::create([
                 'parent_id' => 4,
                 'path' => str_slug($submenu, '-'),
-                'name' => $submenu
+                'name' => $submenu,
             ]);
         }
 
-        foreach($sub_menu5 as $submenu){
+        $loanPayments = ['Loan information', 'Group', 'Individual'];
+
+        foreach ($loanPayments as $submenu) {
             Menu::create([
-                'parent_id' => 53,
-                'path' => 'transactions/'.str_slug($submenu, '-'),
-                'name' => $submenu
+                'parent_id' => 43,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
             ]);
         }
 

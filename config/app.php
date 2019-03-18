@@ -181,6 +181,7 @@ return [
         App\Providers\CategoryServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
         App\Providers\ChartAccountServiceProvider::class,
+        App\Providers\AccessRightServiceProvider::class,
     ],
 
     /*

@@ -58,6 +58,5 @@ class ChartAccount extends Model
 
         return $query->with(['allChildren', 'parent', 'company', 'tAccount']);
     }
-
     
 }

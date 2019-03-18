@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('dashboard_menus', 'Api\Menu\DashboardMenuController');
     Route::resource('chart_accounts', 'Api\ChartAccount\ChartAccountController');
     Route::resource('company_chart_accounts', 'Api\ChartAccount\CompanyChartAccountController');
+    Route::resource('access_rights', 'Api\AccessRight\AccessRightController');
 });
 
 Route::get('provinces', 'Api\Places\PlacesController@provinces');

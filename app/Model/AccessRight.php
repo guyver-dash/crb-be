@@ -79,4 +79,8 @@ class AccessRight extends Model
     public function scopeRelTable($query){
         return $query->with(['roles', 'menus']);
     }
+
+    public function getNameAttribute($val){
+        return ucwords($val);
+    }
 }

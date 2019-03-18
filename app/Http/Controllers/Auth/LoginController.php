@@ -43,7 +43,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
+        if(Auth::attempt(['email' => request('username'), 'password' => request('password')])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             return response()->json([
@@ -52,7 +52,7 @@ class LoginController extends Controller
                     'userLogin' => true
                 ]); 
  
-        }else if(Auth::attempt(['username' => request('email'), 'password' => request('password')])) {
+        }else if(Auth::attempt(['username' => request('username'), 'password' => request('password')])) {
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             return response()->json([
