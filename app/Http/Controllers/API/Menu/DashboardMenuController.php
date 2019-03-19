@@ -98,4 +98,15 @@ class DashboardMenuController extends Controller
     {
         //
     }
+
+    public function search(){
+
+        return response()->json([
+            'menus' => $this->menu->whereNoObfuscate('name', 'LIKE', '%'.request('string').'%')
+                ->when( request('string') == null, function($q){
+                    return $q->where('parent_id', 0);
+                })
+                ->with('allChildren')->get()
+        ]);
+    }
 }

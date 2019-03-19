@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = ['fullname', 'optimus_id', 'role_ids'];
+    protected $appends = ['optimus_id', 'role_ids'];
 
     public function AauthAcessToken(){
         return $this->hasMany('App\Model\OauthAccessToken');
@@ -49,7 +49,7 @@ class User extends Authenticatable
   
     public function information(){
 
-        return $this->hasOne('App\Model\Information', 'user_id', 'id');
+        return $this->hasOne('App\Model\Information', 'id', 'information_id');
     }
 
 
@@ -80,10 +80,5 @@ class User extends Authenticatable
 
         return $this->roles->pluck('id');
     }
-
-    public function getFullnameAttribute(){
-        return $this->firstname . ' ' . $this->lastname;
-    }
-
 
 }
