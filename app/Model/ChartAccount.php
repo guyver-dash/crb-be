@@ -11,13 +11,11 @@ class ChartAccount extends Model
     protected $table = 'chart_accounts';
     protected $fillable = [
         'company_id',
-        'parent_id',
+        'parent_code',
         'taccount_id',
         'name',
         'account_code',
         'account_display',
-        'accounting_standard_id',
-        'remarks'
     ];
 
     protected $appends = ['optimus_id'];
@@ -31,11 +29,11 @@ class ChartAccount extends Model
     }
 
     public function parent(){
-        return $this->hasOne('App\Model\ChartAccount', 'id', 'parent_id');
+        return $this->hasOne('App\Model\ChartAccount', 'id', 'parent_code');
     }
     public function children() {
 
-        return $this->hasMany('App\Model\ChartAccount', 'parent_id', 'id');
+        return $this->hasMany('App\Model\ChartAccount', 'parent_code', 'account_code');
     }
 
     public function allChildren()

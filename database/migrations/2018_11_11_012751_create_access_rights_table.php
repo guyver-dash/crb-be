@@ -16,6 +16,7 @@ class CreateAccessRightsTable extends Migration
         Schema::create('access_rights', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

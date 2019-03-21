@@ -26,16 +26,13 @@ class ChartAccountController extends Controller
         $request = $this->chartAccount->request();
         return response()->json([
             'chartAccounts' => $this->chartAccount->paginate(
-                $this->chartAccount->when(request('companyId') !== null, function ($q) use ($request) {
-                    return $q->where('company_id', $this->optimus()->encode($request->companyId));
+                $this->chartAccount
+                    ->when(request('filter') !== null, function ($q) use ($request) {
+                        return $q->where('name', 'LIKE', '%' . $request->filter . '%');
                     })
-                    // ->when(request('filter') !== null, function ($q) use ($request) {
-                    //     return $q->where('name', 'LIKE', `%{$request->filter}%`);
-                    // })
-                    // ->when(request('filter') !== null, function ($q) use ($request) {
-                    //     return $q->where('remarks', 'LIKE', `%{$request->filter}%`);
-                    // })
-                    ->where('parent_id', '=', 0)
+                    ->when(request('filter') === null, function ($q) {
+                        return $q->where('parent_code', '=', 0);
+                    })
                     ->with(['allChildren', 'tAccount'])
                     ->orderBy('created_at', 'desc')
                     ->get()
@@ -49,9 +46,9 @@ class ChartAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-{
+    {
         return response()->json([
-            'parentAccount' => $this->chartAccount->where('id', $this->chartAccount->request()->id)->first(),
+            'parentAccount' => $this->chartAccount->whereNoObfuscate('account_code', request('account_code'))->first(),
             'tAccounts' => $this->chartAccount->tAccounts(),
         ]);
     }
@@ -63,7 +60,7 @@ class ChartAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ChartAccountFormRequest $request)
-{
+    {
         $this->chartAccount->create($request->all());
 
         return response()->json([
@@ -78,8 +75,10 @@ class ChartAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-{
-        //
+    {
+        return response()->json([
+            'chartAccount' => $this->chartAccount->whereNoObfuscate('account_code', request('account_code'))->first(),
+        ]);
     }
 
     /**
@@ -90,9 +89,9 @@ class ChartAccountController extends Controller
      */
     public function edit(Request $request)
     {
-        
+
         return response()->json([
-            'chartAccount' => $this->chartAccount->find($request->id)
+            'chartAccount' => $this->chartAccount->whereNoObfuscate('account_code', request('account_code'))->first(),
         ]);
     }
 
@@ -105,9 +104,9 @@ class ChartAccountController extends Controller
      */
     public function update(Request $request)
     {
-        $this->chartAccount->find($request->id)
+        $this->chartAccount->whereNoObfuscate('account_code', request('account_codee'))->first()
             ->update($request->all());
-        
+
         return response()->json([
             'success' => true
         ]);
@@ -120,7 +119,10 @@ class ChartAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-{
-        //
+    {
+        $this->chartAccount->whereNoObfuscate('account_code', request('account_code'))->first()->delete();
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

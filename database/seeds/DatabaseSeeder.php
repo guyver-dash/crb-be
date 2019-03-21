@@ -102,24 +102,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OtherVendorsTableSeeder::class);
         $this->call(AccountingStandardsTableSeeder::class);
         $this->call(ChartAccountsTableSeeder::class);
-        $this->call(ItemsTableSeeder::class);
-        $this->call(ItemsTableSeeder::class);
-        $this->call(PurchaseStatusTableSeeder::class);
-        $this->call(PurchasesTableSeeder::class);
-        $this->call(PurchasesTableSeeder::class);
-        $this->call(PurchasesTableSeeder::class);
-        $this->call(JobsTableSeeder::class);
-        $this->call(PurchasedReceivedTableSeeder::class);
-        $this->call(PurchasedReceivedTableSeeder::class);
-        $this->call(PurchasedReceivedTableSeeder::class);
-        $this->call(IngredientsTableSeeder::class);
-        $this->call(TransactionsTableSeeder::class);
-        $this->call(GeneralLedgersTableSeeder::class);
-        $this->call(PayeesTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
-        $this->call(SaleInvoicesTableSeeder::class);
-        $this->call(PaymentMethodsTableSeeder::class);
-        $this->call(PayorTableSeeder::class);
         
     }
 }

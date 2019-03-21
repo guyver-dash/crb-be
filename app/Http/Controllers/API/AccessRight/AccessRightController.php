@@ -25,7 +25,7 @@ class AccessRightController extends Controller
         
         $request = app()->make('request');
         return response()->json([
-            'roles' => $this->accessRight->paginate( 
+            'accessRights' => $this->accessRight->paginate( 
                 $this->accessRight->whereLike('name', 'like', '%' . $request->filter . '%')
                     ->orderBy('created_at', 'desc')
                     ->get() 
@@ -51,7 +51,10 @@ class AccessRightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->accessRight->create($request->all());
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -60,9 +63,11 @@ class AccessRightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        return response()->json([
+            'accessRight' => $this->accessRight->where('id', $request->id)->first()
+        ]);
     }
 
     /**
@@ -71,9 +76,12 @@ class AccessRightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+       
+        return response()->json([
+            'accessRight' => $this->accessRight->where('id', $request->id)->first()
+        ]);
     }
 
     /**
@@ -83,9 +91,13 @@ class AccessRightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        
+        $this->accessRight->find($request->optimus_id)->update($request->all());
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**
@@ -94,8 +106,11 @@ class AccessRightController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $this->accessRight->find($request->id)->delete();
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

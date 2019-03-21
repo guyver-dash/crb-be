@@ -209,23 +209,21 @@ class MenusTableSeeder extends Seeder
             ]);
         }
 
-        $settings = ['Setup Time Deposit', 'Setup Loans'];
-
-        foreach ($settings as $submenu) {
-            Menu::create([
-                'parent_id' => 93,
-                'path' => str_slug($submenu, '-'),
-                'name' => $submenu,
-            ]);
-        }
-
-        $setUpTimeDeposit = ['time Deposit Reclassification', 'Time Deposit Limit to Names', 'Time Deposit Override Setup', 'Time Deposit Join Reclassification'];
-
-        $settings = ['Setup Time Deposit', 'Setup Loans'];
+        $settings = ['Setup Time Deposit', 'Setup Loans', 'Roles', 'Access Rights', 'Chart of Accounts'];
 
         foreach ($settings as $submenu) {
             Menu::create([
                 'parent_id' => 9,
+                'path' => 'settings'. '/'. str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+
+        $setUpTimeDeposit = ['Time Deposit Reclassification', 'Time Deposit Limit to Names', 'Time Deposit Override Setup', 'Time Deposit Join Reclassification'];
+        foreach ($setUpTimeDeposit as $submenu) {
+            Menu::create([
+                'parent_id' => 114,
                 'path' => str_slug($submenu, '-'),
                 'name' => $submenu,
             ]);
@@ -235,7 +233,7 @@ class MenusTableSeeder extends Seeder
 
         foreach ($setupLoans as $submenu) {
             Menu::create([
-                'parent_id' => 93,
+                'parent_id' => 115,
                 'path' => str_slug($submenu, '-'),
                 'name' => $submenu,
             ]);

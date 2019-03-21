@@ -12,7 +12,7 @@ class TaccountsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tAccounts = ['Debit', 'Credit', 'DebitorCredit'];
+        $tAccounts = ['Debit', 'Credit'];
 
         foreach($tAccounts as $tAccount){
             TAccount::create([
