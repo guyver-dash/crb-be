@@ -39,6 +39,6 @@
 ### Create a Model ###
 
 * New Model ```php artisan make:model Model/Role ``` 
-* Location is in ```app/model``` create your own folder if need. ```ModelFolder/ModelName
+* Location is in ```app/model``` create your own folder if need. ```ModelFolder/ModelName```
 
 
