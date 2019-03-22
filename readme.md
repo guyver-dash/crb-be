@@ -5,7 +5,7 @@
 * E.g Model - Roles
 * CLI(Command Line Interface)
 * ```Php artisan make:migration create_roles_table```
-* Location is on ```database/migrations``` find the roles created
+* Location is on ```database/migrations``` 
 * [Available Column Types](https://laravel.com/docs/5.7/migrations#columns)
 * E.g 
     ```Schema::create('roles', function (Blueprint $table) {
@@ -17,7 +17,7 @@
     });
   
 
-### Create a seeder if need. ###
+### Create a Seeder if need. ###
 * Always observe the ```Naming Convention``` PluralModelTableSeeder
 * ```Php artisan make:seeder RolesTableSeeder```
 * Location is on ```database/seeds```
@@ -36,7 +36,9 @@
            }
 
 
-### Who do I talk to? ###
+### Create a Model ###
 
-* Repo owner or admin
-* Other community or team contact
+* New Model ```php artisan make:model Model/Role ``` 
+* Location is in ```app/model``` create your own folder if need. ```ModelFolder/ModelName
+
+
