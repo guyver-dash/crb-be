@@ -14,7 +14,7 @@
             $table->string('description')->nullable();
             $table->integer('parent_id');
             $table->timestamps();
-        });```
+    });```
   
 
 ### How do I get set up? ###
