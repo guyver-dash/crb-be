@@ -1,0 +1,3 @@
+Back office transaction - R for cash receipt
+			- D for cash disbursement
+			- remove T for journal

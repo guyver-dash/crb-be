@@ -81,4 +81,9 @@ class User extends Authenticatable
         return $this->roles->pluck('id');
     }
 
+    public function branches(){
+
+        return $this->belongsToMany('App\Model\Branch', 'branch_user', 'user_id', 'branch_id')->withPivot(['default']);
+    }
+
 }

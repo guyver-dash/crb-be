@@ -1,0 +1,16 @@
+CREATE TABLE back_office_transaction (
+	bckoffice_id BIGINT NOT NULL DEFAULT AUTOINCREMENT,
+	ctrl VARCHAR(5) NULL,
+	acct VARCHAR(10) NULL,
+	selected_radio VARCHAR(100) NULL,
+	referenceNumber VARCHAR(250) NULL,
+	accountCode VARCHAR(250) NULL,
+	cName VARCHAR(250) NULL,
+	transaction_date datetime NULL,
+	amount DECIMAL(19,2) NULL,
+	trans_no BIGINT NULL,
+	status BIGINT NULL DEFAULT 0,
+	brno VARCHAR(6) NULL,
+	particulars VARCHAR(225) NULL,
+	PRIMARY KEY ( bckoffice_id ASC )
+);
