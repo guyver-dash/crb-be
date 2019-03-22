@@ -20,8 +20,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('chart_accounts', 'Api\ChartAccount\ChartAccountController');
     Route::resource('company_chart_accounts', 'Api\ChartAccount\CompanyChartAccountController');
     Route::resource('access_rights', 'Api\AccessRight\AccessRightController');
-
     Route::get('search-menus', 'Api\Menu\DashboardMenuController@search');
+
 });
 
 Route::get('provinces', 'Api\Places\PlacesController@provinces');
@@ -31,3 +31,7 @@ Route::resource('categories', 'Api\Category\CategoryController');
 Route::get('products/{id}', 'Api\Product\ProductController@show');
 Route::resource('products', 'Api\Product\ProductController');
 Route::resource('category_products', 'Api\Product\CategoryProductController');
+
+ //epoy
+    Route::resource('lmmcategories', 'Api\lmmCategory\lmmCategoryController');
+    // Route::resource('loancodes', 'Api\lmmCategory\LoanCodeController');
