@@ -5,6 +5,7 @@
 * E.g Model - Roles
 * CLI(Command Line Interface)
 * ```Php artisan make:migration create_roles_table```
+* Location is on ```database/migrations``` find the roles created
 * [Available Column Types](https://laravel.com/docs/5.7/migrations#columns)
 * E.g 
 
