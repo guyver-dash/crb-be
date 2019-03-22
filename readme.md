@@ -40,9 +40,9 @@
 
 * New Model CLI ```php artisan make:model Model/Role ``` 
 * Location is in ```app/model``` create your own folder if need. ```ModelFolder/ModelName```
-* Specify table names ```protected $table = 'roles';
-* Add Fillable for mass assignment ``` protected $fillable = ['name', 'description', 'parent_id'];
-* Mass Assignment using facade. ``` Role::create($request->all());
+* Specify table names ```protected $table = 'roles';```
+* Add Fillable for mass assignment ``` protected $fillable = ['name', 'description', 'parent_id'];```
+* Mass Assignment using facade. ``` Role::create($request->all());```
 
 ### Create a Controller ###
 
