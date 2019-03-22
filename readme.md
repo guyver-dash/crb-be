@@ -14,17 +14,13 @@
             $table->string('description')->nullable();
             $table->integer('parent_id');
             $table->timestamps();
-    });```
+    });
   
 
-### How do I get set up? ###
+### Create a seeder if need. ###
+* Always observe the ```Convention``` PluralModelTableSeeder
+* ```Php artisan make:seeder RolesTableSeeder```
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
 ### Contribution guidelines ###
 
