@@ -4,7 +4,7 @@
 
 * E.g Model - Roles
 * CLI(Command Line Interface)
-* Php artisan make:migration create_roles_table
+* ```Php artisan make:migration create_roles_table```
 * [Available Column Types](https://laravel.com/docs/5.7/migrations#columns)
 * E.g 
 
