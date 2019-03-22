@@ -5,7 +5,7 @@
 * E.g Model - Roles
 * CLI(Command Line Interface)
 * ```Php artisan make:migration create_roles_table```
-* Location is on ```database/migrations``` 
+* Location is in ```database/migrations``` 
 * [Available Column Types](https://laravel.com/docs/5.7/migrations#columns)
 * E.g 
     ```Schema::create('roles', function (Blueprint $table) {
@@ -20,7 +20,7 @@
 ### Create a Seeder if need. ###
 * Always observe the ```Naming Convention``` PluralModelTableSeeder
 * ```Php artisan make:seeder RolesTableSeeder```
-* Location is on ```database/seeds```
+* Location is in ```database/seeds```
 * E.g
     ```
        public function run()
@@ -38,7 +38,13 @@
 
 ### Create a Model ###
 
-* New Model ```php artisan make:model Model/Role ``` 
+* New Model CLI ```php artisan make:model Model/Role ``` 
 * Location is in ```app/model``` create your own folder if need. ```ModelFolder/ModelName```
+* Specify table names ```protected $table = 'roles';
+* Add Fillable for mass assignment ``` protected $fillable = ['name', 'description', 'parent_id'];
+* Mass Assignment using facade. ``` Role::create($request->all());
 
+### Create a Controller ###
 
+* New Controller CLI ```php artisan make:controller Api/Role/RoleController --resource```
+* Location is in ```app/Http/Controller/Api/Role/RoleController
