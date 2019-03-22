@@ -1,10 +1,12 @@
-# Work Life Cycle #
+# Work Life Cycle Laravel 5.7#
 
-### What is this repository for? ###
+### Create Migration ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* E.g Model - Roles
+* CLI(Command Line Interface)
+* Php artisan make:migration create_roles_table
+* [Available Column Types](https://laravel.com/docs/5.7/migrations#columns)
+* E.g 
 
 ### How do I get set up? ###
 
