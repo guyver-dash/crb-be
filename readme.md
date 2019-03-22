@@ -23,14 +23,17 @@
 * Location is on ```database/seeds```
 * E.g
     ```
-        $roles = ['Super Admin', 'Holding CEO'];
-        foreach ($roles as $value) {
-            $role = Role::create([
-                    'name' => $value,
-                    'parent_id' => 0,
-                    
-                ]);
-        }
+       public function run()
+          {
+                $roles = ['Super Admin', 'Holding CEO'];
+                foreach ($roles as $value) {
+                    $role = Role::create([
+                            'name' => $value,
+                            'parent_id' => 0,
+
+                        ]);
+                }
+           }
 
 
 ### Who do I talk to? ###
