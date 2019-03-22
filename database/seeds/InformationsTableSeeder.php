@@ -16,9 +16,10 @@ class InformationsTableSeeder extends Seeder
 
         for ($i=1; $i < 102 ; $i++) { 
             Information::create([
-
+                'firstname' => $faker->firstName('male'|'female'),
+                'lastname' => $faker->lastName,
+                'middlename' => $faker->firstNameFemale,
                 'employee_id' => $faker->ein,
-                'user_id' => $i,
                 'gender_id' => rand(1, 2),
                 'birthdate' => $faker->dateTimeThisCentury->format('Y-m-d'),
                 'mobile' => $faker->phoneNumber,

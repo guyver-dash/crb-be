@@ -1,0 +1,22 @@
+CREATE TABLE chartofaccount (
+	coaacctcode DECIMAL(18,0) NOT NULL,
+	coaparentcode DECIMAL(18,0) NOT NULL,
+	coalevelcode INTEGER NULL,
+	coaacctdesc VARCHAR(100) NULL,
+	coanormalbalance VARCHAR(1) NULL,
+	coaaccountsymbol VARCHAR(15) NULL,
+	coainformation VARCHAR(500) NULL,
+	coainclude VARCHAR(1) NULL,
+	coaparentdesc VARCHAR(100) NULL,
+	coapostable VARCHAR(1) NULL,
+	coaamount DECIMAL(19,2) NULL,
+	coatype VARCHAR(2) NULL,
+	coaacctdisp VARCHAR(18) NULL,
+	forBOD VARCHAR(1) NULL DEFAULT '0',
+	bspFSmultiple VARCHAR(1) NULL DEFAULT '0',
+	bspSME VARCHAR(1) NULL DEFAULT '0',
+	bspAgriAgra VARCHAR(1) NULL DEFAULT '0',
+	bspAgriAgraSpecial VARCHAR(1) NULL DEFAULT '0',
+	bspcarsetup VARCHAR(1) NULL DEFAULT '0',
+	PRIMARY KEY ( coaacctcode ASC, coaparentcode ASC )
+);

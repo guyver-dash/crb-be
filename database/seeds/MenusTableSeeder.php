@@ -16,7 +16,6 @@ class MenusTableSeeder extends Seeder
         $menus = ['Home', 'CIS', 'Deposit', 'Loans', 'Interbranch', 'Miscellaneous', 'General Ledger', 'Reports', 'Setting'];
 
         $deposits = ['Savings Deposit', 'Time Deposit', 'Share Capital', 'Current Account', 'Special Savings Deposit', 'Special Savings Coop'];
-        $savingsDeposit = ['New Account', 'Cash/Memo Transactions', 'Check Deposit', 'Account Ledger', 'Current Account', 'Savings Retagging', 'Post Deposit Payment'];
         $timeDeposits = ['Placement', 'Redemption', 'Time Deposit Ledger'];
         $shareCapital = ['Cbu Transactions'];
         $currentAccount = ['New Account', 'Cash Transactions', 'Check Deposit', 'Account Ledger', 'Check Issuance/Withdrawal'];
@@ -26,6 +25,16 @@ class MenusTableSeeder extends Seeder
         foreach ($menus as $submenu) {
             Menu::create([
                 'parent_id' => 0,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $cis = ['Add Client', 'Add Corporate', 'Edit Profile'];
+
+        foreach ($cis as $submenu) {
+            Menu::create([
+                'parent_id' => 2,
                 'path' => str_slug($submenu, '-'),
                 'name' => $submenu,
             ]);
@@ -41,11 +50,13 @@ class MenusTableSeeder extends Seeder
 
         }
 
+        $savingsDeposit = ['New Account', 'Cash/Memo Transactions', 'Check Deposit', 'Account Ledger', 'Current Account', 'Savings Retagging', 'Post Deposit Payment'];
+
         foreach ($savingsDeposit as $value) {
 
             Menu::create([
                 'parent_id' => 10,
-                'path' => str_slug($value, '-'),
+                'path' => 'cis/add-client/'. str_slug($value, '-'),
                 'name' => $value,
             ]);
 
@@ -97,7 +108,7 @@ class MenusTableSeeder extends Seeder
             ]);
         }
 
-        $loans = ['Loan Application', 'Loan Processing', 'Loan Approval', 'Loan Release', 'Loan Payments', 'Delete Loans', 'Payable Accounts', 'Loan Regrouping', 'List Of Loan Process', 'Upload Loan Payment', 'Post Loan Payment', 'Collection Sheets'];
+        $loans = ['Loan Application', 'Loan Processing', 'Loan Approval', 'Loan Release', 'Loan Payments', 'Delete Loans', 'Payable Accounts', 'Loan Regrouping', 'List Of Loan Process', 'Upload Loan Payment', 'Post Loan Payment', 'Collection Sheets', 'List of Loan Approved', 'Microfinance Collection Lists', 'Microfinance Collection List 2'];
 
         foreach ($loans as $submenu) {
             Menu::create([
@@ -112,6 +123,117 @@ class MenusTableSeeder extends Seeder
         foreach ($loanPayments as $submenu) {
             Menu::create([
                 'parent_id' => 43,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $payableAccounts = ['Create Payable Accounts', 'Payables'];
+
+        foreach ($payableAccounts as $submenu) {
+            Menu::create([
+                'parent_id' => 45,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+       
+
+        $miscellaneous = ['Tellering', 'View Teller Transaction', 'Voucher List', 'Cash Out Approval', 'Other Accounts'];
+        foreach ($miscellaneous as $submenu) {
+            Menu::create([
+                'parent_id' => 6,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $otherAccounts = ['Other Accounts', 'Other Accounts Transaction', 'New/Edit Account', 'Approve New Account', 'Approve New Account-AR'];
+
+        foreach ($otherAccounts as $submenu) {
+            Menu::create([
+                'parent_id' => 66,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $generalLedger = ['Post Daily Transaction', 'Transaction Posting', 'GL Temp Proofsheet', 'Trial Balance', 'Proofsheet of the Day', 'GL Proofsheet After Posting', 'Voucher List', 'Transaction Approval', 'AP/AR Transaction', 'AP/AR Subsidiary'];
+
+        foreach ($generalLedger as $submenu) {
+            Menu::create([
+                'parent_id' => 7,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $reports = ['Deposit Report', 'Teller Reports', 'Loans Report', 'Audit Trail Report', 'Share Capital Report', 'General Ledger Report', 'Loan Aging Report', 'Other Reports', 'Other BSP Reports', 'Consolidated Audit Reports'];
+
+        foreach ($reports as $submenu) {
+            Menu::create([
+                'parent_id' => 8,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $depositReport = ['Daily Reports', 'Periodic Reports', 'Master List', 'Consolidated Sa Reports'];
+
+        foreach ($depositReport as $submenu) {
+            Menu::create([
+                'parent_id' => 82,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $dailyReports = ['Daily Totals', 'Summary of Account By Product', 'Interest Posting Report', 'Summary of Transaction - Per Tran Type', 'Error Corrected Transactions', 'Summary of Transaction Per Collector', 'Adjustment Report', 'Amic Report', 'Daily Summary Savings Account Transactions'];
+
+        foreach ($dailyReports as $submenu) {
+            Menu::create([
+                'parent_id' => 92,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $periodicReports = ['Daily Totals', 'Summary of Account By Product', 'Periodic Summary of Account-Per Tran Type', 'Reclassified Dormant Account', 'Td Transactions Reports', 'Dormant to Active', 'Pre-dormancy Notice Report', 'Adjustment Report', 'Summary Deposit Report'];
+
+        foreach ($periodicReports as $submenu) {
+            Menu::create([
+                'parent_id' => 93,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $settings = ['Setup Time Deposit', 'Setup Loans', 'Roles', 'Access Rights', 'Chart of Accounts'];
+
+        foreach ($settings as $submenu) {
+            Menu::create([
+                'parent_id' => 9,
+                'path' => 'settings'. '/'. str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+
+        $setUpTimeDeposit = ['Time Deposit Reclassification', 'Time Deposit Limit to Names', 'Time Deposit Override Setup', 'Time Deposit Join Reclassification'];
+        foreach ($setUpTimeDeposit as $submenu) {
+            Menu::create([
+                'parent_id' => 114,
+                'path' => str_slug($submenu, '-'),
+                'name' => $submenu,
+            ]);
+        }
+
+        $setupLoans = ['Add Collector', 'Setup Holidays', 'Add Center', 'Add Barangay', 'Add Groups', 'Loan Category', 'Office Setup', 'Loan Status Reclassification'];
+
+        foreach ($setupLoans as $submenu) {
+            Menu::create([
+                'parent_id' => 115,
                 'path' => str_slug($submenu, '-'),
                 'name' => $submenu,
             ]);

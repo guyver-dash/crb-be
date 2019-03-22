@@ -5,16 +5,17 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Traits\Model\Globals;
-
+use App\Traits\Obfuscate\Optimuss;
 class AccessRight extends Model
 {
 
-    use Globals;
+    use Globals, Optimuss;
     
     protected $table = 'access_rights';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description'];
     
+    protected $appends = ['optimus_id'];
 
     public function trademarks()
     {

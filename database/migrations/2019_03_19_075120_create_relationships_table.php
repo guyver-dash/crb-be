@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccessRightsTable extends Migration
+class CreateRelationshipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateAccessRightsTable extends Migration
      */
     public function up()
     {
-        Schema::create('access_rights', function (Blueprint $table) {
+        Schema::create('relationships', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateAccessRightsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('access_rights');
+        Schema::dropIfExists('relationships');
     }
 }
