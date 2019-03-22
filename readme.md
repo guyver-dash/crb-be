@@ -20,13 +20,18 @@
 ### Create a seeder if need. ###
 * Always observe the ```Naming Convention``` PluralModelTableSeeder
 * ```Php artisan make:seeder RolesTableSeeder```
+* Location is on ```database/seeds```
+* E.g
+    ```
+        $roles = ['Super Admin', 'Holding CEO'];
+        foreach ($roles as $value) {
+            $role = Role::create([
+                    'name' => $value,
+                    'parent_id' => 0,
+                    
+                ]);
+        }
 
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
 
 ### Who do I talk to? ###
 
