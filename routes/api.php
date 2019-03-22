@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('access_rights', 'Api\AccessRight\AccessRightController');
 
     Route::get('search-menus', 'Api\Menu\DashboardMenuController@search');
+    Route::resource('branches', 'Api\Branch\BranchController');
 });
 
 Route::get('provinces', 'Api\Places\PlacesController@provinces');

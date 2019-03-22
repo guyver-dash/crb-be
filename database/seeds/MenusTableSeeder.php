@@ -209,7 +209,7 @@ class MenusTableSeeder extends Seeder
             ]);
         }
 
-        $settings = ['Setup Time Deposit', 'Setup Loans', 'Roles', 'Access Rights', 'Chart of Accounts'];
+        $settings = ['Setup Time Deposit', 'Setup Loans', 'Roles', 'Access Rights', 'Chart of Accounts', 'Branches'];
 
         foreach ($settings as $submenu) {
             Menu::create([

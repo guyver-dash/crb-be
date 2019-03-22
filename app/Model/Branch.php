@@ -4,18 +4,18 @@ namespace App\Model;
 
 use App\Traits\Model\Globals;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Obfuscate\Optimuss;
 
 class Branch extends Model
 {
-    use Globals;
+    use Globals, Optimuss;
 
     protected $table = 'branches';
-
     protected $fillable = [
-        'name', 'desc', 'company_id',
+        'name', 'company_id', 'code', 'branch_address', 'initial', 'tel', 'bir'
     ];
 
-    protected $appends = ['entity', 'complete_address'];
+    protected $appends = ['entity', 'optimus_id'];
 
     public function jobs()
     {
@@ -98,8 +98,12 @@ class Branch extends Model
         return 'App\Model\Branch';
     }
 
-    public function getCompleteAddressAttribute(){
-        return $this->address->street_lot_blk . ', '. $this->address->brgy->description . ', '. $this->address->city->description . ', '. $this->address->province->description;
+    public function getCodeAttribute($val){
+        return str_pad($val, 3, '0', STR_PAD_LEFT);
     }
+
+    // public function getCompleteAddressAttribute(){
+    //     return $this->address->street_lot_blk . ', '. $this->address->brgy->description . ', '. $this->address->city->description . ', '. $this->address->province->description;
+    // }
 
 }

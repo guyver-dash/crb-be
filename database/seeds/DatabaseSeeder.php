@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(RolesTableSeeder::class);
         // $this->call(InformationsTableSeeder::class);
         // $this->call(UsersTableSeeder::class);
-        // $this->call(MenusTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
         // $this->call(HoldingsTableSeeder::class);
         // $this->call(CompaniesTableSeeder::class);
         // $this->call(BranchesTableSeeder::class);
@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(OtherVendorsTableSeeder::class);
         // $this->call(AccountingStandardsTableSeeder::class);
         // $this->call(ChartAccountsTableSeeder::class);
-        $this->call(BranchUserTableSeeder::class);
+        // $this->call(BranchUserTableSeeder::class);
         // $this->call(TempDailyTransTableSeeder::class);
         
     }
