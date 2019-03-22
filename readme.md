@@ -47,4 +47,4 @@
 ### Create a Controller ###
 
 * New Controller CLI ```php artisan make:controller Api/Role/RoleController --resource```
-* Location is in ```app/Http/Controller/Api/Role/RoleController
+* Location is in   ```app/Http/Controller/Api/Role/RoleController```
