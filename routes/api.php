@@ -35,3 +35,4 @@ Route::resource('category_products', 'Api\Product\CategoryProductController');
  //epoy
     Route::resource('lmmcategories', 'Api\lmmCategory\lmmCategoryController');
     // Route::resource('loancodes', 'Api\lmmCategory\LoanCodeController');
+    //aaaa
