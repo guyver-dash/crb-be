@@ -8,13 +8,14 @@
 * Location is on ```database/migrations``` find the roles created
 * [Available Column Types](https://laravel.com/docs/5.7/migrations#columns)
 * E.g 
-```Schema::create('roles', function (Blueprint $table) {
+    ```Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->integer('parent_id');
             $table->timestamps();
         });```
+  
 
 ### How do I get set up? ###
 
