@@ -18,7 +18,7 @@
   
 
 ### Create a seeder if need. ###
-* Always observe the ```Convention``` PluralModelTableSeeder
+* Always observe the ```Naming Convention``` PluralModelTableSeeder
 * ```Php artisan make:seeder RolesTableSeeder```
 
 
