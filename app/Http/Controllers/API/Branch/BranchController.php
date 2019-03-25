@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Branch;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repo\Branch\BranchInterface;
+use App\Http\Requests\BranchFormRequest;
 
 class BranchController extends Controller
 {
@@ -47,9 +48,13 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BranchFormRequest $request)
     {
-        //
+        
+        $this->branch->store($request);
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**

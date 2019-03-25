@@ -15,4 +15,11 @@ class BranchRepository extends BaseRepository implements BranchInterface{
     
     }
 
+    public function store($request){
+
+        $branch = $this->create($request->all());
+        $branch = $this->findNoObfuscate($branch->id);
+        $branch->address()->create($request->address);
+    }
+
 }
