@@ -16,7 +16,7 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable, Optimuss;
     
      protected $fillable = [
-        'firstname', 'middlename', 'lastname', 'username',  'email', 'password', 'status'
+        'username',  'email', 'password', 'status'
     ];
 
     /**
@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $appends = ['optimus_id', 'role_ids'];
+    protected $appends = ['optimus_id', 'role_ids', 'fullname'];
 
     public function AauthAcessToken(){
         return $this->hasMany('App\Model\OauthAccessToken');
@@ -79,6 +79,11 @@ class User extends Authenticatable
     public function getRoleIdsAttribute(){
 
         return $this->roles->pluck('id');
+    }
+
+    public function getFullnameAttribute(){
+
+        return $this->information->firstname . ' ' . $this->information->lastname;
     }
 
     public function branches(){

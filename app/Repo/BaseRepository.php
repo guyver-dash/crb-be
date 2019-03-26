@@ -2,13 +2,13 @@
 
 namespace App\Repo;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Traits\Obfuscate\Optimuss;
 use App\Model\Address;
 use App\Model\Information;
-use App\Model\User;
 use App\Model\TAccount;
+use App\Model\User;
+use App\Traits\Obfuscate\Optimuss;
 use Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseRepository implements BaseInterface
 {
@@ -17,22 +17,28 @@ class BaseRepository implements BaseInterface
 
     protected $modelName;
 
-
     public function all()
     {
         return $this->modelName->all();
     }
 
-    public function orderBy($field, $value){
+    public function orderBy($field, $value)
+    {
         return $this->modelName->orderBy($field, $value);
     }
-    public function relTable(){
+    public function relTable()
+    {
         return $this->modelName->relTable()->get();
     }
 
     public function create($array)
     {
         return $this->modelName->create($array);
+    }
+
+    public function whereHas($attribute, \Closure $closure = null)
+    {
+        return $this->modelName->whereHas($attribute, $closure);
     }
 
     public function where($name, $operator, $value = null)
@@ -51,13 +57,15 @@ class BaseRepository implements BaseInterface
         return $this->modelName->where($name, $operator, $this->optimus()->encode($value));
     }
 
-    public function whereNoObfuscate($name, $operator, $value = null){
+    public function whereNoObfuscate($name, $operator, $value = null)
+    {
         if ($value === null) {
             return $this->modelName->where($name, $operator);
         }
         return $this->modelName->where($name, $operator, $value);
     }
-    public function orWhereNoObfuscate($name, $operator, $value = null){
+    public function orWhereNoObfuscate($name, $operator, $value = null)
+    {
         if ($value === null) {
             return $this->modelName->where($name, $operator);
         }
@@ -70,7 +78,7 @@ class BaseRepository implements BaseInterface
     }
 
     public function update($array)
-    {   
+    {
         return $this->modelName->update($array);
     }
 
@@ -116,7 +124,8 @@ class BaseRepository implements BaseInterface
         }
     }
 
-    public function fillable($array){
+    public function fillable($array)
+    {
 
         $modelName = $this->modelName;
         return collect($array)->filter(function ($value, $key) use ($modelName) {
@@ -236,7 +245,7 @@ class BaseRepository implements BaseInterface
     {
         return $validator = Validator::make($data, $rule);
     }
-    
+
     // override this method in specific repository
     public function getUpdateRules($id, $ruleKeys = null)
     {
@@ -254,12 +263,12 @@ class BaseRepository implements BaseInterface
                 }
             }
         }
-        
+
         return $updateRule;
     }
 
     /**
-     * @param data = assoc array() 
+     * @param data = assoc array()
      * @param
      * field (required) = string field that will be validated
      * value (required) = string value that will be validated
@@ -284,25 +293,29 @@ class BaseRepository implements BaseInterface
         return $actionType[$data['type']]();
     }
 
-    public function userCompanies(){
-        
+    public function userCompanies()
+    {
+
         $user = User::where('id', Auth::User()->id)->with('roles.accessRights.companies')->first();
-        return $user->roles->map(function($role){
+        return $user->roles->map(function ($role) {
             return $role->accessRights;
-        })->flatten(1)->map(function($accessRight){
+        })->flatten(1)->map(function ($accessRight) {
             return $accessRight->companies;
         })->flatten(1);
     }
 
-    public function when($condition, $function){
-        return $this->modelName->when($condition, $function);
+    public function when($condition, \Closure $closure = null)
+    {
+        return $this->modelName->when($condition, $closure);
     }
 
-    public function request(){
+    public function request()
+    {
         return app()->make('request');
     }
 
-    public function tAccounts(){
+    public function tAccounts()
+    {
         return TAccount::all();
     }
 }

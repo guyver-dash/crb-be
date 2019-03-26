@@ -63,9 +63,12 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        
+        return response()->json([
+            'branch' => $this->branch->where('id',$request->id)->with(['address'])->first()
+        ]);
     }
 
     /**

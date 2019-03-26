@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('search-menus', 'Api\Menu\DashboardMenuController@search');
     Route::resource('branches', 'Api\Branch\BranchController');
+    Route::post('users/change-password', 'Api\User\UserController@changePassword');
 });
 
 Route::get('provinces', 'Api\Places\PlacesController@provinces');
