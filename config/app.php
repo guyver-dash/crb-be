@@ -183,6 +183,7 @@ return [
         App\Providers\MenuServiceProvider::class,
         App\Providers\ChartAccountServiceProvider::class,
         App\Providers\AccessRightServiceProvider::class,
+        App\Providers\BranchServiceProvider::class,
     ],
 
     /*
