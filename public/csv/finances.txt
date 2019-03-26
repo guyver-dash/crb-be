@@ -1,0 +1,10 @@
+CREATE TABLE lending (
+	code VARCHAR(3) NOT NULL,
+	name VARCHAR(255) NULL,
+	subname VARCHAR(255) NULL,
+	priority INTEGER NULL,
+	brno VARCHAR(5) NULL,
+	orig_code VARCHAR(3) NULL,
+	isVisible VARCHAR(1) NULL,
+	PRIMARY KEY ( code ASC )
+);
