@@ -1,20 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Branch;
+namespace App\Http\Controllers\API\lmmCategory;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repo\Branch\BranchInterface;
-use App\Http\Requests\BranchFormRequest;
+use App\ModelEpoy\LoanCategory;
 
-class BranchController extends Controller
+class lmmCategoryController extends Controller
 {
-    protected $branch;
-    public function __construct(BranchInterface $branch){
-
-        $this->branch = $branch;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,13 +15,9 @@ class BranchController extends Controller
      */
     public function index()
     {
-
-        return response()->json([
-            'branches' => $this->branch->paginate(
-                $this->branch->whereLike('name', 'like', '%' . request('filter') . '%')
-                ->orderBy('created_at', 'desc')
-                ->get()
-            )
+        //
+         return response()->json([
+            'success' => true
         ]);
     }
 
@@ -48,14 +37,15 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BranchFormRequest $request)
+    public function store(Request $request)
     {
-
-        $this->branch->store($request);
+        
+        LoanCategory::create($request->all());  
         return response()->json([
             'success' => true
         ]);
     }
+
 
     /**
      * Display the specified resource.
@@ -63,12 +53,9 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        
-        return response()->json([
-            'branch' => $this->branch->where('id',$request->id)->with(['address'])->first()
-        ]);
+        //
     }
 
     /**
