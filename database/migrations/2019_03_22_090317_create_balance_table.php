@@ -6,24 +6,22 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateBalanceTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('balance', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('loan_id')->unsigned()->nullable();
+            $table->decimal('principal_balance', 12, 2);
+            $table->decimal('interest_balance', 12, 2);
+            $table->date('last_movement_principal');
+            $table->date('last_movement_interest');
             $table->timestamps();
+
+            // $table->foreign('loan_id')
+            //     ->references('id')->on('loans');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('balance');

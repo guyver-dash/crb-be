@@ -50,7 +50,7 @@ class BranchController extends Controller
      */
     public function store(BranchFormRequest $request)
     {
-        
+
         $this->branch->store($request);
         return response()->json([
             'success' => true

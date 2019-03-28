@@ -37,10 +37,10 @@ class CreateLoansTable extends Migration
             //     ->references('id')->on('payment_modes');
 
             // $table->foreign('loan_level_id')
-            //     ->references('id')->on('accounts');
+            //     ->references('id')->on('loan_levels');
 
             // $table->foreign('loan_status_id')
-            //     ->references('id')->on('accounts');
+            //     ->references('id')->on('loan_status');
 
             // $table->foreign('approved_by')
             //     ->references('id')->on('users');
