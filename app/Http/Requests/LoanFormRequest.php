@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoanFormRequest extends FormRequest
 {
+
+
     public function authorize()
     {
         return true;
@@ -13,6 +15,7 @@ class LoanFormRequest extends FormRequest
 
     public function rules()
     {
+
         return [
             'account_id' => 'required',
             'cycle' => 'required',
