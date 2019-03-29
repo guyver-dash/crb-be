@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -183,6 +183,7 @@ return [
         App\Providers\MenuServiceProvider::class,
         App\Providers\ChartAccountServiceProvider::class,
         App\Providers\AccessRightServiceProvider::class,
+        App\Providers\BranchServiceProvider::class,
     ],
 
     /*

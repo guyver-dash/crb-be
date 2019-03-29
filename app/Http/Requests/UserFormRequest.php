@@ -29,9 +29,9 @@ class UserFormRequest extends FormRequest
     {
         $user = User::find($this->optimus()->encode($this->get('id')));
         return [
-            'firstname' => 'alpha_spaces|required',
-            'middlename' => 'alpha_spaces|required',
-            'lastname' => 'alpha_spaces|required',
+            'information.firstname' => 'alpha_spaces|required',
+            'information.middlename' => 'alpha_spaces|required',
+            'information.lastname' => 'alpha_spaces|required',
             'email' => 'required|email|unique:users,email,'.$user->id,
         ];
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\User;
 use App\Repo\User\UserInterface;
 use App\Http\Requests\UserFormRequest;
+use Hash;
 
 class UserController extends Controller
 {
@@ -27,9 +28,9 @@ class UserController extends Controller
         $request = app()->make('request');
         return response()->json([
             'users' => $this->user->paginate( 
-                $this->user->whereLike('firstname', 'like', '%' . $request->filter . '%')
-                    ->orWhere('lastname', 'like', '%' . $request->filter . '%')
-                    ->orderBy('created_at', 'desc')
+                $this->user->whereHas('information', function($q) use ($request) {
+                        return $q->where('firstname', 'like', '%' . $request->filter . '%')->orWhere('lastname', 'like', '%' . $request->filter . '%');
+                    })
                     ->with(['roles', 'address', 'information'])
                     ->get() 
             )
@@ -106,6 +107,18 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         $this->user->find($request->id)->delete();
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function changePassword(Request $request){
+
+        $user = $this->user->find($request->id);
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
         return response()->json([
             'success' => true
         ]);

@@ -1,11 +1,11 @@
-'000','Executive Office','Lanao, Kidapawan City, North Cotabato','EO',,,,1,1,1,1,1,1,0,'2016-03-02 00:00:00.000',,,,,0,'000',,,,,,'004-766-092-000'
-'001','Head Office','Kidapawan City, North Cotabato','HEAD OFFICE','(064) 577-1220',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000',,,,,,'004-766-092-001'
-'002','Midsayap Branch','Midsayap, North Cotabato','MIDSAYAP','(064) 521-4235',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000',,,,,,'004-766-092-003'
-'003','Mlang Branch','Mlang, North Cotabato','MLANG','(064) 572-4046',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000','14303747431678362685','KPS-GSA1','165','183','09172155101','004-766-092-002'
-'004','Pigcawayan Branch','Pigcawayan, North Cotabato','PIGCAWAYAN','(064) 521-3001',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000','NULL','NULL','NULL','NULL','NULL','004-766-092-004'
-'005','Antipas Branch','Antipas, North Cotabato','ANTIPAS','(064) 523-0023',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000','NULL','NULL','NULL','NULL','NULL','004-766-092-005'
-'006','Kabacan Branch','Kabacan, North Cotabato','KABACAN','(064) 572-2416',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000','NULL','NULL','NULL','NULL','NULL','004-766-092-006'
-'007','Isulan Branch','Isulan, Sultan Kudarat','ISULAN','(064) 201-5309',,,0,0,0,0,0,0,0,'2016-03-02 00:00:00.000',,,,,0,'000','NULL','NULL','NULL','NULL','NULL','004-766-092-007'
-'008','Koronadal Branch','Koronadal City, South Cotabato','KORONADAL','(083) 878-4574',,,0,0,0,0,0,0,0,'2016-06-12 19:21:13.000',,,,,0,,,,,,,'004-766-092-008'
-'009','Bansalan Branch','Bansalan, Davao Del Sur','BANSALAN','(083) 878-4574',,,0,0,0,0,0,0,0,'2016-06-12 19:21:13.000',,,,,0,,,,,,,'004-766-092-009'
-'010','Surallah Branch','Surallah, South Cotabato','SURALLAH',,,,0,0,0,0,0,0,0,,,,,,0,,,,,'289, Allah Valley Drive Zone 1, Libertad,',,
+0,Executive Office,Lanao, Kidapawan City, North Cotabato,EO,004-766-092-000
+1,Head Office,Kidapawan City, North Cotabato,HEAD OFFICE,(064) 577-1220,004-766-092-001
+2,Midsayap Branch,Midsayap, North Cotabato,MIDSAYAP,(064) 521-4235,004-766-092-003
+3,Mlang Branch,Mlang, North Cotabato,MLANG,(064) 572-4046,004-766-092-002
+4,Pigcawayan Branch,Pigcawayan, North Cotabato,PIGCAWAYAN,(064) 521-3001,004-766-092-004
+5,Antipas Branch,Antipas, North Cotabato,ANTIPAS,(064) 523-0023,004-766-092-005
+6,Kabacan Branch,Kabacan, North Cotabato,KABACAN,(064) 572-2416,004-766-092-006
+7,Isulan Branch,Isulan, Sultan Kudarat,ISULAN,(064) 201-5309,004-766-092-007
+8,Koronadal Branch,Koronadal City, South Cotabato,KORONADAL,(083) 878-4574,004-766-092-008
+9,Bansalan Branch,Bansalan, Davao Del Sur,BANSALAN,(083) 878-4574,004-766-092-009
+10,Surallah Branch,Surallah, South Cotabato,SURALLAH,, Libertad
