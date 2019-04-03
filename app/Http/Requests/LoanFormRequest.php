@@ -6,6 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoanFormRequest extends FormRequest
 {
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 231e3308cb3c55351965c2323e829447be35e15a
     public function authorize()
     {
         return true;
@@ -13,6 +18,10 @@ class LoanFormRequest extends FormRequest
 
     public function rules()
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 231e3308cb3c55351965c2323e829447be35e15a
         return [
             'account_id' => 'required',
             'cycle' => 'required',

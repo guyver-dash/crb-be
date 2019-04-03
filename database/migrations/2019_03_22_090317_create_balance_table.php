@@ -8,7 +8,11 @@ class CreateBalanceTable extends Migration
 {
     public function up()
     {
+<<<<<<< HEAD
         Schema::create('balance', function (Blueprint $table) {
+=======
+        Schema::create('balances', function (Blueprint $table) {
+>>>>>>> 231e3308cb3c55351965c2323e829447be35e15a
             $table->increments('id');
             $table->integer('loan_id')->unsigned()->nullable();
             $table->decimal('principal_balance', 12, 2);
@@ -24,6 +28,10 @@ class CreateBalanceTable extends Migration
 
     public function down()
     {
+<<<<<<< HEAD
         Schema::dropIfExists('balance');
+=======
+        Schema::dropIfExists('balances');
+>>>>>>> 231e3308cb3c55351965c2323e829447be35e15a
     }
 }

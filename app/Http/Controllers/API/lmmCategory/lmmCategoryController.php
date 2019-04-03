@@ -39,8 +39,8 @@ class lmmCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
-        LoanCategory::create($request->all());  
+
+        LoanCategory::create($request->all());
         return response()->json([
             'success' => true
         ]);

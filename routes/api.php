@@ -22,9 +22,12 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('access_rights', 'Api\AccessRight\AccessRightController');
     Route::get('search-menus', 'Api\Menu\DashboardMenuController@search');
 
+
     Route::resource('branches', 'Api\Branch\BranchController');
     Route::post('users/change-password', 'Api\User\UserController@changePassword');
 
+    Route::resource('branches', 'Api\Branch\BranchController');
+    Route::post('users/change-password', 'Api\User\UserController@changePassword');
 
 });
 Route::resource('dashboard_role', 'Api\Role\DashboardRoleController');
@@ -41,4 +44,3 @@ Route::resource('loans', 'Api\Loan\LoanController');
  //epoy
     Route::resource('lmmcategories', 'Api\lmmCategory\lmmCategoryController');
     // Route::resource('loancodes', 'Api\lmmCategory\LoanCodeController');
-
