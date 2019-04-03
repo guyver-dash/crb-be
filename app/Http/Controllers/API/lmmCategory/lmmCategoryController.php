@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\lmmCategory;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\ModelEpoy\LoanCategory;
+use App\Model\MasterSetup\LoanCategory;
 
 class lmmCategoryController extends Controller
 {
