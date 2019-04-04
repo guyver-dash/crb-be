@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(RolesTableSeeder::class);
         // $this->call(InformationsTableSeeder::class);
         // $this->call(UsersTableSeeder::class);
-        $this->call(MenusTableSeeder::class);
+        // $this->call(MenusTableSeeder::class);
         // $this->call(HoldingsTableSeeder::class);
         // $this->call(CompaniesTableSeeder::class);
         // $this->call(BranchesTableSeeder::class);
@@ -104,6 +104,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(ChartAccountsTableSeeder::class);
         // $this->call(BranchUserTableSeeder::class);
         // $this->call(TempDailyTransTableSeeder::class);
-        
+
+        $this->call(LoanLevelTableSeeder::class); // romnel for loan setup
+        $this->call(LoanStatusTableSeeder::class); // romnel for loan setup
+        $this->call(PaymentModeTableSeeder::class); // romnel for loan setup
+
     }
 }

@@ -13,8 +13,8 @@ class CreateBalanceTable extends Migration
             $table->integer('loan_id')->unsigned()->nullable();
             $table->decimal('principal_balance', 12, 2);
             $table->decimal('interest_balance', 12, 2);
-            $table->date('last_movement_principal');
-            $table->date('last_movement_interest');
+            $table->date('last_movement_principal')->nullable();
+            $table->date('last_movement_interest')->nullable();
             $table->timestamps();
 
             // $table->foreign('loan_id')

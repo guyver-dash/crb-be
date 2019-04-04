@@ -33,20 +33,20 @@ class Loan extends Model
     //     return $this->hasOne('App\Model\Account', 'id', 'account_id');
     // }
 
-    // public function paymentMode()
-    // {
-    //     return $this->hasOne('App\Model\PaymentMode', 'id', 'payment_mode_id');
-    // }
+    public function paymentMode()
+    {
+        return $this->hasOne('App\Model\Loans\PaymentMode', 'id', 'payment_mode_id');
+    }
 
-    // public function loanLevel()
-    // {
-    //     return $this->hasOne('App\Model\LoanLevel', 'id', 'loan_level_id');
-    // }
+    public function loanLevel()
+    {
+        return $this->hasOne('App\Model\Loans\LoanLevel', 'id', 'loan_level_id');
+    }
 
-    // public function loanStatus()
-    // {
-    //     return $this->hasOne('App\Model\LoanStatus', 'id', 'loan_status_id');
-    // }
+    public function loanStatus()
+    {
+        return $this->hasOne('App\Model\Loans\LoanStatus', 'id', 'loan_status_id');
+    }
 
     // public function approvedBy()
     // {

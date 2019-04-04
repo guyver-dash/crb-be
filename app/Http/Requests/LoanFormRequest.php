@@ -17,7 +17,7 @@ class LoanFormRequest extends FormRequest
     {
 
         return [
-            'account_id' => 'required',
+            'account_id' => 'required|numeric',
             'cycle' => 'required',
             'loan_amount' => 'required',
             'rate' => 'required',

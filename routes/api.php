@@ -33,6 +33,7 @@ Route::get('products/{id}', 'Api\Product\ProductController@show');
 Route::resource('products', 'Api\Product\ProductController');
 Route::resource('category_products', 'Api\Product\CategoryProductController');
 Route::resource('loans', 'Api\Loan\LoanController');
+Route::post('loan_processing/{id}', 'Api\Loan\LoanController@processing');
 
 
  //epoy
