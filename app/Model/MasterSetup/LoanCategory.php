@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ModelEpoy;
+namespace App\Model\MasterSetup;
 
 use Illuminate\Database\Eloquent\Model;
 

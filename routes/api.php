@@ -42,5 +42,7 @@ Route::resource('loans', 'Api\Loan\LoanController');
 
 
  //epoy
-    Route::resource('lmmcategories', 'Api\lmmCategory\lmmCategoryController');
-    // Route::resource('loancodes', 'Api\lmmCategory\LoanCodeController');
+    Route::resource('lmmcategories', 'Api\MasterSetup\lmmCategoryController'); //creat loan categories
+    Route::resource('loan_code', 'Api\MasterSetup\LoanCodeController');//create loan code
+    Route::get('lmmcategories/{id}', 'Api\MasterSetup\lmmCategoryController@show');//display all category from parent
+    Route::get('loan_code/{id}', 'Api\MasterSetup\LoanCodeController@show');
