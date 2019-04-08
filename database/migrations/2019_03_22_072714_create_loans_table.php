@@ -22,6 +22,7 @@ class CreateLoansTable extends Migration
             $table->integer('payment_mode_id')->unsigned()->nullable();
             $table->integer('loan_level_id')->unsigned()->default(1);
             $table->integer('loan_status_id')->unsigned()->nullable();
+            $table->integer('loan_groups_id')->unsigned()->nullable();
             $table->date('first_payment')->nullable();
             $table->integer('grace');
             $table->date('date_release')->nullable();

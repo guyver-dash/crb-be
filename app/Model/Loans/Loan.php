@@ -20,6 +20,7 @@ class Loan extends Model
         'payment_mode_id',
         'loan_level_id',
         'loan_status_id',
+        'loan_groups_id',
         'first_payment',
         'grace',
         'date_release',
@@ -48,6 +49,10 @@ class Loan extends Model
         return $this->hasOne('App\Model\Loans\LoanStatus', 'id', 'loan_status_id');
     }
 
+    public function loanGroups()
+    {
+        return $this->hasOne('App\Model\Loans\LoanGroup', 'id', 'loan_groups_id');
+    }
     // public function approvedBy()
     // {
     //     return $this->hasOne('App\Model\User', 'id', 'approved_by');
