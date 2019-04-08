@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLmmcategoriesTable extends Migration
+class CreateAgricultureClass extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateLmmcategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lmmcategories', function (Blueprint $table) {
+        Schema::create('agriculture_class', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('description');
-            $table->string('ilacategory')->nullable();
-            $table->boolean('isMicro')->nullable();
-            $table->integer('misAmort')->nullable();
-            $table->integer('parent_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateLmmcategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lmmcategories');
+        Schema::dropIfExists('agriculture_class');
     }
 }

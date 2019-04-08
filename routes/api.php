@@ -21,8 +21,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('company_chart_accounts', 'Api\ChartAccount\CompanyChartAccountController');
     Route::resource('access_rights', 'Api\AccessRight\AccessRightController');
     Route::get('search-menus', 'Api\Menu\DashboardMenuController@search');
+
+
     Route::resource('branches', 'Api\Branch\BranchController');
     Route::post('users/change-password', 'Api\User\UserController@changePassword');
+
+    Route::resource('branches', 'Api\Branch\BranchController');
+    Route::post('users/change-password', 'Api\User\UserController@changePassword');
+
 });
 Route::resource('dashboard_role', 'Api\Role\DashboardRoleController');
 Route::get('provinces', 'Api\Places\PlacesController@provinces');
@@ -37,5 +43,7 @@ Route::post('loan_processing/{id}', 'Api\Loan\LoanController@processing');
 
 
  //epoy
-    Route::resource('lmmcategories', 'Api\lmmCategory\lmmCategoryController');
-    // Route::resource('loancodes', 'Api\lmmCategory\LoanCodeController');
+    Route::resource('lmmcategories', 'Api\MasterSetup\lmmCategoryController'); //creat loan categories
+    Route::resource('loan_code', 'Api\MasterSetup\LoanCodeController');//create loan code
+    Route::get('lmmcategories/{id}', 'Api\MasterSetup\lmmCategoryController@show');//display all category from parent
+    Route::get('loan_code/{id}', 'Api\MasterSetup\LoanCodeController@show');
