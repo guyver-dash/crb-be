@@ -53,10 +53,6 @@ class LoanCodesSeeder extends Seeder
 					'auto_transfer' => NULL,
 					'sub_code' => '7',
 					'coa_service_charge' => 40052000
-<<<<<<< HEAD
-					
-=======
->>>>>>> da5a33033951307fa4d25dffc144bbf3929d0c72
 	        ]);        	     
         }
 
