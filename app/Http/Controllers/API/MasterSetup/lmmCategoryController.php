@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API\MasterSetup;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\MasterSetup\LoanCategory;
+use Illuminate\Http\Request;
 
 class lmmCategoryController extends Controller
 {
@@ -12,8 +12,8 @@ class lmmCategoryController extends Controller
     public function index()
     {
         //
-         return response()->json([
-            'success' => true
+        return response()->json([
+            'success' => true,
         ]);
     }
 
@@ -38,10 +38,9 @@ class lmmCategoryController extends Controller
 
         LoanCategory::create($request->all());
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
-
 
     /**
      * Display the specified resource.
@@ -52,12 +51,11 @@ class lmmCategoryController extends Controller
     public function show($id)
     {
 
-       return response()->json([
-            'loanCategory' => LoanCategory::where('parent_id', $id)->get()
+        return response()->json([
+            'loanCategory' => LoanCategory::where('parent_id', $id)->get(),
         ]);
     }
 
-   
     public function edit($id)
     {
         //
