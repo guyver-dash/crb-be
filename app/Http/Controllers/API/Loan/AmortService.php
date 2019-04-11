@@ -30,13 +30,13 @@ class AmortService
             $totalPayment = $principalAmount + $interestAmount;
             $balance -= $principalAmount;
 
-            if ($ctr != 1) { // for firstpayment
+            if ($ctr != 1) { // for next payment
                 $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($paymentDate));
                 $paymentDate = date('Y-m-d', $newdate2);
             }
 
             if ($ctr == $num_payments) { // for last payment
-                $newdate2 = strtotime('+180 day', strtotime($loan->date_applied));
+                $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($loan->date_applied));
                 $paymentDate = date('Y-m-d', $newdate2);
 
                 if ($balance > 0) {
@@ -77,13 +77,13 @@ class AmortService
         while ($ctr <= $num_payments) {
             $balance -= $principalAmount;
             $totalPayment = $principalAmount + $interestAmount;
-            if ($ctr != 1) { // for firstpayment
+            if ($ctr != 1) { // for next payment
                 $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($paymentDate));
                 $paymentDate = date('Y-m-d', $newdate2);
             }
 
             if ($ctr == $num_payments) { // for last payment
-                $newdate2 = strtotime('+180 day', strtotime($loan->date_applied));
+                $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($loan->date_applied));
                 $paymentDate = date('Y-m-d', $newdate2);
 
                 if ($balance > 0) {

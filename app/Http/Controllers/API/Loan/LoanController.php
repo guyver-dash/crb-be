@@ -40,10 +40,14 @@ class LoanController extends Controller
     public function processing(Request $request, $id)
     {
         $loan = Loan::find($id);
+        $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($loan->date_applied));
+        $paymentDate = date('Y-m-d', $newdate2);
+
         $loan->update([
             'loan_level_id' => 2,
             'first_payment' => $request->first_payment,
             'date_release' => $request->date_applied,
+            // 'maturity_date' =>
         ]);
 
         return $this->amortizationSchedule($id);
@@ -52,11 +56,16 @@ class LoanController extends Controller
         // ]);
     }
 
-    public function amortizationSchedule($id)
+    public function loan_approval($id)
+    {
+        $loan = Loan::find($id);
+    }
+
+    private function amortizationSchedule($id)
     {
         $loan = Loan::find($id);
         Amortization::where('loan_id', $loan->id)->delete();
-        dd($loan->loanGroups->toArray());
+
         $data = $this->amortService->diminishing($loan);
 
         $amort = Amortization::insert($data);
