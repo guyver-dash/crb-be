@@ -20,15 +20,10 @@ class LoanGroup extends Model
         'subproject_id'
     ];
 
-    // public function loans()
-    // {
-    //     return $this->hasOne('App\Model\Loans\Loan', 'id', 'loan_id');
-    // }
-
-    // public function loanCategory()
-    // {
-    //     return $this->hasOne('App\Model\Loans\LoanCategory', 'id', 'loancategory_id');
-    // }
+    public function loanCode()
+    {
+        return $this->hasOne('App\Model\MasterSetup\LoanCode', 'id', 'loancategory_id');
+    }
 
     // public function officer()
     // {

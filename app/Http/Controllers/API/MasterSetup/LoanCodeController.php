@@ -18,7 +18,7 @@ class LoanCodeController extends Controller
        	$request = $request->all();
        	$request['loan_categories_id'] = $loanCategory->id;
         LoanCode::create($request);
-                
+
         return response()->json([
             'success' => true
         ]);
@@ -29,7 +29,7 @@ class LoanCodeController extends Controller
     {
 
        return response()->json([
-            'loanCode' => LoanCode::with('loanCategory')->get()
+            'loanCode' => LoanCode::with('loanCategory')->where('id', $id)->get()
         ]);
     }
 }

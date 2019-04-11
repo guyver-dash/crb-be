@@ -40,39 +40,50 @@ class LoanController extends Controller
     public function processing(Request $request, $id)
     {
         $loan = Loan::find($id);
-        $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($loan->date_applied));
-        $paymentDate = date('Y-m-d', $newdate2);
-
+        $computeMaturity = strtotime('+' . $loan->terms . ' day', strtotime($request->date_release));
+        $maturityDate = date('Y-m-j', $computeMaturity);
         $loan->update([
             'loan_level_id' => 2,
             'first_payment' => $request->first_payment,
-            'date_release' => $request->date_applied,
-            // 'maturity_date' =>
+            'date_release' => $request->date_release,
+            'date_maturity' => $maturityDate
         ]);
 
-        return $this->amortizationSchedule($id);
-        // return response()->json([
-        //     'success' => true
-        // ]);
+        return response()->json([
+            'success' => true
+        ]);
     }
 
-    public function loan_approval($id)
+    public function approval(Request $request, $id)
     {
         $loan = Loan::find($id);
+        $loan->update([
+            'loan_level_id' => 3,
+            'date_approved' => $request->date_approved,
+            'approved_by' => $request->approved_by
+        ]);
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
-    private function amortizationSchedule($id)
+    public function amortizationSchedule($id)
     {
         $loan = Loan::find($id);
+
         Amortization::where('loan_id', $loan->id)->delete();
 
-        $data = $this->amortService->diminishing($loan);
+        if ($loan->loanGroups->loanCode->method == 'A') {
+            $amort = $this->amortService->diminishing($loan);
+        }
+        elseif ($loan->loanGroups->loanCode->method == 'D') {
+            $amort = $this->amortService->straight($loan);
+        }
 
-        $amort = Amortization::insert($data);
-        return [
-            'success' => true,
-            'data' => $data,
-        ];
+        Amortization::insert($amort);
+
+        return $amort;
     }
 
 }

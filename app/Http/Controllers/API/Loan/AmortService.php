@@ -36,7 +36,7 @@ class AmortService
             }
 
             if ($ctr == $num_payments) { // for last payment
-                $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($loan->date_applied));
+                $newdate2 = strtotime('+' . $loan->terms . ' day', strtotime($loan->date_release));
                 $paymentDate = date('Y-m-d', $newdate2);
 
                 if ($balance > 0) {
@@ -83,7 +83,7 @@ class AmortService
             }
 
             if ($ctr == $num_payments) { // for last payment
-                $newdate2 = strtotime('+' . $paymentDays . ' day', strtotime($loan->date_applied));
+                $newdate2 = strtotime('+' . $loan->terms . ' day', strtotime($loan->date_release));
                 $paymentDate = date('Y-m-d', $newdate2);
 
                 if ($balance > 0) {
