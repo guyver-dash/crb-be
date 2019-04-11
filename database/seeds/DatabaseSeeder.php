@@ -30,6 +30,12 @@ use App\Model\Taccount;
 use App\Model\ChartAccount;
 use App\Model\PurchaseReceived;
 use App\Model\Relationship;
+use App\Model\MasterSetup\LoanCategory;
+use App\Model\MasterSetup\LoanCode;
+use App\Model\MasterSetup\AgricultureClass;
+use App\Model\Loans\LoanLevel;
+use App\Model\Loans\LoanStatus;
+use App\Model\Loans\PaymentMode;
 
 class DatabaseSeeder extends Seeder
 {
@@ -72,10 +78,16 @@ class DatabaseSeeder extends Seeder
         AccountingStandard::truncate();
         ChartAccount::truncate();
         TAccount::truncate();
+        LoanCategory::truncate();
+        LoanCode::truncate();
+        AgricultureClass::truncate();
+        LoanLevel::truncate();
+        LoanStatus::truncate();
+        PaymentMode::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $this->call(RelationshipTableSeeder::class);
         $this->call(TaxesTableSeeder::class);
-         $this->call(TaxTypesTableSeeder::class);
+        $this->call(TaxTypesTableSeeder::class);
         $this->call(AccountingMethodsTableSeeder::class);
         $this->call(TaccountsTableSeeder::class);
         $this->call(TransactionTypesTableSeeder::class);
@@ -169,6 +181,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(ChartAccountsTableSeeder::class);
         // $this->call(BranchUserTableSeeder::class);
         // $this->call(TempDailyTransTableSeeder::class);
+        $this->call(LoanCategoriesSeeder::class);
+        $this->call(LoanCodesSeeder::class);
+        $this->call(AgricultureClassSeeder::class);
 
         $this->call(LoanLevelTableSeeder::class); // romnel for loan setup
         $this->call(LoanStatusTableSeeder::class); // romnel for loan setup
