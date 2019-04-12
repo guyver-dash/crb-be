@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Loan\AmortService;
 use App\Model\Loans\Amortization;
 use App\Model\Loans\Balance;
 use App\Model\Loans\Loan;
+use App\Model\Loans\LoanCharge;
 use App\Model\Loans\LoanGroup;
 use Illuminate\Http\Request;
 
@@ -49,6 +50,8 @@ class LoanController extends Controller
             'date_maturity' => $maturityDate
         ]);
 
+        LoanCharge::insert($request->charges);
+
         return response()->json([
             'success' => true
         ]);
@@ -66,6 +69,11 @@ class LoanController extends Controller
         return response()->json([
             'success' => true
         ]);
+    }
+
+    public function release()
+    {
+
     }
 
     public function amortizationSchedule($id)

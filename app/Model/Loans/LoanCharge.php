@@ -4,15 +4,13 @@ namespace App\Model\Loans;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Balance extends Model
+class LoanCharge extends Model
 {
-    protected $table = 'balances';
+    protected $table = 'loan_charges';
     protected $fillable = [
+        'charge_id',
         'loan_id',
-        'principal_balance',
-        'interest_balance',
-        'last_movement_principal',
-        'last_movement_interest'
+        'amount'
     ];
 
     public function loans()
@@ -20,4 +18,8 @@ class Balance extends Model
         return $this->hasOne('App\Model\Loans\Loan', 'id', 'loan_id');
     }
 
+    public function charge()
+    {
+        return $this->hasOne('App\Model\Loans\Charge', 'id', 'charge_id');
+    }
 }

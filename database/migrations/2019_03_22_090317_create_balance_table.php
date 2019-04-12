@@ -19,8 +19,8 @@ class CreateBalanceTable extends Migration
             $table->date('last_movement_interest')->nullable();
             $table->timestamps();
 
-            // $table->foreign('loan_id')
-            //     ->references('id')->on('loans');
+            $table->foreign('loan_id')
+                ->references('id')->on('loans');
         });
     }
 

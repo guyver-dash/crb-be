@@ -53,10 +53,16 @@ class Loan extends Model
     {
         return $this->hasOne('App\Model\Loans\LoanGroup', 'id', 'loan_groups_id');
     }
-    // public function approvedBy()
-    // {
-    //     return $this->hasOne('App\Model\User', 'id', 'approved_by');
-    // }
+
+    public function loanCharges()
+    {
+        return $this->hasMany('App\Model\Loans\LoanCharge', 'loan_id', 'id');
+    }
+
+    public function approvedBy()
+    {
+        return $this->hasOne('App\Model\User', 'id', 'approved_by');
+    }
 
     // public function ovverideBy()
     // {
