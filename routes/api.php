@@ -39,8 +39,9 @@ Route::get('products/{id}', 'Api\Product\ProductController@show');
 Route::resource('products', 'Api\Product\ProductController');
 Route::resource('category_products', 'Api\Product\CategoryProductController');
 Route::resource('loans', 'Api\Loan\LoanController');
-Route::post('loan_processing/{id}', 'Api\Loan\LoanController@processing');
-Route::post('loan_approval/{id}', 'Api\Loan\LoanController@approval');
+Route::post('loan_processing', 'Api\Loan\LoanController@processing');
+Route::post('loan_approval', 'Api\Loan\LoanController@approval');
+Route::post('loan_release', 'Api\Loan\LoanController@release');
 
 
  //epoy

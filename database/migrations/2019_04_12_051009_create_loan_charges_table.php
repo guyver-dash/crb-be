@@ -10,16 +10,16 @@ class CreateLoanChargesTable extends Migration
     {
         Schema::create('loan_charges', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('charge_id')->unsigned();
-            $table->integer('loan_id')->unsigned();
+            $table->integer('charge_id');
+            $table->integer('loan_id');
             $table->decimal('amount', 12, 2);
             $table->timestamps();
 
-            $table->foreign('charge_id')
-                ->references('id')->on('charges');
+            // $table->foreign('charge_id')
+            //     ->references('id')->on('charges');
 
-            $table->foreign('loan_id')
-                ->references('id')->on('loans');
+            // $table->foreign('loan_id')
+            //     ->references('id')->on('loans');
         });
     }
 

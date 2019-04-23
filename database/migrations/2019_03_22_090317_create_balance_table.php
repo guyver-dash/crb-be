@@ -9,7 +9,7 @@ class CreateBalanceTable extends Migration
     public function up()
     {
 
-        Schema::create('balance', function (Blueprint $table) {
+        Schema::create('balances', function (Blueprint $table) {
 
             $table->increments('id');
             $table->integer('loan_id')->unsigned()->nullable();

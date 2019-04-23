@@ -28,6 +28,7 @@ class CreateLoansTable extends Migration
             $table->date('date_release')->nullable();
             $table->decimal('irr_rate', 12, 2);
             $table->integer('approved_by')->unsigned()->nullable();
+            $table->integer('released_by')->unsigned()->nullable();
             $table->integer('override_user')->unsigned()->nullable();
             $table->timestamps();
 

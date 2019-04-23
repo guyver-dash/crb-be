@@ -88,37 +88,37 @@ class DatabaseSeeder extends Seeder
         PaymentMode::truncate();
         Charge::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        // $this->call(RelationshipTableSeeder::class);
-        // $this->call(TaxesTableSeeder::class);
-        // $this->call(TaxTypesTableSeeder::class);
-        // $this->call(AccountingMethodsTableSeeder::class);
-        // $this->call(TaccountsTableSeeder::class);
-        // $this->call(TransactionTypesTableSeeder::class);
-        // $this->call(CivilStatusTableSeeder::class);
-        // $this->call(GendersTableSeeder::class);
-        // $this->call(VatTypesTableSeeder::class);
-        // $this->call(BusinessTypesTableSeeder::class);
-        // $this->call(RolesTableSeeder::class);
-        // $this->call(InformationsTableSeeder::class);
-        // $this->call(UsersTableSeeder::class);
-        // $this->call(MenusTableSeeder::class);
-        // $this->call(HoldingsTableSeeder::class);
-        // $this->call(CompaniesTableSeeder::class);
-        // $this->call(BranchesTableSeeder::class);
-        // $this->call(TrademarksTableSeeder::class);
-        // $this->call(ImagesTableSeeder::class);
-        // $this->call(AccessRightTableSeeder::class);
-        // $this->call(BusinessInfosTableSeeder::class);
-        // $this->call(BankAccountsTableSeeder::class);
-        // $this->call(CategoriesTableSeeder::class);
-        // $this->call(PackagesTableSeeder::class);
-        // $this->call(FranchiseesTableSeeder::class);
-        // $this->call(LogisticsTableSeeder::class);
-        // $this->call(CommissariesTableSeeder::class);
-        // $this->call(OtherVendorsTableSeeder::class);
-        // $this->call(AccountingStandardsTableSeeder::class);
-        // $this->call(ChartAccountsTableSeeder::class);
-        // $this->call(BranchUserTableSeeder::class);
+        $this->call(RelationshipTableSeeder::class);
+        $this->call(TaxesTableSeeder::class);
+        $this->call(TaxTypesTableSeeder::class);
+        $this->call(AccountingMethodsTableSeeder::class);
+        $this->call(TaccountsTableSeeder::class);
+        $this->call(TransactionTypesTableSeeder::class);
+        $this->call(CivilStatusTableSeeder::class);
+        $this->call(GendersTableSeeder::class);
+        $this->call(VatTypesTableSeeder::class);
+        $this->call(BusinessTypesTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(InformationsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
+        $this->call(HoldingsTableSeeder::class);
+        $this->call(CompaniesTableSeeder::class);
+        $this->call(BranchesTableSeeder::class);
+        $this->call(TrademarksTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
+        $this->call(AccessRightTableSeeder::class);
+        $this->call(BusinessInfosTableSeeder::class);
+        $this->call(BankAccountsTableSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
+        $this->call(PackagesTableSeeder::class);
+        $this->call(FranchiseesTableSeeder::class);
+        $this->call(LogisticsTableSeeder::class);
+        $this->call(CommissariesTableSeeder::class);
+        $this->call(OtherVendorsTableSeeder::class);
+        $this->call(AccountingStandardsTableSeeder::class);
+        $this->call(ChartAccountsTableSeeder::class);
+        $this->call(BranchUserTableSeeder::class);
 
 
         $this->call(LoanCategoriesSeeder::class);
@@ -129,5 +129,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LoanStatusTableSeeder::class); // romnel for loan setup
         $this->call(PaymentModeTableSeeder::class); // romnel for loan setup
         $this->call(ChargesTableSeeder::class); // romnel for loan setup
+        // $this->call(TransactionCodeTableSeeder::class); // romnel for loan setup
     }
 }
