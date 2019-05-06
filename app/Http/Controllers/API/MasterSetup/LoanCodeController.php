@@ -29,7 +29,7 @@ class LoanCodeController extends Controller
     {
 
        return response()->json([
-            'loanCode' => LoanCode::with('loanCategory')->get()
+            'loanCode' => LoanCode::where('id', $id)->with('loanCategory')->get()
         ]);
     }
 }

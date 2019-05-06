@@ -46,3 +46,9 @@ Route::resource('loans', 'Api\Loan\LoanController');
     Route::resource('loan_code', 'Api\MasterSetup\LoanCodeController');//create loan code
     Route::get('lmmcategories/{id}', 'Api\MasterSetup\lmmCategoryController@show');//display all category from parent
     Route::get('loan_code/{id}', 'Api\MasterSetup\LoanCodeController@show');
+    Route::get('agriculture_class', 'Api\MasterSetup\AgricultureClassController@show');
+    Route::get('agricultural_purpose', 'Api\MasterSetup\AgriculturalPurposeController@show');
+    Route::resource('collector', 'Api\MasterSetup\CollectorsController'); //creat loan collector
+    Route::get('collector_all', 'Api\MasterSetup\CollectorsController@showAll');//display all collector
+    Route::get('collector/{id}', 'Api\MasterSetup\CollectorsController@show');//display information of specific collector
+    Route::get('collector_list/{id}', 'Api\MasterSetup\CollectorsController@showAllBranch');//display all collector per branch
