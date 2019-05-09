@@ -42,6 +42,14 @@ Route::resource('loans', 'Api\Loan\LoanController');
 Route::post('loan_processing', 'Api\Loan\LoanController@processing');
 Route::post('loan_approval', 'Api\Loan\LoanController@approval');
 Route::post('loan_release', 'Api\Loan\LoanController@release');
+Route::post('loan_amortization/{id}', 'Api\Loan\LoanController@amortizationSchedule');
+
+// LOAN INFORMATION
+Route::get('view_ledger/{id}', 'Api\Loan\InformationController@showLedger');
+Route::get('view_information/{id}', 'Api\Loan\InformationController@showLoanInfo');
+Route::get('loan_amortization/{id}', 'Api\Loan\InformationController@showAmortization');
+Route::get('loan_amortization_status/{id}', 'Api\Loan\InformationController@showAmortizationStatus');
+
 
 
  //epoy
