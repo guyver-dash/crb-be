@@ -21,11 +21,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('company_chart_accounts', 'Api\ChartAccount\CompanyChartAccountController');
     Route::resource('access_rights', 'Api\AccessRight\AccessRightController');
     Route::get('search-menus', 'Api\Menu\DashboardMenuController@search');
-<<<<<<< HEAD
+
     Route::resource('branches', 'Api\Branch\BranchController');
     Route::post('users/change-password', 'Api\User\UserController@changePassword');
-=======
->>>>>>> c808a35add06e44fc690bf96521de06d9a50a015
+
 });
 Route::resource('dashboard_role', 'Api\Role\DashboardRoleController');
 Route::get('provinces', 'Api\Places\PlacesController@provinces');
