@@ -19,5 +19,4 @@ class Balance extends Model
     {
         return $this->hasOne('App\Model\Loans\Loan', 'id', 'loan_id');
     }
-
 }
