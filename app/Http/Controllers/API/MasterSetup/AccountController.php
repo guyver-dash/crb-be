@@ -16,7 +16,11 @@ class AccountController extends Controller
 
     public function store(Request $request)
     {
+        Account::create($request->all());
 
+        return [
+            'success' => true
+        ];
     }
 
     public function show($id)
@@ -31,6 +35,10 @@ class AccountController extends Controller
 
     public function destroy($id)
     {
-        //
+        Account::find($id)->delete();
+
+        return [
+            'success' => true
+        ];
     }
 }

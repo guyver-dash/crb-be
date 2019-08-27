@@ -18,4 +18,9 @@ class Collector extends Model
     {
         return $this->hasMany('App\Model\MasterSetup\Center');
     }
+
+    public function branch()
+    {
+        return $this->hasOne('App\Model\Branch', 'id', 'branch_id');
+    }
 }

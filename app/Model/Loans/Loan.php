@@ -29,10 +29,10 @@ class Loan extends Model
         'override_user'
     ];
 
-    // public function accounts()
-    // {
-    //     return $this->hasOne('App\Model\Account', 'id', 'account_id');
-    // }
+    public function accounts()
+    {
+        return $this->hasOne('App\Model\MasterSetup\Account', 'id', 'account_id');
+    }
 
     public function paymentMode()
     {

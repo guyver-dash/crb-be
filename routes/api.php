@@ -45,6 +45,7 @@ Route::post('loan_release', 'Api\Loan\LoanController@release');
 Route::post('loan_amortization/{id}', 'Api\Loan\LoanController@amortizationSchedule');
 
 // LOAN SETUP
+Route::resource('account', 'Api\MasterSetup\AccountController');
 Route::resource('officer', 'Api\MasterSetup\OfficerController');
 Route::resource('collector', 'Api\MasterSetup\CollectorController');
 Route::resource('center', 'Api\MasterSetup\CenterController');
