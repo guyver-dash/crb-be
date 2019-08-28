@@ -13,8 +13,9 @@ class LoanFormRequest extends FormRequest
 
     public function rules()
     {
+
         return [
-            'account_id' => 'required',
+            'account_id' => 'required|numeric',
             'cycle' => 'required',
             'loan_amount' => 'required',
             'rate' => 'required',

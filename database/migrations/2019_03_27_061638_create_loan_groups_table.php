@@ -10,7 +10,6 @@ class CreateLoanGroupsTable extends Migration
     {
         Schema::create('loan_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('loan_id')->unsigned()->nullable();
             $table->integer('loancategory_id')->unsigned()->nullable();
             $table->integer('officer_id')->unsigned()->nullable();
             $table->integer('collector_id')->unsigned()->nullable();
@@ -22,8 +21,6 @@ class CreateLoanGroupsTable extends Migration
             $table->integer('subproject_id')->unsigned()->nullable();
             $table->timestamps();
 
-            // $table->foreign('loan_id')
-            //     ->references('id')->on('loans');
             // $table->foreign('loancategory_id')
             //     ->references('id')->on('loan_categories');
             // $table->foreign('officer_id')
