@@ -24,9 +24,9 @@ class CreateLoansTable extends Migration
             $table->integer('loan_status_id')->unsigned()->nullable();
             $table->integer('loan_groups_id')->unsigned()->nullable();
             $table->date('first_payment')->nullable();
-            $table->integer('grace');
+            $table->integer('grace')->nullable();
             $table->date('date_release')->nullable();
-            $table->decimal('irr_rate', 12, 2);
+            $table->decimal('irr_rate', 12, 2)->nullable();
             $table->integer('approved_by')->unsigned()->nullable();
             $table->integer('released_by')->unsigned()->nullable();
             $table->integer('override_user')->unsigned()->nullable();

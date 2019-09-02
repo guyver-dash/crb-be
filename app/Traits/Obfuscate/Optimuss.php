@@ -14,4 +14,10 @@ trait Optimuss
         return $this->optimus()->decode($this->id);
     }
 
+    //Id obfuscation should be resolveManually
+    public function resolveRouteBinding($value)
+    {
+       return $this->where('id', $this->optimus()->encode($value) )->first() ?? abort(404);
+    }
+
 }

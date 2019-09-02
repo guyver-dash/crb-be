@@ -11,7 +11,7 @@ class CollectorController extends Controller
 {
     public function index()
     {
-        return Collector::all();
+        return Collector::with('information')->with('branch')->with('center')->get();
     }
 
     public function store(Request $request)
@@ -23,11 +23,12 @@ class CollectorController extends Controller
         ];
     }
 
-    public function show($id)
+    public function show($id) // parameter is branch ID
     {
-        $collector = Collector::where('id', $id)->with('information')->with('center');
-
-        return $collector->get();
+        return Collector::where('branch_id', $id)
+                        ->with('information')
+                        ->with('branch')
+                        ->with('center')->get();
     }
 
     public function update(Request $request, $id)

@@ -24,10 +24,8 @@ class CenterController extends Controller
         ];
     }
 
-    public function show($id)
+    public function show($id) // parameter is COLLECTOR ID
     {
-        // $center = Center::where('id', $id)->with('collector.information')->with('groups');
-
         $center = Center::whereHas('collector' , function($query) use ($id) {
             $query->where('id', $id);
         })->with('collector.information')->get();

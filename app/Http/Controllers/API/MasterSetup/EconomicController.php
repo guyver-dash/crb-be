@@ -4,37 +4,36 @@ namespace App\Http\Controllers\API\MasterSetup;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\MasterSetup\Economic;
 
-use App\Model\MasterSetup\Officer;
-
-class OfficerController extends Controller
+class EconomicController extends Controller
 {
+   
     public function index()
     {
-        return Officer::with('designation')->with('branch')->get();
+        return Economic::all();
     }
 
     public function store(Request $request)
     {
-        $create = Officer::create($request->all());
+        Economic::create($request->all());
 
         return [
             'success' => true
         ];
     }
-
-    public function show($id)
+    
+    function show($id)
     {
-        return Officer::find($id);
+        return Economic::find($id);
     }
 
     public function update(Request $request, $id)
     {
-        $officer = Officer::find($id);
-        $officer->update([
-            'designation_id' => $request->designation_id,
-            'branch_id' => $request->branch_id,
-            'name' => $request->name,
+        $economic = Economic::find($id);
+        $economic->update([
+            'description' => $request->description,
+            'isAgricultural' => $request->isAgricultural
         ]);
 
         return [
@@ -44,7 +43,7 @@ class OfficerController extends Controller
 
     public function destroy($id)
     {
-        Officer::find($id)->delete();
+        Economic::find($id)->delete();
 
         return [
             'success' => true

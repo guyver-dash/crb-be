@@ -11,7 +11,7 @@ class AccountController extends Controller
 {
     public function index()
     {
-        //
+        return Account::with('information')->with('branch')->get();
     }
 
     public function store(Request $request)
@@ -25,12 +25,22 @@ class AccountController extends Controller
 
     public function show($id)
     {
-        //
+        return Account::where('id', $id)->with('branch')->with('information')->get();
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $account = Account::find($id);
+        $account->update([
+            'branch_id' => $request->branch_id,
+            'information_id' => $request->information_id,
+            'savings_id' => $request->savings_id,
+            'status' => $request->status
+        ]);
+
+        return [
+            'success' => true
+        ];
     }
 
     public function destroy($id)

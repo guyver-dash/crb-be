@@ -4,37 +4,35 @@ namespace App\Http\Controllers\API\MasterSetup;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\MasterSetup\SubProject;
 
-use App\Model\MasterSetup\Officer;
-
-class OfficerController extends Controller
+class SubProjectController extends Controller
 {
     public function index()
     {
-        return Officer::with('designation')->with('branch')->get();
+        return SubProject::all();
     }
 
     public function store(Request $request)
     {
-        $create = Officer::create($request->all());
+        SubProject::create($request->all());
 
         return [
             'success' => true
         ];
     }
-
-    public function show($id)
+    
+    function show($id)
     {
-        return Officer::find($id);
+        return SubProject::find($id);
     }
 
     public function update(Request $request, $id)
     {
-        $officer = Officer::find($id);
-        $officer->update([
-            'designation_id' => $request->designation_id,
-            'branch_id' => $request->branch_id,
-            'name' => $request->name,
+        $Project = SubProject::find($id);
+        $Project->update([
+            'description' => $request->description,
+            'isOtherAgricultural' => $request->isOtherAgricultural
         ]);
 
         return [
@@ -44,7 +42,7 @@ class OfficerController extends Controller
 
     public function destroy($id)
     {
-        Officer::find($id)->delete();
+        SubProject::find($id)->delete();
 
         return [
             'success' => true

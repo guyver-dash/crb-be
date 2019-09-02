@@ -43,10 +43,15 @@ Route::post('loan_amortization/{id}', 'Api\Loan\LoanController@amortizationSched
 
 // LOAN SETUP
 Route::resource('account', 'Api\MasterSetup\AccountController');
-Route::resource('officer', 'Api\MasterSetup\OfficerController');
 Route::resource('collector', 'Api\MasterSetup\CollectorController');
 Route::resource('center', 'Api\MasterSetup\CenterController');
+Route::resource('economic', 'Api\MasterSetup\EconomicController');
+Route::resource('funder', 'Api\MasterSetup\FunderController');
 Route::resource('group', 'Api\MasterSetup\GroupController');
+Route::resource('office', 'Api\MasterSetup\OfficeController');
+Route::resource('officer', 'Api\MasterSetup\OfficerController');
+Route::resource('project', 'Api\MasterSetup\ProjectController');
+Route::resource('subproject', 'Api\MasterSetup\SubProjectController');
 
 // LOAN INFORMATION
 Route::get('view_ledger/{id}', 'Api\Loan\InformationController@showLedger');

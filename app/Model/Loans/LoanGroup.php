@@ -8,7 +8,6 @@ class LoanGroup extends Model
 {
     protected $table = 'loan_groups';
     protected $fillable = [
-        'loan_id',
         'loancategory_id',
         'officer_id',
         'collector_id',
@@ -47,12 +46,12 @@ class LoanGroup extends Model
 
     public function lending()
     {
-        return $this->hasOne('App\Model\Loans\Lending', 'id', 'lending_id');
+        return $this->hasOne('App\Model\MasterSetup\Funder', 'id', 'lending_id');
     }
 
     public function office()
     {
-        return $this->hasOne('App\Model\Loans\Office', 'id', 'office_id');
+        return $this->hasOne('App\Model\MasterSetup\Office', 'id', 'office_id');
     }
 
     public function economic()

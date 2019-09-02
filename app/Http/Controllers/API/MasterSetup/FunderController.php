@@ -4,37 +4,35 @@ namespace App\Http\Controllers\API\MasterSetup;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\MasterSetup\Funder;
 
-use App\Model\MasterSetup\Officer;
-
-class OfficerController extends Controller
+class FunderController extends Controller
 {
     public function index()
     {
-        return Officer::with('designation')->with('branch')->get();
+        return Funder::with('branch')->get();
     }
 
     public function store(Request $request)
     {
-        $create = Officer::create($request->all());
+        Funder::create($request->all());
 
         return [
             'success' => true
         ];
     }
-
-    public function show($id)
+    
+    function show($id)
     {
-        return Officer::find($id);
+        return Funder::where('id', $id)->with('branch')->get();
     }
 
     public function update(Request $request, $id)
     {
-        $officer = Officer::find($id);
-        $officer->update([
-            'designation_id' => $request->designation_id,
-            'branch_id' => $request->branch_id,
+        $Funder = Funder::find($id);
+        $Funder->update([
             'name' => $request->name,
+            'subname' => $request->subname
         ]);
 
         return [
@@ -44,7 +42,7 @@ class OfficerController extends Controller
 
     public function destroy($id)
     {
-        Officer::find($id)->delete();
+        Funder::find($id)->delete();
 
         return [
             'success' => true

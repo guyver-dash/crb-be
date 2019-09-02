@@ -4,37 +4,36 @@ namespace App\Http\Controllers\API\MasterSetup;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\MasterSetup\Project;
 
-use App\Model\MasterSetup\Officer;
-
-class OfficerController extends Controller
+class ProjectController extends Controller
 {
     public function index()
     {
-        return Officer::with('designation')->with('branch')->get();
+        return Project::all();
     }
 
     public function store(Request $request)
     {
-        $create = Officer::create($request->all());
+        Project::create($request->all());
 
         return [
             'success' => true
         ];
     }
-
-    public function show($id)
+    
+    function show($id)
     {
-        return Officer::find($id);
+        return Project::find($id);
     }
 
     public function update(Request $request, $id)
     {
-        $officer = Officer::find($id);
-        $officer->update([
-            'designation_id' => $request->designation_id,
-            'branch_id' => $request->branch_id,
-            'name' => $request->name,
+        $Project = Project::find($id);
+        $Project->update([
+            'description' => $request->description,
+            'isAgricultural' => $request->isAgricultural,
+            'isMicro' => $request->isMicro
         ]);
 
         return [
@@ -44,7 +43,7 @@ class OfficerController extends Controller
 
     public function destroy($id)
     {
-        Officer::find($id)->delete();
+        Project::find($id)->delete();
 
         return [
             'success' => true

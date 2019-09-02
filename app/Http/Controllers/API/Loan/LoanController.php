@@ -28,6 +28,7 @@ class LoanController extends Controller
 
     public function store(Request $request)
     {
+        $request['cycle'] = AmortService::leading_zeros($request->cycle,4);
         $loanGroups = LoanGroup::create($request->all());
         $request['loan_groups_id'] = $loanGroups->id;
 

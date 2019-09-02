@@ -12,4 +12,8 @@ class Officer extends Model
     public function designation(){
     	return $this->hasOne('App\Model\MasterSetup\Designation', 'id', 'designation_id');
     }
+
+    public function branch(){
+        return $this->hasOne('App\Model\Branch', 'id', 'branch_id');
+    }
 }

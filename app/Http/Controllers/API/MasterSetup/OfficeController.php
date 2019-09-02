@@ -5,39 +5,37 @@ namespace App\Http\Controllers\API\MasterSetup;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Model\MasterSetup\Group;
+use App\Model\MasterSetup\Office;
 
-class GroupController extends Controller
+class OfficeController extends Controller
 {
+    
     public function index()
     {
-        return Group::with('center.collector.information')->get();
+        return Office::with('branch')->get();
     }
 
     public function store(Request $request)
     {
-        Group::create($request->all());
+        Office::create($request->all());
 
         return [
             'success' => true
         ];
     }
 
-    public function show($id) //parameter is CENTER ID
+    public function show($id)
     {
-        $group = Group::whereHas('center' , function($query) use ($id) {
-            $query->where('id', $id);
-        })->with('center.collector.information')->get();
-
-        return $group;
+        return Office::where('id', $id)->with('branch')->get();
     }
 
     public function update(Request $request, $id)
     {
-        $group = Group::find($id);
-        $group->update([
-            'center_id' => $request->center_id,
+        $office = Office::find($id);
+        $office->update([
+            'branch_id' => $request->branch_id,
             'name' => $request->name,
+            'address' => $request->address,
         ]);
 
         return [
@@ -47,7 +45,7 @@ class GroupController extends Controller
 
     public function destroy($id)
     {
-        Group::find($id)->delete();
+        Office::find($id)->delete();
 
         return [
             'success' => true
